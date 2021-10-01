@@ -1,0 +1,856 @@
+---
+title: "UAE cogBMI - Data Update 2021"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+header-includes:
+- \usepackage{fullpage}
+- \usepackage{graphicx}
+- \usepackage{subcaption}
+- \usepackage{float}
+- \usepackage{placeins}
+- \usepackage{caption}
+- \usepackage{mathtools}
+# - \usepackage{rotating}
+- \usepackage{multirow}
+- \usepackage{amssymb}
+- \usepackage{amsmath}
+- \usepackage{bigstrut}
+- \usepackage{geometry}
+# - \usepackage{longtable}
+# - \usepackage{lscape}
+- \usepackage{pdflscape}
+- \setlength{\parskip}{1em}
+---
+
+<!-- R Markdown -->
+
+<!-- This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>. -->
+
+<!-- When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this: -->
+
+<!-- Note: the first statement is the langauge (i.e., r), then the label for the chunck. After this you can put extra statements like echo (show code and outcome), include (show outcome) -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy = TRUE, tidy.opts = list(comment = FALSE), echo = TRUE, fig.width=6, fig.height=4, fig.path='UAE_cogBMI_Figs/fig-', echo=FALSE, warning=FALSE, message=FALSE, comment = NA)
+```
+
+<!-- load startup file and any extra packages -->
+```{r load, echo=FALSE, include=FALSE}
+source('UAE_cogBMI_setup.R')
+library(knitr)
+library(kableExtra)
+```
+
+<!-- The number of hashtags (#) will determine the boldness of heading -->
+\clearpage
+
+# Overview/Last Discussion
+
+We last discussed splitting the data into 2 papers: 
+
+1) Description of participants, medical comorbidities, family history/characteristics, and child psychological functioning 
+
+2) Cognitive profiles: IQ, neuropsychological assessments (digit span, coding), N-Back performance
+
+Alaina can provide the statistical write-up of both papers to start and then we can split up the writing responsibilities of the 2 papers.
+
+We had discussed aiming for the International Journal of Obesity, however, may be good to discuss which journals we are aiming for again.
+
+# Participant Characteristics - Overall
+
+## Weight Status
+
+We decided to use the International Obesity Task Force (IOTF) designation of weight status for the sample. They use smoothed, sex-specific BMI curves meant to match the the BMI cutoffs for overweight (OW; 25 $kg/m^2$) and obesity (OB; 30 $kg/m^2$) at age 18 yrs.
+
+Rather than BMI-zscore or BMI-percentile, we chose to use percent of overweight cutoff because recent studies shows it has a tighter association with measured adiposity:
+
+BMI $\%$ of overweight = $\frac{child BMI}{BMI\: at\: age-\: and\: sex-\: adjusted\: overweight\: cutoff}*100$
+
+<100 $\%$ - indicates child BMI is below the overweight cutoff for age and sex (i.e., has healthy weight)
+100 $\%$ - indicates child BMI is the same as the overweight cutoff for age and sex
+>100 $\%$ - indicates child BMI is above the overweight cutoff for age and sex (i.e., has overweight or obesity)
+
+\FloatBarrier
+
+### Distribution of Percent of Overweight Cutoff by Sex
+
+```{r IOTF_BMI25p_DensityPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_plot
+```
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering IOTF: Percent of Overweight Cuttof (85th Percentile)}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_DensityPlot-1.pdf}
+  \end{subfigure}
+\end{figure}
+
+\FloatBarrier
+### Weight Status Table
+
+\begin{table}[ht!]
+\begin{tabular}{lcc@{\hspace{5pt}}cc@{\hspace{5pt}}c}
+  \hline
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 107 && 61 && 46 \\
+  BMI \scriptsize{(Mean [range])}  & \multicolumn{1}{l}{25.22 [12.71 - 55.52]} && \multicolumn{1}{l}{24.85 [21.71 - 47.60]} && \multicolumn{1}{l}{25.70 [13.60 - 55.52]} \\
+  IOTF BMI $\%$ of OW\scriptsize{(Mean [range])} & 115 [64 - 239] && 112 [67 - 193]  &&  118 [64 - 239]\\
+  IOTF Weight Status\scriptsize{(\textit{N})}  & &&  &&  \\
+    \hspace{10pt} Morbidly Obese (\scriptsize{pred BMI $\ge 35$ at 18 yrs})&  23 &&  12 && 11 \\
+    \hspace{10pt} Obese (\scriptsize{pred BMI $\ge  30$ BMI $ < 35$ at 18 yrs}) & 14 &&  11 && 3 \\
+    \hspace{10pt} Overweight (\scriptsize{pred BMI $\ge  25$ BMI $ < 30$ at 18 yrs})&  29 &&  14 && 15 \\
+    \hspace{10pt} Healthy Weight (\scriptsize{pred BMI $ \ge 18.5$ BMI $ < 25$ at 18 yrs})&  30 &&  18 && 12 \\
+    \hspace{10pt} Thinness 1 (\scriptsize{pred BMI $ \ge 17$ BMI $ < 18.5$ at 18 yrs})&  8 &&  5 && 3 \\
+    \hspace{10pt} Thinness 2 (\scriptsize{pred BMI $ \ge 16$ BMI $ < 17$ at 18 yrs})&  3 &&  1 && 2 \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+\clearpage
+
+## Demographics
+
+\begin{table}[ht!]
+\begin{tabular}{lcc@{\hspace{5pt}}cc@{\hspace{5pt}}c}
+  \hline
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 107 && 61 && 46 \\
+  Age \scriptsize{(\textit{Mean [range], yrs})} & \multicolumn{1}{l}{12.75 [7.31 - 17.84]} && \multicolumn{1}{l}{12.79 [7.31 - 17.84]} && \multicolumn{1}{l}{12.71 [8.04 - 17.54]} \\
+  Maternal Education \scriptsize{(\textit{Mean [range], yrs})} & \multicolumn{1}{l}{13.09 [0 - 18]} && \multicolumn{1}{l}{13.00 [3 - 18]} && \multicolumn{1}{l}{13.21 [0 - 18]} \\
+   \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 4 &&  &&   \\
+  Paternal Education \scriptsize{(\textit{Mean [range], yrs})} & \multicolumn{1}{l}{12.71 [0 - 18]} && \multicolumn{1}{l}{12.91 [0 - 18]} && \multicolumn{1}{l}{12.44 [6 - 18]} \\
+  \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 1 &&  &&   \\
+  Paternal Nationality\scriptsize{(\textit{N})}   & &&  && \\
+    \hspace{10pt} Emirate      & 98 && 58 && 40 \\
+    \hspace{10pt} Omani        & 1 && 1 && 0\\
+    \hspace{10pt} Yemeni       & 2 && 1 && 1 \\
+    \hspace{10pt} No Response  & 6 &&  &&  \\
+  Maternal Nationality\scriptsize{(\textit{N})}   & &&  && \\
+    \hspace{10pt} Emirate      & 96 && 55 && 41 \\
+    \hspace{10pt} Omani        & 1 && 1 && 0 \\
+    \hspace{10pt} Yemeni       & 1 && 0 && 1 \\
+    \hspace{10pt} Bahrani       & 1 && 0 && 1 \\
+    \hspace{10pt} Egyptian       & 3 && 2 && 1 \\
+    \hspace{10pt} Moroccan       & 2 && 2 && 0 \\
+    \hspace{10pt} No Response  & 3 &&  &&  \\
+  SES\scriptsize{(\textit{N})}       &  &&  &&  \\
+    \hspace{10pt} $>$75,000 AED    & 9 && 5 && 4  \\
+    \hspace{10pt} 55,000-75,000 AED & 6  &&  4 && 2  \\
+    \hspace{10pt} 25,000-55,000 AED  & 55 && 33  && 22 \\
+    \hspace{10pt} $<$25,000 AED      & 33 && 17 && 16 \\
+    \hspace{10pt} No Response       & 4 &&  &&  \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+# Paper 1
+
+## Associations between Demographics and Percent of Overweight Cutoff
+
+### Correlations with Age, Father Education (yrs), and Mother Education (yrs)
+
+```{r IOTF_BMI25p_demo_cors, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_demo_cormat, "latex",  digits = 3, caption = "Correlations between percent of overweight cuttoff and demographic characteristics", booktabs=TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Only child age was associated with percent of overweight cutoff - older children tended to have higher percent of overweight cutoff indicating older children were more likely to have overweight or obesity. There was no association with father or mother education level, which differs from finding in the US.
+
+\FloatBarrier
+
+### Sex Differences in Percent of Overwight Cutoff
+```{r IOTF_BMI25p_sex_ttest, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p.sex_ttest_tab, "latex",  digits = 3, caption = "t-test for percent of overweight by sex", booktabs=TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+There were no differences in percent of overweight cutoff by sex
+
+\FloatBarrier
+
+### Differences by Socioeconomic Status/Family Income
+```{r IOTF_BMI25p_SES_anova, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p.SES_ANOVAtab, "latex",  digits = 3, caption = "One-way ANOVA for percent of overweight by SES category", booktabs=TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+There were no differences in percent of overweight cutoff by family income level, which differs from findings in the US.
+
+\FloatBarrier
+\clearpage
+
+## Medical Comorbidities by Sex
+
+\begin{table}[ht!]
+\begin{tabular}{lcc@{\hspace{5pt}}cc@{\hspace{5pt}}c}
+  \hline
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 107 && 61 && 46 \\
+  Number Comorbidities \scriptsize{(\textit{Mean [range]})} & \multicolumn{1}{l}{2.2 [0-4]} && \multicolumn{1}{l}{2.3 [0-4]} && \multicolumn{1}{l}{2.1 [0-4]}  \\
+  Vitamine D Deficiency \scriptsize{(\textit{N (\%)})} & 98 (91.6\%) && 56 (91.8\%) && 42 (81.3\%)  \\
+  Anemia\scriptsize{(\textit{Total N (\%)})}                     & 40 (37.4\%) && 24 (39.3\%) && 16 (34.8\%)\\
+    \hspace{10pt} Iron Deficiency Anemia                    & 22  && 13  && 8 \\
+    \hspace{10pt} Thalassemia Minor                         & 3 && 2 && 1\\
+    \hspace{10pt} Iron Deficiency Anemia + Thalassemia Minor & 2 && 0 && 2\\
+    \hspace{10pt} Iron Deficiency Anemia + G6PD Deficiency    & 1 && 1 && 0\\
+    \hspace{10pt} G6PD Deficiency                              & 1 && 0 && 1\\
+    \hspace{10pt} Unspecified Anemia                        & 12 && 8 && 4 \\
+  Hyperlipidemia\scriptsize{(\textit{N (\%)})}  & 12 (11.2\%) &&  9 (14.8\%) &&  3 (6.5\%) \\
+    \hspace{10pt} Hyperlipidemia                & 11 &&  8 &&  3\\
+    \hspace{10pt} Hyperlipidemia-Mixed          & 1 &&  1 &&  0 \\
+  Thyroid Related Conditions\scriptsize{(\textit{N (\%)})}   & 25 (23.3\%) && 18 (29.5\%)  && 7 (15.2\%))  \\
+    \hspace{10pt} Abnormal Funciton                   & 14 &&  10 &&  4\\
+    \hspace{10pt} Autoimmune Thyroiditis              & 3 &&  2 &&  1 \\
+    \hspace{10pt} Hypothyroidism - Autoimmune         & 2 &&  1 &&  1 \\
+    \hspace{10pt} Hypothyroidism - Unspecified        & 5 &&  4 &&  1 \\
+    \hspace{10pt} Goiter                               & 1 &&  1 &&  0 \\
+  Imparied Glucose Funciton\scriptsize{(\textit{N (\%)})}  & 28 (26.2\%)  &&  14 (23.0\%) &&  14 (30.4\%) \\
+    \hspace{10pt} Impaired Fasting Glucose            & 14 &&  10 &&  4\\
+    \hspace{10pt} Impaired Glucose Tolerance Test     & 3 &&  2 &&  1 \\
+    \hspace{10pt} Type1 Diabetes                      & 2 &&  1 &&  1 \\
+  Hypertension\scriptsize{(\textit{N (\%)})}  & 3 (2.8\%)  &&  1 (1.6\%) &&  2 (4.3\%) \\
+    \hspace{10pt} Essential Primary Hypertension            & 2 &&  1 &&  1\\
+    \hspace{10pt} High Blood Pressure                        & 1 &&  0 &&  1 \\
+  Metabolic Syndrome \scriptsize{(\textit{N (\%)})}  & 2 (1.9\%)  &&  1 (1.6\%) &&  1 (2.2\%) \\
+  Growth/Stature Issues\scriptsize{(\textit{N (\%)})}  & 10 (9.3\%)  &&  4 (6.6\%) &&  6 (13.0\%) \\
+    \hspace{10pt} Failure to Thrive                   & 1 &&  0 &&  1\\
+    \hspace{10pt} Growth Hormone Deficency            & 1 &&  0 &&  1 \\
+    \hspace{10pt} Short Stature                       & 6 &&  3 &&  3 \\
+    \hspace{10pt} Short Stature + Failure to Thrive   & 1 &&  1 &&  0 \\
+    \hspace{10pt} Short Stature + Precocious Puberty   & 1 &&  0 &&  1 \\
+  Polycystic Ovarian Syndrome (PCOS)\scriptsize{(\textit{N (\%)})}  & 3 (2.8\%)  &&  3 (4.9\%) &&  NA \\
+    \hspace{10pt} PCOS            & 1 &&  1 &&  NA\\
+    \hspace{10pt} Hirsutism    & 1 &&  1 &&  NA \\
+    \hspace{10pt} Hirsutism - unspecified ovarian cysts & 1 &&  1 &&  NA \\
+  \hline
+  \multicolumn{6}{l}{Note: $^{\dagger}$p<0.10; ***p<0.001} \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+### Association betwen Number of Comorbidities and Percent of Overweight Cutoff
+
+```{r IOTF_BMI25p_MedComorbid_cors, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_MedComorbid_cormat, digits = 3, caption = "Correlations between percent of overweight and medical comorbidities; *p<=0.05", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+There was no association between percent of overweight cutoff and number of comorbidities
+
+\FloatBarrier
+
+### Differences in Percent of Overweight Cutoff by Presence/Absence of Anemia, Thyroid Dysfunction, and Impaired Glucose Function
+
+```{r IOTF_BMI25p_MedComorbid_ttests, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p.MedComorbid_ttest_tab_reduced, "latex",  digits = 3, caption = "t-tests for percent of overweight by absence vs presence of medical comorbidity", booktabs=TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+There were no difference in percent of overweight cutoff by presence/absence of Thyroid dysfunction or impaired glucose function. However, those with anemia tended to have lower percent of overweight. The mean with anemia was 101% indicating children were overweight on average. The mean for those without anemia were 123%, indicating the children were above the overweight cutoff.
+
+\FloatBarrier
+\clearpage
+
+## Family History
+
+\begin{table}[ht!]
+\begin{tabular}{lcc@{\hspace{5pt}}cc@{\hspace{5pt}}c}
+  \hline
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 107 && 61 && 46 \\
+  Diabetes \scriptsize{(\textit{N} (\%))} & 6 (5.6\%) && 3 (4.9\%) && 3 (6.5\%)  \\
+  \multicolumn{2}{l}{Family Members Have/Had Obestity} &&  && \\
+    \hspace{10pt} Yes \scriptsize{(\textit{Total N (\%)})}   & 73 (68.2\%) && 43 (70.5\%) && 30 (65.2\%)\\
+      \hspace{25pt} No Response (Yes/No question)                        & 2  &&   &&  \\
+    \hspace{10pt} Total Number of Family Members \scriptsize{(\textit{Mean [range]})}   & \multicolumn{1}{l}{1.95 [0 - 7]} && \multicolumn{1}{l}{1.95 [0 - 7]} && \multicolumn{1}{l}{1.96 [0 - 7]}\\
+      \hspace{25pt} Mother                        & 20  && 12  && 8 \\
+      \hspace{25pt} Father                         & 23 && 10 && 13\\
+      \hspace{25pt} Grandmother                   & 36 && 21 && 15\\
+      \hspace{25pt} Grandfather                    & 8 && 5 && 3 \\
+      \hspace{25pt} Sister                        & 18 && 11 && 7 \\
+      \hspace{25pt} Brother                       & 25 && 15 && 10 \\
+      \hspace{25pt} Aunt                          & 48 && 28 && 20 \\
+      \hspace{25pt} Uncle                         & 31 && 17 && 14 \\
+      \hspace{25pt} No Response (if Yes)          & 2 &&  &&  \\
+  \multicolumn{2}{l}{Family Members Have/Had Eating Disorder}  &&  && \\
+    \hspace{10pt} Yes \scriptsize{(\textit{Total N (\%)})} & 11 (10.3\%) && 5 (8.2\%) && 5 (13.0\%)\\
+      \hspace{25pt} No Response (Yes/No)                        & 8  &&   &&  \\
+    \hspace{10pt} Total Number of Family Members \scriptsize{(\textit{Mean [range]})} & \multicolumn{1}{l}{0.21 [0 - 7]} && \multicolumn{1}{l}{0.21 [0 - 7]} && \multicolumn{1}{l}{0.22 [0 - 3]}\\  
+      \hspace{25pt} Mother                        & 1  && 1  && 0 \\
+      \hspace{25pt} Father                         & 2 && 1 && 1\\
+      \hspace{25pt} Grandmother                   & 4 && 2 && 2\\
+      \hspace{25pt} Grandfather                    & 2 && 2 && 0 \\
+      \hspace{25pt} Sister                        & 2 && 2 && 0 \\
+      \hspace{25pt} Brother                       & 2 && 1 && 1 \\
+      \hspace{25pt} Aunt                          & 7 && 3 && 4 \\
+      \hspace{25pt} Uncle                         & 3 && 1 && 2 \\
+      \hspace{25pt} No Response (if Yes)          & 8 &&  &&  \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+### Regression Testing if Percent of Overweight Predicts Number of Family Members with Obesity (as reported by parent)
+
+```{r IOTF_BMI25p_nFamOBHistory_poisson, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_nFamOBHistory_tab, digits = 3, caption = "Poisson Regression: Number of Family Members with Obesity - SES category + Maternal Education + Age + Sex + BMI25p", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+After controlling for family income, mother education, child age, and child sex, percent of overweight was positively associated with number of family members with obesity. For each increase in percent of overweight above 100%, there was a 1% increase in the number of family members with obesity. In other words we would expect and 10% increase in number of family members with obesity if the child had a BMI that was 110% of their age- and sex- adjusted cutoff for overweight.
+
+\FloatBarrier
+
+### Regression Testing if Percent of Overweight Predicts Number of Family Members with Eating Disorder (as reported by parent)
+
+```{r IOTF_BMI25p_nFamEDHistory_poisson, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_nFamEDHistory_tab, digits = 3, caption = "Poisson Regression: Number of Family Members with Eating Disorder - SES category + Maternal Education + Age + Sex + BMI25p", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Percent of overweight cutoff was not associated with reported number of family members with an eating disorder. Note - since this is reported by the family, may be better to interpret as number of family members percieved as having disordered or atypical eating patterns.
+
+\FloatBarrier
+
+### Difference in Percent of Overweight Cutoff by Family History (Yes/No of Diabetes, Obesity, and Eating Disorder
+```{r IOTF_BMI25p_FamHistory_ttests, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p.FamHistory_ttest_tab, "latex",  digits = 3, caption = "t-tests for percent of overweight by absence vs presence of family history", booktabs=TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+There were no differences in percent of overweight for child whose families had a history of diabetes or eating disorder (reported by parent). There was a significant difference in child percent of overweight between families that reported a history of obesity ('Yes') and those who did not ('No'). Children without a family history of obesity had a mean percent of overweight equal to 94%, indicating the children had healthy weight on average. Children with a family history of obesity had a mean percent of overweight equal to 124%, indicating the children had overweight or obesity.
+
+\FloatBarrier
+\clearpage
+
+## Behavioral/Psychological: Strengths and Difficulties Questionnaire
+
+\begin{table}[ht!]
+\begin{tabular}{lcc@{\hspace{5pt}}cc@{\hspace{5pt}}c}
+  \hline
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 107 && 61 && 46 \\
+  \multicolumn{6}{l}{Reported on Medical Chart}  \bigstrut[t]\\
+  Nicotine Addition \scriptsize{(\textit{N})}        & 1 && 0 && 1   \\
+  Underacheaving in School \scriptsize{(\textit{N})} & 1  && 0 && 1   \\
+ \multicolumn{6}{l}{Strengths and Difficulties Questionnaire: Raw Score} \bigstrut[t]\\
+  $^{\dagger}$Emotional Problems \scriptsize{(\textit{Mean (SD)})} & \multicolumn{1}{l}{3.2 (2.2)} && \multicolumn{1}{l}{3.5 (2.2)} && \multicolumn{1}{l}{2.7 (2.2)} \\
+   \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 3 &&  &&   \\
+  Conduct Problems \scriptsize{(\textit{Mean (SD)})}                    & \multicolumn{1}{l}{2.0 (1.7)} && \multicolumn{1}{l}{2.0 (1.7)} && \multicolumn{1}{l}{2.0 (1.7)}   \\
+    \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 5 &&  &&   \\
+  Hyperactivity \scriptsize{(\textit{Mean (SD)})}                       & \multicolumn{1}{l}{3.43 (2.4)}  && \multicolumn{1}{l}{3.1 (2.3)} && \multicolumn{1}{l}{3.9 (2.4)}   \\
+    \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 4 &&  &&   \\
+  Peer Problems \scriptsize{(\textit{Mean (SD)})}                       & \multicolumn{1}{l}{3.0 (1.5)}  && \multicolumn{1}{l}{2.8 (1.4)} && \multicolumn{1}{l}{3.3 (1.5)}   \\
+    \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 5 &&  &&   \\
+  Total Problem Score \scriptsize{(\textit{Mean (SD)})}                 & \multicolumn{1}{l}{11.29 (5.29)} && \multicolumn{1}{l}{11.13 (5.1)} && \multicolumn{1}{l}{11.5 (5.7)}   \\
+    \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 16 &&  && \\
+  Prosocial \scriptsize{(\textit{Mean (SD)})}                           & \multicolumn{1}{l}{8.45 (1.7)} && \multicolumn{1}{l}{8.4 (1.5)} && \multicolumn{1}{l}{8.5 (1.9)}   \\
+    \hspace{10pt} No Response  \scriptsize{(\textit{N})}        & 5 &&  &&   \\
+  \hline
+  \multicolumn{6}{l}{Note: $^{\dagger}$p<0.10} \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+\begin{table}[ht!]
+\begin{tabular}{lcc@{\hspace{5pt}}cc@{\hspace{5pt}}cc@{\hspace{5pt}}cc@{\hspace{5pt}}c}
+  \hline
+   \multicolumn{10}{c}{Strengths and Difficulties Questionnaire: Categories} \\
+  & \multicolumn{1}{c}{Total Problems} && \multicolumn{1}{c}{Emotional} && \multicolumn{1}{c}{Conduct} && \multicolumn{1}{c}{Hyperactivity} && \multicolumn{1}{c}{Peer Problems} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6} \cline{8-8} \cline{10-10}
+  Very High \scriptsize{(\textit{N (\%)})}        & 6 (5.6\%) && 9 (8.4\%) && 2 (1.9\%) && 5 (4.7\%) && 12 (11.2\%) \\
+  High \scriptsize{(\textit{N (\%)})}             & 12 (11.2\%) && 19 (17.8\%) && 18 (16.8\%) && 1 (0.1\%) && 30 (28.0\%)    \\
+  Slightly Raised \scriptsize{(\textit{N (\%)})}  & 12 (11.2\%) && 14 (13.1\%) && 13 (12.1\%) && 12 (11.2\%) && 20 (18.7\%)   \\
+  Close to Average \scriptsize{(\textit{N (\%)})} & 63 (58.9\%) && 62 (57.9\%) && 69 (64.4\%) && 85 (79.4\%) && 40 (\%) (37.4\%)   \\
+  \cline{2-10}
+  & \multicolumn{1}{c}{Prosocial Behaviors} &&  && &&  &&\\
+  \cline{2-2}
+  Close to Average \scriptsize{(\textit{N (\%)})} & 77 (72.0\%) &&  && &&  &&     \\
+  Slightly Lowered \scriptsize{(\textit{N (\%)})} & 15 (14.0\%) &&  && &&  &&     \\
+  Low \scriptsize{(\textit{N (\%)})}              & 5 (4.7\%) &&  && &&  &&       \\
+  Very Low \scriptsize{(\textit{N (\%)})}         & 5 (4.7\%) &&  && &&  &&     \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+
+\clearpage
+
+\FloatBarrier
+
+### Emotional Problems (Elevated vs Not Elevated): No effect of Adiposity or interaction with sex
+
+
+Questions: \par
+Often complains of headaches... (I get a lot of headaches...)\par
+Many worries... (I worry a lot)\par
+Often unhappy, downhearted... (I am often unhappy....)\par
+Nervous or clingy in new situations... (I am nervous in new situations...) \par
+Many fears, easily scared (I have many fears...)\par
+
+
+\FloatBarrier
+
+### Conduct Problems (Elevated vs Not Elevated): No effect of Adiposity or interaction with sex.
+
+Questions: \par
+Often has temper tantrums or hot tempers (I get very angry) \par
+Generally obedient... (I usually do as I am told) - Reverse Scored\par
+Often fights with other children... (I fight a lot)\par
+Often lies or cheats (I am often accused of lying or cheating)\par
+Steals from home, school or elsewhere (I take things that are not mine)\par
+
+
+<!-- ```{r IOTF_BMI25p_ConductProbs_logit, echo=FALSE, results='asis'} -->
+<!-- kable(IOTF_BMI25p_CondProbs_glm2_tab, digits = 3, caption = "Conduct Problems (Elevated vs Not Elevated) - SES category + Maternal Education + nComorbid + Age + Sex X BMI25p", booktabs=TRUE)  %>% -->
+<!--   kable_styling(latex_options = c("hold_position", "repeat_header")) -->
+<!-- ``` -->
+
+<!-- \FloatBarrier -->
+
+<!-- Percent of IOTF overweight cuttoff (BMI 25 equivalency - BMI25p) is centered at 100\% (right at overweight cuttoff). There was no effect of BMI25p, however, there were trending main effects of Number of Comorbid Conditions and Age. For each year increase in age, the odds of having elevated conduct problems decreases by 15\% ($e^{\beta} = 0.85$). For each added comorbid condition, the odds of elevated conduct problems decreases by 35\% ($e^{\beta} = 0.65$).  -->
+
+
+\FloatBarrier
+
+### Hyperactivity (Elevated vs Not Elevated): No effect of Adiposity or interaction with sex.
+
+
+Questions: \par
+Restless, overactive... (I am restless...)\par
+Constantly fidgeting or squirming (I am constantly fidgeting....) \par
+Easily distracted, concentration wanders (I am easily distracted)\par
+Thinks things out before acting (I think before I do things)  - Reverse Scored\par
+Sees tasks through to the end... (I finish the work I am doing) - Reverse Scored\par
+
+\FloatBarrier
+
+### Peer Problems (Elevated vs Not Elevated): percent of overweight x sex interaction
+
+Questions:\par
+Rather solitary, tends to play alone (I am usually on my own)\par
+Has at least one good friend (I have one goof friend or more) - Reverse Scored\par
+Generally liked by other children (Other people my age generally like me) - Reverse Scored\par
+Picked on or bullied... (Other children or young people pick on me)\par
+Gets on better with adults than with other children (I get on better with adults than with people my age)\par
+
+```{r IOTF_BMI25p_PeerProbs_logit, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_PeerProbs_glm2_tab, digits = 3, caption = "Peer Probs (Elevated vs Not Elevated) - SES category + Maternal Education + nComorbid + Age + Sex X BMI25p", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_PeerProbs_logit_sslopes, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_PeerProbs_glm2_emtrends_sum, digits = 3, caption = "Simple Slopes for BMI25p by Sex (controlling for SES, Maternal Education, nComorbid, and age", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+There was a main effect for mother education with each year increase in education associated with a 16% decrease in the odds of having elevated peer problems ($e^{\beta} = 0.84$). There was also a significant interaction between Sex and BMI25p. Each one point increase in BMI25p was associated with a 3\% increase ($e^{\beta} = 0.028$) in odds of having elevated peer problems for girls (simple slope = 0.028, 95\% CI: [0.01, 0.05]), but BMI25p was not associated with increase odds of peer problems for boys (simple slope = -0.004, 95\% CI: [-0.02, 0.01]).
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_PeerProbs_Sex_ORplot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_PeerProbs.Sex_ORplot
+```
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{=0.60\textwidth}
+    \centering
+    \caption*{\centering Predicted Odds for Peer Problems x Sex}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_PeerProbs_Sex_ORplot-1.pdf}
+  \end{subfigure}
+\end{figure}
+
+\FloatBarrier
+
+### Prosocial (Elevated vs Not Elevated): No effect of Adiposity or interaction with sex.
+
+Questions: \par
+Considerate of other people's feelings (I try to be nice to other people)  \par
+Shares readily with other children... (I usually share with others)  \par
+Helpful if someone is hurt... (I am helpful is someone is hurt...) \par
+Kind to younger children (I am kind to younger children) \par
+Often volunteers to help others... (I often volunteer to help others) \par
+
+<!-- ```{r IOTF_BMI25p_Prosocial_logit, echo=FALSE, results='asis'} -->
+<!-- kable(IOTF_BMI25p_Prosocial_glm2_tab, digits = 3, caption = "Peer Probs (Elevated vs Not Elevated) - SES category + Maternal Education + nComorbid + Age + Sex X BMI25p", booktabs=TRUE)  %>% -->
+<!--   kable_styling(latex_options = c("hold_position", "repeat_header")) -->
+<!-- ``` -->
+
+<!-- \FloatBarrier -->
+
+<!-- ```{r IOTF_BMI25p_Prosocial_logit_sslopes, echo=FALSE, results='asis'} -->
+<!-- kable(IOTF_BMI25p_Prosocial_glm2_emtrends_sum, digits = 3, caption = "Simple Slopes for BMI25p by Sex (controlling for SES, Maternal Education, nComorbid, and age", booktabs=TRUE)  %>% -->
+<!--   kable_styling(latex_options = c("hold_position", "repeat_header")) -->
+<!-- ``` -->
+
+<!-- \FloatBarrier -->
+
+<!-- There was a trending effect for income such that going from <25,000 AED to >75,000 AED was associated with a 7.4 time increase in the odds of having lowered prosociality. There was also a trend for the interaction between Sex and BMI25p. Each one point increase in BMI25p was associated with a 2\% increase ($e^{\beta} = 0.02$) in odds of having lowered prosociality for boys (simple slope = 0.02, 95\% CI: [0.001, 0.039]), but BMI25p was not associated with increase odds of prosociality for girls (simple slope = -0.005, 95\% CI: [-0.024, 0.016]). -->
+
+<!-- \FloatBarrier -->
+
+<!-- ```{r IOTF_BMI25p_Prosocial_Sex_ORplot, echo=FALSE, include = FALSE} -->
+<!-- IOTF_BMI25p_Prosocial.Sex_ORplot -->
+<!-- ``` -->
+
+<!-- \begin{figure}[ht!] -->
+<!--   \centering -->
+<!--   \begin{subfigure}[b]{=0.60\textwidth} -->
+<!--     \centering -->
+<!--     \caption*{\centering Predicted Odds for Lower Prosociality x Sex} -->
+<!--     \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_Prosocial_Sex_ORplot-1.pdf} -->
+<!--   \end{subfigure} -->
+<!-- \end{figure} -->
+
+
+\FloatBarrier
+
+### Summary
+
+No evidence for an association between percent of overweight or interaction with sex for Emotional, Conduct, Hyperactivity, or Pro-social problems. Only peer problems were associated with a weight status by sex interaction indicating girls experience more peer problems than boys when they have very high levels of excess weight.
+
+\clearpage
+
+## Additional Analysis Posibilities
+
+1) I can look by obesity status (e.g., healthy weight vs overweight vs obese)
+2) Can try to look at the sleep data to see how much we have complete
+
+# Paper 2
+
+## Neuropsychological Assessments
+
+\begin{table}[ht!]
+\begin{tabular}{lll@{\hspace{5pt}}ll@{\hspace{5pt}}l}
+  \hline
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 107 && 61 && 46 \\
+  WASI Block     &  &&  &&    \\
+  \hspace{10pt} Raw Score\scriptsize{(\textit{Mean (sd)})} & 26.2 (12.4) && 27.4 (12.0) && 24.8 (12.9)   \\
+  \hspace{10pt} T-Score \scriptsize{(\textit{Mean (sd)})} & 45.0 (8.75) && 46.0 (8.0) && 43.8 (9.6)   \\
+  WASI Matrix     &  &&  &&    \\
+  \hspace{10pt} $^{\dagger}$Raw Score\scriptsize{(\textit{Mean (sd)})} & 16.1 (5.0) && 16.9 (5.0) && 15.0 (5.0)   \\
+  \hspace{10pt} $^{*}$T-Score \scriptsize{(\textit{Mean (sd)})} & 46.0 (9.6) && 47.7 (8.8) && 43.9 (10.2)   \\
+  $^{*}$Performance IQ \scriptsize{(\textit{Mean (sd)})} & 91.7 (12.9) && 94.3 (11.5) && 88.6 (14.0)   \\
+  \hspace{10pt} Below 70 \scriptsize{(\textit{N})} & \multicolumn{1}{c}{5} &&  &&    \\
+  Digit Span Forward     &  &&  &&    \\
+  \hspace{10pt} Raw Score\scriptsize{(\textit{Mean (sd)})} & 8.62 (2.1) && 8.7 (2.3) && 8.5 (1.9)   \\
+  \hspace{10pt} Standard Score \scriptsize{(\textit{Mean (sd)})} & 9.24 (2.9) && 9.4 (2.8) && 9.1 (2.9)   \\ 
+  Digit Span Backward     &  &&  &&    \\
+  \hspace{10pt} $^{*}$Raw Score\scriptsize{(\textit{Mean (sd)})} & 6.2 (1.7) && 6.5 (1.9) && 5.9 (1.4)   \\
+  \hspace{10pt} $^{\dagger}$Standard Score \scriptsize{(\textit{Mean (sd)})} & 8.2 (2.9) && 8.6 (2.9) && 7.6 (2.7)   \\ 
+  Coding     &  &&  &&    \\
+  \hspace{10pt} $^{\dagger}$Raw Score\scriptsize{(\textit{Mean (sd)})} & 44.8 (14.0) && 46.8 (13.8) && 42.2 (14.0)   \\
+  \hspace{10pt} Standard Score \scriptsize{(\textit{Mean (sd)})} & 7.4 (3.3) && 7.7 (3.0) && 6.8 (4.0)   \\ 
+  \hline
+  \multicolumn{6}{l}{Note: $^{\dagger}$p<0.10; *p<0.05} \\
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+
+## WASI Models - Potential Quadratic Effects of Adiposity
+
+```{r IOTF_BMI25p_BlockT_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_BlockT_plot
+```
+
+```{r IOTF_BMI25p_MatrixT_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_MatrixT_plot
+```
+
+```{r IOTF_BMI25p_PRI_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_PRI_plot
+```
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Block T-Score}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_BlockT_corPlot-1.pdf}
+  \end{subfigure}
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Matrix T-Score}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_MatrixT_corPlot-1.pdf}
+  \end{subfigure}
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Performance IQ}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_PRI_corPlot-1.pdf}
+  \end{subfigure}
+\end{figure}
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_BlockT_mod, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_BlockT_quad_sum$coefficients, digits = 3, caption = "Block T-Score - SES category + Maternal Education + Age + Sex + BMI25p + BMI25p*BMI25p", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Percent of IOTF overweight cuttoff (BMI 25 equivalency - BMI25p) is centered at 100\% (right at overweight cuttoff). The Effect of SES indicates that moving from <25,000 AED to >75,000 AED is assoicated with 8 point increase in Block T-score. Age, Mother Educuation, and Sex were not associated with Block T-score. There is a significant quadratic effect such that for one point increase in BMI25p (1 more percent over cuttoff), the association between BMI25p and BlockT decreases by .19 points (twice the quadratic coefficient). If we scale differently, each 10 point increase in BMI125p results in the slope between BMI25p dreasing by almost 2 points. This means the initial positive slope between BMI25p and Block performance becomes zero at BMI25p 99.2 ( linear/2xquadratic and then add 100 to undo centering) and then starts becoming negative as BMI25p increases. This indicates that higher weight status is assoicated with better Block performance up to the level of overweight and then heigher weight status starts to become associated with worse performance. When remove those with performance IQ <70 quadratic effect is p = 0.052.
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_MatrixT_mod, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_MatrixT_quad_sum$coefficients, digits = 3, caption = "Matrix T-Score - SES category + Maternal Education + Age + Sex + BMI25p + BMI25p*BMI25p", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+The Effect of SES indicates that moving from <25,000 AED to >75,000 AED is assoicated with 9 point increase in Matrix T-score. Age, Mother Educuation, and Sex were not associated with Block T-score. There was no quadratic effect of BMI25p on Matrix T-score. THere was no linear effect of BMI25p, even when tested without the quadratic effect.
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_PRI_mod, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_PRI_quad_sum$coefficients, digits = 3, caption = "Performance IQ - SES category + Maternal Education + Age + Sex + BMI25p + BMI25p*BMI25p", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+The Effect of SES indicates that moving from <25,000 AED to >75,000 AED is assoicated with 15 point increase in Overall Performance IQ. There are trend level effects for increasing from <25,000 AED to 25,000-55,000 AED and to 55,000-75,000 such that the increases in income are associated with 5 and 10 point increases in Performance IQ. Age, Mother Educuation, and Sex were not associated with Performance IQ. There was a trend level quadratic effect such that for each one point increase in BMI25p (1 more percent over cuttoff), the association between BMI25p and Performance IQ decreases by .24 points (twice the quadratic coefficient). If we scale differently, each 10 point increase in BMI125p results in the slope between BMI25p dreasing by 2.4 points. This means the initial positive slope between BMI25p and Block performance becomes zero at BMI25p 100.9 ( linear/2xquadratic and then add 100 to undo centering) and then starts becoming negative as BMI25p increases. This indicates that higher weight status is assoicated with better Block performance up to the level of overweight and then heigher weight status starts to become associated with worse performance. When remove those with performance IQ <70 quadratic effect is p = 0.082.
+\FloatBarrier
+
+
+
+## WASI Models - Effects of Glucose Impairment
+
+No effect of Presence/Absence of Gluce Impairment on WASI performance.
+
+\clearpage
+\FloatBarrier
+
+## Digit Span and Coding Models - Potential Quadratic Effects
+
+```{r IOTF_BMI25p_DSForwardSS_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_DSforwardSS_plot
+```
+
+```{r IOTF_BMI25p_DSBackwardSS_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_DSbackwardSS_plot
+```
+
+```{r IOTF_BMI25p_CodingSS_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_CodingSS_plot
+```
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Digit Span Forward Standard Score}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_DSForwardSS_corPlot-1.pdf}
+  \end{subfigure}
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Digit Span Backward Standard Score}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_DSBackwardSS_corPlot-1.pdf}
+  \end{subfigure}
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Coding Standard Score}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_CodingSS_corPlot-1.pdf}
+  \end{subfigure}
+\end{figure}
+
+\FloatBarrier
+
+No Effect of adiposity on Digit Span or Coding.
+
+\FloatBarrier
+
+## Digit Span and Coding Models - Effects of Glucose Impairment
+
+No effect of Presence/Absence of Gluce Impairment on WASI performance.
+
+\clearpage
+\FloatBarrier
+
+## N-Back Performance
+ 
+\begin{table}[ht!]
+\begin{tabular}{lll@{\hspace{5pt}}ll@{\hspace{5pt}}l}
+  \hline
+   \multicolumn{6}{c}{Full Sample} \\
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 76 && 61 && 46 \\
+  \hspace{10pt}Missing or Incomplete & 31 &&  &&  \\
+  \hspace{10pt} Ballanced Accuracy     &  &&  &&    \\
+  \hspace{10pt} 1-Back\scriptsize{(\textit{Mean (sd)})} & 90.4 (7.8) && 90.3 (7.8) && 90.4 (7.9)   \\
+  \hspace{10pt} 2-Back \scriptsize{(\textit{Mean (sd)})} & 73.3 (9.9) && 74.2 (9.6) && 71.8 (10.4)   \\
+  $d^{'}$     &  &&  &&    \\
+  \hspace{10pt} 1-Back\scriptsize{(\textit{Mean (sd)})} & 2.81 (0.61) && 2.85 (0.59) && 2.75 (0.64)   \\
+  \hspace{10pt} 2-Back \scriptsize{(\textit{Mean (sd)})} & 1.63 (0.64) && 1.71 (0.57) && 1.50 (0.74)   \\
+  Mean Reaction Time     &  &&  &&    \\
+  \hspace{10pt} 1-Back\scriptsize{(\textit{Mean (sd)})} & 575 (113) && 580 (122) && 557 (96)   \\
+  \hspace{10pt} 2-Back \scriptsize{(\textit{Mean (sd)})} & 632 (113) && 645 (113) && 607 (111)   \\ 
+  \hline
+  \multicolumn{6}{c}{PRI IQ $>=$ 70} \\
+  & \multicolumn{1}{c}{Full Sample} && \multicolumn{1}{c}{Girls} && \multicolumn{1}{c}{Boys} \bigstrut[t] \\
+  \cline{2-2} \cline{4-4} \cline{6-6}
+  Total\scriptsize{(\textit{N})} & 71 && 59 && 43 \\
+  \hspace{10pt}Missing or Incomplete & 31 &&  &&  \\
+  \hspace{10pt} Ballanced Accuracy     &  &&  &&    \\
+  \hspace{10pt} 1-Back\scriptsize{(\textit{Mean (sd)})} & 90.5 (7.8) && 90.5 (7.8) && 90.4 (7.9)   \\
+  \hspace{10pt} 2-Back \scriptsize{(\textit{Mean (sd)})} & 73.5 (9.8) && 74.5 (9.4) && 71.8 (10.4)   \\
+  $d^{'}$     &  &&  &&    \\
+  \hspace{10pt} 1-Back\scriptsize{(\textit{Mean (sd)})} & 2.80 (0.61) && 2.86 (0.59) && 2.75 (0.64)   \\
+  \hspace{10pt} 2-Back \scriptsize{(\textit{Mean (sd)})} & 1.63 (0.65) && 1.73 (0.57) && 1.50 (0.74)   \\
+  Mean Reaction Time     &  &&  &&    \\
+  \hspace{10pt} 1-Back\scriptsize{(\textit{Mean (sd)})} & 576 (113) && 582 (122) && 567 (96)   \\
+  \hspace{10pt} 2-Back \scriptsize{(\textit{Mean (sd)})} & 634 (112) && 649 (111) && 607 (111)   \\ 
+  \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+\clearpage
+
+### N-Back Performance - Load x BMI25p
+ 
+
+```{r IOTF_BMI25p_BalAcc_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_BalAcc_plot
+```
+
+```{r IOTF_BMI25p_dprime_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_dprime_plot
+```
+
+```{r IOTF_BMI25p_RT_corPlot, echo=FALSE, include = FALSE}
+IOTF_BMI25p_meanRT_plot
+```
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Nback Ballanced Accuracy x Load}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_BalAcc_corPlot-1.pdf}
+  \end{subfigure}
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Nback d' x Load}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_dprime_corPlot-1.pdf}
+  \end{subfigure}
+  \begin{subfigure}[b]{=0.40\textwidth}
+    \centering
+    \caption*{\centering Nback RT x Load}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-IOTF_BMI25p_RT_corPlot-1.pdf}
+  \end{subfigure}
+\end{figure}
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_BalAcc.Load_IQge70_mod, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_BalAcc.Load_IQge70_sum$coefficients, digits = 3, caption = "Ballanced Acc - IQ + SES category + Maternal Education + Age + Sex + BMI25p x Load ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_dprime.Load_IQge70_mod, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_dprime.Load_IQge70_sum$coefficients, digits = 3, caption = "dprime - IQ + SES category + Maternal Education + Age + Sex + BMI25p x Load ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r IOTF_BMI25p_meanRT.Load_IQge70_mod, echo=FALSE, results='asis'}
+kable(IOTF_BMI25p_meanRT.Load_IQge70_sum$coefficients, digits = 3, caption = "RT - IQ + SES category + Maternal Education + Age + Sex + BMI25p x Load ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+\clearpage
+
+### N-Back Performance - Load x Glucose Status
+
+\FloatBarrier
+
+```{r Glucose_BalAcc.Load_mod, echo=FALSE, results='asis'}
+kable(IOTF_Glucose_BalAcc.Load_IQge70_sum$coefficients, digits = 3, caption = "Ballanced ACC - IQ + SES category + Maternal Education + Age + Sex + BMI25p + Glucose x Load ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r Glucose_BalAccLoad_plot, echo=FALSE, include = FALSE}
+bar_graph.se(Glucose_BalAcc.Load_means, Glucose_BalAcc.Load_se, 'Load', 'BalAcc', 1, 0.5, UAE_cogBMI_NBACKDat.merge_long$ImpariedGlucose_YN)
+```
+
+\FloatBarrier
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{=0.60\textwidth}
+    \centering
+    \caption*{\centering Ballance Accuracy ~ Glucose Status x Load}
+    \includegraphics[width=\textwidth]{UAE_cogBMI_Figs/fig-Glucose_BalAccLoad_plot-1.pdf}
+  \end{subfigure}
+\end{figure}
+
+\FloatBarrier
+
+```{r Glucose_dprime.Load_mod, echo=FALSE, results='asis'}
+kable(IOTF_dprime_Glucose.Load_IQge70_sum$coefficients, digits = 3, caption = "dprime - IQ + SES category + Maternal Education + Age + Sex + BMI25p + Glucose x Load ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r Glucose_meanRT.Load_mod, echo=FALSE, results='asis'}
+kable(IOTF_meanRT_Glucose.Load_IQge70_sum$coefficients, digits = 3, caption = "RT - IQ + SES category + Maternal Education + Age + Sex + BMI25p + Glucose x Load ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+## Additional Analysis Posibilities
+
+1) Associations between number of comorbidities and performance
+2) Test differences with vs without Anemia
+3) Test differences by weight status 
+
+
