@@ -1,17 +1,5 @@
 ############ Basic Data Load/Setup########
-library(rstudioapi)
 
-#set working directory to location of script--not needed when called 
-#through Rmarkdown doc. Uncomment below if running locally/manually
-#this.dir = getActiveDocumentContext()$path
-#setwd(dirname(this.dir))
-
-
-#####################################
-####                            
-####  Data setup      ####
-####                            
-#####################################
 ##load datasets
 UAE_cogBMI_sumDat_all = read.csv('Data/UAE_cogBMI_summary_4.12.20.csv', header = TRUE, na.strings = c("NA", "", "<NA>", "N/A"))
 UAE_cogBMI_sumDat_all$CDC_WeightStatus = factor(UAE_cogBMI_sumDat_all$CDC_WeightStatus, levels = c("Obese", "Overweight", "HW", "Underweight"))

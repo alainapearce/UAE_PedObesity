@@ -20,7 +20,8 @@
 #
 
 ####        Basic Data Load/Setup       ####
-library(lubridate)
+# load libraries - uncomment if running separately
+# library(lubridate)
 
 # source data load and clean ####
 UAE_sumDat <- read.csv('Data/UAE_cogBMI_summary_10.1.21.csv', header = TRUE, na.strings = c("NA", "", "<NA>", "N/A"))
@@ -263,10 +264,10 @@ UAE_allDat$P_WeightStatus <- factor(UAE_allDat$P_WeightStatus,
 #total media use (including extra parent notes)
 
 #add tv and video games together
-UAE_allDat$Media_hrday <- ifelse(UAE_allDat$TV_hrday == 'none' & UAE_allDat$VG_Comp_hrday == 'none', 'none', 
+UAE_allDat$Media_hrday <- ifelse(UAE_allDat$TV_hrday == 'none' & UAE_allDat$VG_Comp_hrday == 'none', 'less than 1 hr', 
                                  ifelse(UAE_allDat$TV_hrday == '<1', 
-                                        ifelse(is.na(UAE_allDat$VG_Comp_hrday) | UAE_allDat$VG_Comp_hrday == 'none', '<1',
-                                               ifelse(UAE_allDat$VG_Comp_hrday == '<1', '1', 
+                                        ifelse(is.na(UAE_allDat$VG_Comp_hrday) | UAE_allDat$VG_Comp_hrday == 'none', 'less than 1 hr',
+                                               ifelse(UAE_allDat$VG_Comp_hrday == '<1', 'less than 1 hr', 
                                                       ifelse(UAE_allDat$VG_Comp_hrday == '1', '1+',
                                                              ifelse(UAE_allDat$VG_Comp_hrday == '2', '2+',
                                                                     ifelse(UAE_allDat$VG_Comp_hrday == '2.5', '3', 
@@ -328,7 +329,7 @@ UAE_allDat$Media_hrday <- ifelse(is.na(UAE_allDat$HoursDay_TVnotes), as.characte
                                           UAE_allDat$HoursDay_TVnotes == '\"social media all day\"', '10+', 
                                         ifelse(UAE_allDat$HoursDay_TVnotes == '(phone for 2 hour)', 
                                                ifelse(is.na(UAE_allDat$Media_hrday) | UAE_allDat$Media_hrday == 'none', '2',
-                                                      ifelse(UAE_allDat$Media_hrday == '<1', '2+', 
+                                                      ifelse(UAE_allDat$Media_hrday == 'less than 1 hr', '2+', 
                                                              ifelse(UAE_allDat$Media_hrday == '1', '3',
                                                                     ifelse(UAE_allDat$Media_hrday == '1+', '3+',
                                                                            ifelse(UAE_allDat$Media_hrday == '2', '4',
@@ -348,32 +349,29 @@ UAE_allDat$Media_hrday <- ifelse(is.na(UAE_allDat$HoursDay_TVnotes), as.characte
                                                ifelse(UAE_allDat$HoursDay_TVnotes == "3-Feb" | UAE_allDat$HoursDay_TVnotes == "he does not watch TV on an average school day, 1, 2", as.character(UAE_allDat$Media_hrday), as.character(UAE_allDat$Media_hrday)))))
 
 #factor into better groups
-UAE_allDat$Media_hrday <- ifelse(UAE_allDat$Media_hrday == 'none', 'none',
-                                 ifelse(UAE_allDat$Media_hrday == '<1' | UAE_allDat$Media_hrday == '1' | UAE_allDat$Media_hrday == '1+' | UAE_allDat$Media_hrday == '2' | UAE_allDat$Media_hrday == '2+', '<1 - 2 hours',
-                                        ifelse(UAE_allDat$Media_hrday == '3' | UAE_allDat$Media_hrday == '3.5' | UAE_allDat$Media_hrday == '3+' | UAE_allDat$Media_hrday == '4' | UAE_allDat$Media_hrday == '4.5' | UAE_allDat$Media_hrday == '4+', '3 - 4 hours',
-                                               ifelse(UAE_allDat$Media_hrday == '5' | UAE_allDat$Media_hrday == '5.5' | UAE_allDat$Media_hrday == '5+' | UAE_allDat$Media_hrday == '6'| UAE_allDat$Media_hrday == '6+', '5 - 6 hours', '7+ hours'))))
+UAE_allDat$Media_hrday <- ifelse(UAE_allDat$Media_hrday == 'less than 1 hr' | UAE_allDat$Media_hrday == '1' | UAE_allDat$Media_hrday == '1+' , 'less than 2 hr',
+                                 ifelse(UAE_allDat$Media_hrday == '2' | UAE_allDat$Media_hrday == '2+' | UAE_allDat$Media_hrday == '3' | UAE_allDat$Media_hrday == '3.5' | UAE_allDat$Media_hrday == '3+', '2 - 3 hours',
+                                        ifelse(UAE_allDat$Media_hrday == '4' | UAE_allDat$Media_hrday == '4.5' | UAE_allDat$Media_hrday == '4+' | UAE_allDat$Media_hrday == '5' | UAE_allDat$Media_hrday == '5.5' | UAE_allDat$Media_hrday == '5+', '4 - 5 hours', '6+ hours')))
 #factor
 UAE_allDat$Media_hrday <- factor(UAE_allDat$Media_hrday, 
-                                 levels = c('none', '<1 - 2 hours', '3 - 4 hours', '5 - 6 hours', '7+ hours'))
+                                 levels = c('less than 2 hr', '2 - 3 hours', '4 - 5 hours', '6+ hours'))
 
 # TV use
 UAE_allDat$TV_hrday <- ifelse(is.na(UAE_allDat$TV_hrday), NA,
-                              ifelse(UAE_allDat$TV_hrday == 'none', 'none',
-                                     ifelse(UAE_allDat$TV_hrday == '<1' | UAE_allDat$TV_hrday == '1' | 
-                                              UAE_allDat$TV_hrday == '2' | UAE_allDat$TV_hrday == '2.5', '<1 - 2 hours',
+                              ifelse(UAE_allDat$TV_hrday == 'none' | UAE_allDat$TV_hrday == '<1', 'less than 1 hr',
+                                     ifelse(UAE_allDat$TV_hrday == '1' | UAE_allDat$TV_hrday == '2' | UAE_allDat$TV_hrday == '2.5', '1 - 2 hours',
                                             ifelse(UAE_allDat$TV_hrday == '3' | UAE_allDat$TV_hrday == '4', '3 - 4 hours', '5+ hours'))))
 UAE_allDat$TV_hrday <- factor(UAE_allDat$TV_hrday, 
-                              levels = c('none', '<1 - 2 hours', '3 - 4 hours', '5+ hours'))
+                              levels = c('less than 1 hr', '1 - 2 hours', '3 - 4 hours', '5+ hours'))
 
 # Video Game/Computer use
 UAE_allDat$VG_Comp_hrday <- ifelse(is.na(UAE_allDat$VG_Comp_hrday), NA,
-                                   ifelse(UAE_allDat$VG_Comp_hrday == 'none', 'none',
-                                          ifelse(UAE_allDat$VG_Comp_hrday == '<1' | UAE_allDat$VG_Comp_hrday == '1' | 
-                                                   UAE_allDat$VG_Comp_hrday == '2' | UAE_allDat$VG_Comp_hrday == '2.5', '<1 - 2 hours',
+                                   ifelse(UAE_allDat$VG_Comp_hrday == 'none' | UAE_allDat$VG_Comp_hrday == '<1', 'less than 1 hr',
+                                          ifelse(UAE_allDat$VG_Comp_hrday == '1' | UAE_allDat$VG_Comp_hrday == '2' | UAE_allDat$VG_Comp_hrday == '2.5', '1 - 2 hours',
                                                  ifelse(UAE_allDat$VG_Comp_hrday == '3' | UAE_allDat$VG_Comp_hrday == '4', '3 - 4 hours', '5+ hours'))))
 
 UAE_allDat$VG_Comp_hrday <- factor(UAE_allDat$VG_Comp_hrday, 
-                                   levels = c('none', '<1 - 2 hours', '3 - 4 hours', '5+ hours'))
+                                   levels = c('less than 1 hr', '1 - 2 hours', '3 - 4 hours', '5+ hours'))
 
 
 ####        Clean CSHQ Sleep Data       ####
