@@ -1,6 +1,6 @@
 # This script was written by Alaina Pearce in 2021
 # to set up tables by weight status for the paper examining
-# medical, family history, and behavior in Emerati children
+# medical, family history, and behavior in Emirati children
 # by weight status
 #
 #     Copyright (C) 2020 Alaina L Pearce
@@ -23,6 +23,7 @@
 ## load libraries - uncomment if running separately
 # library(stats)
 # library(gtsummary)
+# theme_gtsummary_compact()
 
 ## load basic functions and custom gtsummmary table functions - uncomment if running separately
 # source('functions.R')
@@ -41,6 +42,15 @@ UAE_demo_OB <-
     statistic = all_continuous() ~ c("{mean} [{min} - {max}]"), 
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
+  add_n()
+
+UAE_demo_OB_stat <-
+  tbl_summary(
+    data=sum_tab_OB,
+    by = IOTF_3class, 
+    statistic = all_continuous() ~ c("{mean} [{min} - {max}]"), 
+    missing = "ifany",
+    digits = all_continuous() ~ 2) %>%
   add_n() %>%
   add_stat(fns = all_continuous() ~ my_anova) %>%
   add_stat(fns = all_categorical() ~ my_chifisher) %>%
@@ -51,6 +61,8 @@ UAE_demo_OB <-
       all_stat_cols() ~ "**{level}**"
     )
   )
+
+
                  
 ####    Medial Data       ####
 

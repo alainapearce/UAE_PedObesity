@@ -1,6 +1,6 @@
 # This script was written by Alaina Pearce in 2021
 # to analyze data for the paper examining
-# medical, family history, and behavior in Emerati children
+# medical, family history, and behavior in Emirati children
 # by weight status
 #
 #     Copyright (C) 2020 Alaina L Pearce
@@ -109,8 +109,9 @@ IOTF_pOWcutoff_nFamOB_dat$nFam_Obesity_probLogit <- predict(IOTF_pOWcutoff_nFamO
 ####   Sleep       ####
 
 ##correlations with IOTF_pOWcutoff
-IOTF_pOWcutoff_CSHQ_cor.varnames <- names(UAE_allDat)[c(105, 127, 93:97, 99:102)]
-IOTF_pOWcutoff_CSHQ_cor.vars <- UAE_allDat[c(105, 127, 93:97, 99:102)]
+IOTF_pOWcutoff_CSHQ_cor.varnames <- c(names(UAE_allDat)[c(105, 93)], 'BedResit', 'OnsetDelay', 'Duration', 'Anxiety',
+                                      'NightWaking', 'Parasomnias', 'DisorderBreathing', 'DaySleepiness')
+IOTF_pOWcutoff_CSHQ_cor.vars <- UAE_allDat[c(105, 93:97, 99:102)]
 IOTF_pOWcutoff_CSHQ_cormat <- cor.matrix(IOTF_pOWcutoff_CSHQ_cor.vars, IOTF_pOWcutoff_CSHQ_cor.varnames)
 
 ##CSHQ sensitivity tests for IOTF_pOWcutoff

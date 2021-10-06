@@ -403,5 +403,3 @@ UAE_allDat$Bedtime_cat <- factor(UAE_allDat$Bedtime_cat,
 # bed time - center at midnight and use
 UAE_allDat$Bedtime_cMidnight <- ifelse(UAE_allDat$Bedtime_cMidnight > 12, UAE_allDat$Bedtime_cMidnight - 24, UAE_allDat$Bedtime_cMidnight)
 
-# CSHQ data
-UAE_allDat$Bedtime_cMidnight

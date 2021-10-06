@@ -1,28 +1,27 @@
 ---
-title: "UAE Manuscript 1 - Medical and Behavioral"
+title: "UAE Medical and Behavioral Paper 1"
 output:
   pdf_document:
     toc: true
     toc_depth: 2
     number_sections: true
-header-includes: |
-  \usepackage{fullpage}
-  \usepackage{graphicx}
-  \usepackage{subcaption}
-  \usepackage{float}
-  \usepackage{placeins}
-  \usepackage{caption}
-  \usepackage{mathtools}
-  \usepackage{multirow}
-  \usepackage{amssymb}
-  \usepackage{amsmath}
-  \usepackage{bigstrut}
-  \usepackage{geometry}
-  \usepackage{pdflscape}
-  \setlength{skip}{1em}
+header-includes:
+- \usepackage{fullpage}
+- \usepackage{graphicx}
+- \usepackage{subcaption}
+- \usepackage{float}
+- \usepackage{placeins}
+- \usepackage{caption}
+- \usepackage{mathtools}
+# - \usepackage{multirow}
+- \usepackage{amssymb}
+- \usepackage{amsmath}
+- \usepackage{bigstrut}
+- \usepackage{geometry}
+# - \usepackage{pdflscape}
+- \setlength{\parskip}{1em}
 ---
 
-\begin{document}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(tidy = TRUE, tidy.opts = list(comment = FALSE), echo = TRUE, fig.width=6, fig.height=4, fig.path='UAE_MedPaper_Figs/fig-', echo=FALSE, warning=FALSE, message=FALSE, comment = NA)
@@ -35,6 +34,8 @@ library(kableExtra)
 library(lubridate)
 library(stats)
 library(gtsummary)
+theme_gtsummary_compact()
+
 library(car)
 library(emmeans)
 library(ggplot2)
@@ -66,13 +67,14 @@ BMI $\%$ of overweight = $\frac{child BMI}{BMI\: at\: age-\: and\: sex-\: adjust
 
 \FloatBarrier
 
-```{r IOTF_pOWcutoff_DensityPlot, echo=FALSE, figure = TRUE, include = FALSE}
+```{r IOTF_pOWcutoff_DensityPlot, echo=FALSE, figure = TRUE, include = TRUE}
 IOTF_pOWcutoff_plot
 ```
 
 Density plot of percent of overweight by sex. The shaded regions indicated those with healthy weight (blue), overweight (yellow), and obesity (red). The points show denisity of participants by sex (purple circles = female, orange triangles = males).
 
 \FloatBarrier
+\clearpage
 
 # Participant Characteristics
 
@@ -80,9 +82,13 @@ Density plot of percent of overweight by sex. The shaded regions indicated those
 as_kable_extra(UAE_demo_OB, caption = 'Demographic Characteristics by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
   kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
 ```
-\FloatBarrier
 
+\FloatBarrier
+\clearpage
+  
 ## Associations between Demographics and Percent of Overweight Cutoff
+
+### Correlation Matrix
 
 ```{r IOTF_pOWcutoff_demo_cors, echo=FALSE, results='asis'}
 kable(IOTF_pOWcutoff_demo_cormat, "latex",  digits = 3, caption = "Correlations between percent of overweight cuttoff and demographic characteristics", booktabs=TRUE) %>%
@@ -94,6 +100,8 @@ kable(IOTF_pOWcutoff_demo_cormat, "latex",  digits = 3, caption = "Correlations 
 Only child age was associated with percent of overweight cutoff - older children tended to have higher percent of overweight cutoff indicating older children were more likely to have overweight or obesity. There was no association with father or mother education level, which differs from finding in the US. Hip to waist ratio was also not associated with percent of overweight cutoff.
 
 \FloatBarrier
+
+### One-Way ANOVA for Income Categories
 
 ```{r IOTF_pOWcutoff_income_anova, echo=FALSE, results='verbatim'}
 IOTF_pOWcutoff_income_anova
@@ -115,7 +123,9 @@ as_kable_extra(UAE_med_OB, caption = 'Medical Comorbidites by Weight Status', fo
 ```
 
 \FloatBarrier
-## Association betwen Number of Comorbidities and Percent of Overweight Cutoff
+## Association between Comorbidities and Percent of Overweight Cutoff
+
+### Correlation with Number of Comorbidities
 
 ```{r IOTF_pOWcutoff_nComorbid_cor, echo=FALSE, results='verbatim'}
 IOTF_pOWcutoff_nComorbid_cor
@@ -126,7 +136,7 @@ There was no association between percent of overweight cutoff and number of como
 
 \FloatBarrier
 
-### Differences in Percent of Overweight Cutoff by Presence/Absence of: Anemia, Thyroid Dysfunction, and Impaired Glucose Function
+### t-tests for Presence/Absence of Comorbidities
 
 ```{r IOTF_pOWcutoff_MedComorbid_ttests, echo=FALSE, results='asis'}
 kable(IOTF_pOWcutoff.MedComorbid_ttest_tab, "latex",  digits = 3, caption = "t-tests for percent of overweight by absence vs presence of medical comorbidity", booktabs=TRUE) %>%
@@ -149,6 +159,8 @@ as_kable_extra(UAE_fam_OB, caption = 'Family History by Weight Status', format =
 \FloatBarrier
 ## Association Betwen Family History and Percent of Overweight Cutoff
 
+### t-tests for Yes/Now History
+
 ```{r IOTF_pOWcutoff_FamHistory_ttests, echo=FALSE, results='asis'}
 kable(IOTF_pOWcutoff_fam_ttest_tab, "latex",  digits = 3, caption = "t-tests for percent of overweight by absence vs presence of family history", booktabs=TRUE) %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
@@ -160,14 +172,17 @@ There was no differences in percent of overweight for those whose families had a
 
 \FloatBarrier
 
+### Correlations with Number of Relative Categories with History
+
+
 ```{r IOTF_pOWcutoff_nFam_cor, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_FamHistory_cormat, digits = 3, caption = "Correlations between number of family members with history and percent of overweight", booktabs=TRUE)  %>%
+kable(IOTF_pOWcutoff_FamHistory_cormat, digits = 3, caption = "Correlations between number of relative categories with history and percent of overweight", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
 \FloatBarrier
 
-Percent of overweight cutoff was not associated with reported number of family members with an perceived to have had an eating disorder but was associated with family history of obesity.
+Percent of overweight cutoff was not associated with reported number of relative categories with an perceived to have had an eating disorder but was associated with family history of obesity.
 
 \FloatBarrier
 
@@ -203,8 +218,11 @@ as_kable_extra(UAE_sleep_OB, caption = 'Sleep by Weight Status', format = "latex
 ```
 
 \FloatBarrier
+\clearpage
 
 ## Association Betwen Sleep Sub-Scales and Percent of Overweight Cutoff
+
+### Correlation Matrix
 
 ```{r IOTF_pOWcutoff_sleep_cor, echo=FALSE, results='asis'}
 kable(IOTF_pOWcutoff_CSHQ_cormat, digits = 3, caption = "Correlations between sleep subscales and percent of overweight", booktabs=TRUE)  %>%
@@ -467,3 +485,4 @@ There were no differences by sex.
 \clearpage
 
 \end{document}
+

@@ -31,6 +31,8 @@
 UAE_allDat$all_group <- 1
 IOTF_pOWcutoff_plot <- ggplot(UAE_allDat, aes(x = IOTF_pOWcutoff, y = all_group, group = all_group, color = sex)) +
   ggtitle('Distribution of Percent of Overweight Cuttoff') +
+  scale_y_continuous(name=paste0('Density')) +
+  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   annotate("rect", xmin = 0, xmax = 100, ymin = 1, ymax = 1.02, alpha = .3,fill = "#56B4E9") +
   annotate("rect", xmin = 100, xmax = 122, ymin = 1, ymax = 1.02, alpha = .3,fill = "#F0E442") +
   annotate("rect", xmin = 122, xmax = 250, ymin = 1, ymax = 1.02, alpha = .3,fill = "#CC79A7") +
@@ -54,8 +56,9 @@ if(!exists('IOTF_pOWcutoff_nFamOB_dat') || !is.data.frame(get('IOTF_pOWcutoff_nF
 IOTF_pOWcutoff_nFamOB_adjOdds_plot <- ggplot(IOTF_pOWcutoff_nFamOB_dat, aes(y = exp(nFam_Obesity_probLogit), x = IOTF_pOWcutoff)) +
   geom_point() +
   geom_smooth(method = 'lm', formula = y~x) +
-   ggtitle('Corrleation between Percent of Overweight Cutoff cuttoff and Number of Family Members with History of Obesity (adjusted for covariates') +
-  scale_y_continuous(name='Adjusted Odds of having an adiition Family with OB (income, mother ed, age, and sex)') +
+  ggtitle('Corrleation between Percent of Overweight Cutoff cuttoff and Number of Family Members with History of Obesity (adjusted for covariates') +
+  scale_y_continuous(name=paste0('Adjusted Odds of having an adiition family relationship', '\n',
+                                'category with OB (income, mother ed, age, and sex)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
@@ -64,8 +67,8 @@ IOTF_pOWcutoff_nFamOB_adjOdds_plot <- ggplot(IOTF_pOWcutoff_nFamOB_dat, aes(y = 
 IOTF_pOWcutoff_nFamOB_raw_plot <- ggplot(UAE_allDat, aes(y = nFam_Obesity, x = IOTF_pOWcutoff)) +
   geom_point() +
   geom_smooth(method = 'lm', formula = y~x) +
-   ggtitle('Corrleation between Percent of Overweight Cutoff cuttoff and Number of Family Members with History of Obesity') +
-  scale_y_continuous(name='# Family with OB') +
+  ggtitle('Corrleation between Percent of Overweight Cutoff cuttoff and Number of Family Members with History of Obesity') +
+  scale_y_continuous(name='# Family Relationship Categories with OB') +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
@@ -82,7 +85,8 @@ IOTF_pOWcutoff_SleepDelay_adj_plot <- ggplot(CHSQ_SleepDelay_dat, aes(y = CSHQ_S
   geom_point() +
   geom_smooth(method = 'lm', formula = y~x) +
   ggtitle('Association between Percent of Overweight Cutoff and Sleep Onset Delay (adjust for covariates)') +
-  scale_y_continuous(name='Adjusted Sleep Onset Delay (income, mother ed, age, and sex)') +
+  scale_y_continuous(name=paste('Adjusted Sleep Onset Delay', '\n', 
+                                '(income, mother ed, age, and sex)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
@@ -107,7 +111,8 @@ IOTF_pOWcutoff_DisorderedBreathing_adj_plot <- ggplot(CHSQ_DisorderedBreathing_d
   geom_point() +
   geom_smooth(method = 'lm', formula = y~x) +
   ggtitle('Association between Percent of Overweight Cutoff and Sleep Disordered Breathing (adjusted for covariates)') +
-  scale_y_continuous(name='Adjusted Sleep Disordered Breathing (income, mother ed, age, and sex)') +
+  scale_y_continuous(name=paste('Adjusted Sleep Disordered Breathing', '\n', 
+                                '(income, mother ed, age, and sex)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
@@ -134,9 +139,14 @@ if(!exists('SDQ_PeerProb_dat') || !is.data.frame(get('SDQ_PeerProb_dat'))){
 IOTF_pOWcutoff_peerprob_ElevatedCat_adjOdds_plot <- ggplot(SDQ_PeerProb_dat, aes(y = exp(SDQ_PeerProb_Elevated_predLogit), x = (IOTF_pOWcutoff_c100 + 100), color = sex)) +
   geom_smooth(method = 'lm', formula = y~x, aes(group = sex, linetype = sex)) +
   geom_point(aes(shape = sex), size = 3) +
-  ggtitle('Association between Percent of Overweight Cutoff and Peer Problems Elevated vs Not (adjusted for covariates)') +
-  scale_y_continuous(name='Adjusted Odds for Elevated Peer Problems (income, mother ed, age, and sex)') +
+  ggtitle('Association between Percent of Overweight Cutoff and Elevated Peer Problems (adjusted for covariates)') +
+  scale_y_continuous(name=paste('Adjusted Odds for Elevated Peer Problems', '\n', 
+                                '(income, mother ed, age, and sex)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
         panel.background = element_blank())
+
+
+
+
