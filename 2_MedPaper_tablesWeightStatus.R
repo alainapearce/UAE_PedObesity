@@ -34,7 +34,7 @@
 
 ####   Demo Data  Table     ####
 
-sum_tab_OB <- UAE_allDat[c(107, 7, 12, 105:106, 42:43, 64, 2:3)]
+sum_tab_OB <- UAE_allDat[c(107, 5, 7, 12, 105, 42:43, 64, 2:3)]
 UAE_demo_OB <-
   tbl_summary(
     data=sum_tab_OB,
@@ -130,6 +130,36 @@ UAE_fam_OB <-
     statistic = all_continuous() ~ c("{mean} [{min} - {max}]"), 
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
+  add_n()
+
+nfamOB_tab <- UAE_allDat[c(109:116)]
+UAE_nFamOB <-
+  tbl_summary(
+    data=nfamOB_tab,
+    value = list(Mother_OBhistory ~ "Mother", Father_OBhistory ~ "Father",
+                 Sister_OBhistory ~ "Sister", Brother_OBhistory ~ "Brother",
+                 Aunt_OBhistory ~ "Aunt", Uncle_OBhistory ~ "Uncle",
+                 Grandmother_OBhistory ~ "Grandmother", Grandfather_OBhistory ~ "Grandfather"),
+    label = list(Mother_OBhistory ~ "Mother", Father_OBhistory ~ "Father",
+                 Sister_OBhistory ~ "Sister", Brother_OBhistory ~ "Brother",
+                 Aunt_OBhistory ~ "Aunt", Uncle_OBhistory ~ "Uncle",
+                 Grandmother_OBhistory ~ "Grandmother", Grandfather_OBhistory ~ "Grandfather"),
+    missing = "ifany") %>%
+  add_n()
+
+nfamED_tab <- UAE_allDat[c(118:125)]
+UAE_nFamED <-
+  tbl_summary(
+    data=nfamED_tab,
+    value = list(Mother_EDhistory ~ "Mother", Father_EDhistory ~ "Father",
+                 Sister_EDhistory ~ "Sister", Brother_EDhistory ~ "Brother",
+                 Aunt_EDhistory ~ "Aunt", Uncle_EDhistory ~ "Uncle",
+                 Grandmother_EDhistory ~ "Grandmother", Grandfather_EDhistory ~ "Grandfather"),
+    label = list(Mother_EDhistory ~ "Mother", Father_EDhistory ~ "Father",
+                 Sister_EDhistory ~ "Sister", Brother_EDhistory ~ "Brother",
+                 Aunt_EDhistory ~ "Aunt", Uncle_EDhistory ~ "Uncle",
+                 Grandmother_EDhistory ~ "Grandmother", Grandfather_EDhistory ~ "Grandfather"),
+    missing = "ifany") %>%
   add_n()
 
 UAE_fam_OB_stat <-

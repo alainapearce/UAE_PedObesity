@@ -34,19 +34,44 @@
 
 ####   Demo Data  Tables     ####
 
+# t-test for sex and IOTF_pOWcutoff 
+IOTF_pOWcutoff.sex_ttest <- t.test(IOTF_pOWcutoff ~ sex, data = UAE_allDat)
+
 # correlations with IOTF_pOWcutoff 
 IOTF_pOWcutoff_demo_cor.varnames <- names(UAE_allDat)[c(7, 42:43, 105)]
 IOTF_pOWcutoff_demo_cor.vars <- UAE_allDat[c(7, 42:43, 105)]
 IOTF_pOWcutoff_demo_cormat <- data.frame(cor.matrix(IOTF_pOWcutoff_demo_cor.vars, IOTF_pOWcutoff_demo_cor.varnames))
+IOTF_pOWcutoff_demo_cormat_ps <- data.frame(cor.matrix_ps(IOTF_pOWcutoff_demo_cor.vars, IOTF_pOWcutoff_demo_cor.varnames))
 
 # monthly income ANOVA
 IOTF_pOWcutoff_income_mod <- lm(IOTF_pOWcutoff ~ Month_AED, data = UAE_allDat)
 IOTF_pOWcutoff_income_anova <- Anova(IOTF_pOWcutoff_income_mod, type = 3, test.statistic = 'F')
 
+##sensitivity test with linear model 
+IOTF_age_pOWcutoff_mod <- lm(IOTF_pOWcutoff ~ Month_AED + Mother_ed + Age_yr + sex, data = UAE_allDat)
+IOTF_age_pOWcutoff_sum <- summary(IOTF_age_pOWcutoff_mod)
+IOTF_age_pOWcutoff_tab <- cbind.data.frame(IOTF_age_pOWcutoff_sum$coefficients, c('', '', '', '', '', '***', ''))
+names(IOTF_age_pOWcutoff_tab) <- c('b', 'se', 't', 'p', ' ')
+
 ####    Medial Data       ####
 
-## table of t-tests for IOTF_pOWcutoff by presence/absence of comorbidities
+# correlation with total number of comorbidities
+IOTF_pOWcutoff_nComorbid_cor <- cor.test(UAE_allDat$IOTF_pOWcutoff, UAE_allDat$nComorbid)
 
+# sex differences in number of comorbidites 
+sex_ncomorbid_ttest <- t.test(nComorbid ~ sex, data = UAE_allDat)
+sex_ncomorbid_sd <- sd.function.na(UAE_allDat, DV = UAE_allDat$nComorbid, IV = UAE_allDat$sex)
+
+
+## distribution tests
+VitD_fisher <- fisher.test(xtabs(~VitDdeficiency + IOTF_3class, data = UAE_allDat))
+Anemia_chi <- chisq.test(xtabs(~as.factor(ifelse(is.na(UAE_allDat$Anemia), 'N', 'Y')) + IOTF_3class, data = UAE_allDat))
+Hyperlipidemia_fisher <- fisher.test(xtabs(~as.factor(ifelse(is.na(UAE_allDat$Hyperlipidemia), 'N', 'Y')) + IOTF_3class, data = UAE_allDat))
+Thyriod_chi <- chisq.test(xtabs(~as.factor(ifelse(is.na(UAE_allDat$ThyroidConditions), 'N', 'Y')) + IOTF_3class, data = UAE_allDat))
+Glycemic_chi <- chisq.test(xtabs(~as.factor(ifelse(is.na(UAE_allDat$GlycemicStatus), 'N', 'Y')) + IOTF_3class, data = UAE_allDat))
+AN_fisher <- fisher.test(xtabs(~as.factor(ifelse(is.na(UAE_allDat$AcanthosisNigricans), 'N', 'Y')) + IOTF_3class, data = UAE_allDat))
+
+## table of t-tests for IOTF_pOWcutoff by presence/absence of comorbidities
 IOTF_pOWcutoff.VitD_ttest <- t.test(IOTF_pOWcutoff ~ VitDdeficiency, data = UAE_allDat)
 IOTF_pOWcutoff.Anemia_ttest <- t.test(UAE_allDat$IOTF_pOWcutoff ~ as.factor(ifelse(is.na(UAE_allDat$Anemia), 'N', 'Y')))
 IOTF_pOWcutoff.Thyroid_ttest <- t.test(UAE_allDat$IOTF_pOWcutoff ~ as.factor(ifelse(is.na(UAE_allDat$ThyroidConditions), 'N', 'Y')))
@@ -66,39 +91,26 @@ rownames(IOTF_pOWcutoff.MedComorbid_ttest_tab) <- c('VitD Deficiency', 'Anemia',
 IOTF_pOWcutoff.MedComorbid_ttest_tab$sig <- c('', '**', '', '')
 IOTF_pOWcutoff.MedComorbid_ttest_tab <- IOTF_pOWcutoff.MedComorbid_ttest_tab[c(4:5, 1:3, 6)]
 
-# correlation with total number of comorbidities
+IOTF_pOWcutoff.Anemia_sd <- sd.function.na(UAE_allDat, DV = UAE_allDat$IOTF_pOWcutoff, IV = as.factor(ifelse(is.na(UAE_allDat$Anemia), 'N', 'Y')))
 
-IOTF_pOWcutoff_nComorbid_cor <- cor.test(UAE_allDat$IOTF_pOWcutoff, UAE_allDat$nComorbid)
-                           
 ####   Family History       ####
 
-##ttests 
+##ttest - obesity history
 IOTF_pOWcutoff_FamOB_ttest <- t.test(IOTF_pOWcutoff ~ Fam_OB_YN, data = UAE_allDat)
-IOTF_pOWcutoff_FamED_ttest <- t.test(IOTF_pOWcutoff ~ Fam_ED_YN, data = UAE_allDat)
+IOTF_pOWcutoff_FamOB_sd <- sd.function.na(UAE_allDat, DV = UAE_allDat$IOTF_pOWcutoff, UAE_allDat$Fam_OB_YN)
 
-
-IOTF_pOWcutoff_fam_ttest_tab <- data.frame(matrix(c(round(IOTF_pOWcutoff_FamOB_ttest$statistic, 2), round(IOTF_pOWcutoff_FamOB_ttest$parameter, 2), round(IOTF_pOWcutoff_FamOB_ttest$p.value, 4),
-                                                        round(IOTF_pOWcutoff_FamOB_ttest$estimate[1], 2), round(IOTF_pOWcutoff_FamOB_ttest$estimate[2], 2),
-                                                        round(IOTF_pOWcutoff_FamED_ttest$statistic, 2), round(IOTF_pOWcutoff_FamED_ttest$parameter, 2), round(IOTF_pOWcutoff_FamED_ttest$p.value, 4),
-                                                        round(IOTF_pOWcutoff_FamED_ttest$estimate[1], 2), round(IOTF_pOWcutoff_FamED_ttest$estimate[2], 2)), byrow = TRUE, nrow = 2))
-
-names(IOTF_pOWcutoff_fam_ttest_tab) <- c('t', 'df', 'pvalue', 'No', 'Yes')
-rownames(IOTF_pOWcutoff_fam_ttest_tab) <- c('Family History of Obesity', 'Family History of Eating Disorder')
-IOTF_pOWcutoff_fam_ttest_tab$sig <- c('***', '')
-IOTF_pOWcutoff_fam_ttest_tab <- IOTF_pOWcutoff_fam_ttest_tab[c(4:5, 1:3, 6)]
-
+##distribution test - eating disorder history
+IOTF_weightstatus_FamED_fisher <- fisher.test(xtabs(~IOTF_3class + Fam_ED_YN, data = UAE_allDat))
 
 ##correlations with IOTF_pOWcutoff
-IOTF_pOWcutoff_FamHistory_cor.varnames <- names(UAE_allDat)[c(117, 126, 105)]
-IOTF_pOWcutoff_FamHistory_cor.vars <- UAE_allDat[c(117, 126, 105)]
-IOTF_pOWcutoff_FamHistory_cormat <- cor.matrix(IOTF_pOWcutoff_FamHistory_cor.vars, IOTF_pOWcutoff_FamHistory_cor.varnames)
+IOTF_pOWcutoff_nFamOB_cor <- cor.test(UAE_allDat$nFam_Obesity, UAE_allDat$IOTF_pOWcutoff)
 
 ##sensitivity test with poisson model 
 IOTF_pOWcutoff_nFamOB_mod <- glm(nFam_Obesity ~ Month_AED + Mother_ed + Age_yr + sex + IOTF_pOWcutoff, data = UAE_allDat, family = poisson(link = 'log'))
 IOTF_pOWcutoff_nFamOB_sum <- summary(IOTF_pOWcutoff_nFamOB_mod)
 IOTF_pOWcutoff_nFamOB_odds <- exp(coef(IOTF_pOWcutoff_nFamOB_mod))
 IOTF_pOWcutoff_nFamOB_oddsCI <- exp(confint(IOTF_pOWcutoff_nFamOB_mod))
-IOTF_pOWcutoff_nFamOB_tab <- cbind.data.frame(IOTF_pOWcutoff_nFamOB_sum$coefficients, c('', '', '', '', '.', '', '', '***'), IOTF_pOWcutoff_nFamOB_odds, IOTF_pOWcutoff_nFamOB_oddsCI)
+IOTF_pOWcutoff_nFamOB_tab <- cbind.data.frame(IOTF_pOWcutoff_nFamOB_sum$coefficients, c('', '', '', '', '', '', '', '***'), IOTF_pOWcutoff_nFamOB_odds, IOTF_pOWcutoff_nFamOB_oddsCI)
 names(IOTF_pOWcutoff_nFamOB_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
 IOTF_pOWcutoff_nFamOB_tab <- IOTF_pOWcutoff_nFamOB_tab[c(1, 6, 2, 7:8, 3:5)]
 
