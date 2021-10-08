@@ -61,7 +61,7 @@ UAE_CSHQDat$CSHQ_Parasomnias <- rowSums(UAE_CSHQ_RawDat[c('Question22', 'Questio
                                                           'Question20', 'Question21', 
                                                           'Question23', 'Question25', 
                                                           'Question24')], na.rm = FALSE)
-UAE_CSHQDat$CSHQ_SleepDisorderBreathing <- rowSums(UAE_CSHQ_RawDat[c('Question26', 'Question7',
+UAE_CSHQDat$CSHQ_SleepDisorderBreathing <- rowSums(UAE_CSHQ_RawDat[c('Question26', 'Question27',
                                                                      'Question28')], na.rm = FALSE)
 UAE_CSHQDat$CSHQ_DaytimeSleepiness <- rowSums(UAE_CSHQ_RawDat[c('Question6', 'Question29',
                                                                 'Question30', 'Question31',
@@ -377,29 +377,38 @@ UAE_allDat$VG_Comp_hrday <- factor(UAE_allDat$VG_Comp_hrday,
 ####        Clean CSHQ Sleep Data       ####
 
 #add ':00' to times on the hour and set 'any' to NA
-UAE_allDat$Bedtime_cMidnight <- ifelse(UAE_allDat$Bedtime_24hr == 'any' | is.na(UAE_allDat$Bedtime_24hr), NA, 
+UAE_allDat$Bedtime_28hr <- ifelse(UAE_allDat$Bedtime_24hr == 'any' | is.na(UAE_allDat$Bedtime_24hr), NA, 
                                        ifelse(UAE_allDat$Bedtime_24hr == '0:00', '00:00',
                                               ifelse(grepl(':', UAE_allDat$Bedtime_24hr), as.character(UAE_allDat$Bedtime_24hr), 
                                                      paste0(UAE_allDat$Bedtime_24hr, ':00'))))
 
-#convert to date
-UAE_allDat$Bedtime_cMidnight <- strptime(UAE_allDat$Bedtime_cMidnight, format = "%H:%M")
+UAE_allDat$Waketime_24hr <- ifelse(is.na(UAE_allDat$Waketime_24), NA, 
+                                  ifelse(grepl(':', UAE_allDat$Waketime_24), as.character(UAE_allDat$Waketime_24), 
+                                                paste0(UAE_allDat$Waketime_24, ':00')))
+# convert time to hr (hr + min/60)
+UAE_allDat$Bedtime_28hr <- strptime(UAE_allDat$Bedtime_28hr, format = "%H:%M")
+UAE_allDat$Bedtime_28hr <- hour(UAE_allDat$Bedtime_28hr) + minute(UAE_allDat$Bedtime_28hr)/60
 
-#convert to number
-UAE_allDat$Bedtime_cMidnight <- hour(UAE_allDat$Bedtime_cMidnight) + minute(UAE_allDat$Bedtime_cMidnight)/60
+UAE_allDat$Waketime_24hr <- strptime(UAE_allDat$Waketime_24hr, format = "%H:%M")
+UAE_allDat$Waketime_24hr <- round((hour(UAE_allDat$Waketime_24hr) + minute(UAE_allDat$Waketime_24hr)/60), digits = 2)
+
+# convert bedtime to 28 hour day so can measure bedtime continuously
+UAE_allDat$Bedtime_28hr <- ifelse(is.na(UAE_allDat$Bedtime_28hr), NA, 
+                                  ifelse(UAE_allDat$Bedtime_28hr < 8, UAE_allDat$Bedtime_28hr + 24.00, UAE_allDat$Bedtime_28hr))
+
+
+# met recommendations
+UAE_allDat$Bedtime_Recommendation <- ifelse(UAE_allDat$Bedtime_28hr >= 22, 'N', 'Y')
+UAE_allDat$Sleep_Recommendation <- ifelse(UAE_allDat$Age_yr <13,  ifelse(UAE_allDat$Bed_hr >=9 & UAE_allDat$Bed_hr <= 11, 'Y', 'N'),
+                                          ifelse(UAE_allDat$Bed_hr >=8 & UAE_allDat$Bed_hr <= 10, 'Y', 'N'))
 
 # bed time - categories
-UAE_allDat$Bedtime_cat <- ifelse(UAE_allDat$Bedtime_cMidnight == 0.00, '11 - Midnight',
-                                        ifelse(UAE_allDat$Bedtime_cMidnight < 10, 'After Midnight',
-                                               ifelse(UAE_allDat$Bedtime_cMidnight < 21, '7 - 8 pm',
-                                                      ifelse(UAE_allDat$Bedtime_cMidnight < 22, '9 pm',
-                                                             ifelse(UAE_allDat$Bedtime_cMidnight < 23, '10 pm', '11 - Midnight')))))
+UAE_allDat$Bedtime_cat <- ifelse(UAE_allDat$Bedtime_28hr == 24.00, '11 - Midnight',
+                                        ifelse(UAE_allDat$Bedtime_28hr > 24, 'After Midnight',
+                                               ifelse(UAE_allDat$Bedtime_28hr < 21, '7 - 8 pm',
+                                                      ifelse(UAE_allDat$Bedtime_28hr < 22, '9 pm',
+                                                             ifelse(UAE_allDat$Bedtime_28hr < 23, '10 pm', '11 - Midnight')))))
 
 
 UAE_allDat$Bedtime_cat <- factor(UAE_allDat$Bedtime_cat,
                                  levels = c('7 - 8 pm', '9 pm', '10 pm', '11 - Midnight', 'After Midnight'))
-
-
-# bed time - center at midnight and use
-UAE_allDat$Bedtime_cMidnight <- ifelse(UAE_allDat$Bedtime_cMidnight > 12, UAE_allDat$Bedtime_cMidnight - 24, UAE_allDat$Bedtime_cMidnight)
-

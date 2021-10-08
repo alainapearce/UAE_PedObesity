@@ -158,10 +158,11 @@ sd(UAE_allDat$nComorbid)
 
 \FloatBarrier
 
-### Correlation with Number of Comorbidities
+### Associaiton with Number of Comorbidities - Poisson
 
-```{r IOTF_pOWcutoff_nComorbid_cor, echo=FALSE, results='verbatim'}
-IOTF_pOWcutoff_nComorbid_cor
+```{r IOTF_pOWcutoff_ncomorbid_poisson, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_nComorbid_tab, "latex",  digits = 3, caption = "Anemia Status by Weight Status", booktabs=TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
 \FloatBarrier
@@ -307,22 +308,23 @@ sd(UAE_allDat$nFam_Obesity)
 
 \FloatBarrier
 
-### Correlations with Number of Relative Categories with History of Obesity
+### Association with Number of Relative Categories with History of Obesity - Poisson
 
-```{r IOTF_pOWcutoff_nFam_cor, echo=FALSE, results='asis'}
-IOTF_pOWcutoff_nFamOB_cor
+```{r IOTF_pOWcutoff_nFam_poisson, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_nFamOB_tab, caption = 'Poisson Model: Number of Family Relationship Categories Obeisty - pOWcutoff', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
 ```
 
 \FloatBarrier
 
-Percent of overweight cutoff was not associated with reported number of relative categories with an perceived to have had an eating disorder but was associated with family history of obesity.
+Percent of overweight cutoff was  associated with reported number of relative categories with family history of obesity.
 
 \FloatBarrier
 
 ### Sensitivity Tests
 
-```{r IOTF_pOWcutoff_nFam_poisson, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_nFamOB_tab, digits = 3, caption = "Linear Model: Peer Problems (raw) - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
+```{r IOTF_pOWcutoff_nFam_STpoisson, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_nFamOB_STtab, digits = 3, caption = "Linear Model: Number of Family Relationship Categories Obesity - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -370,14 +372,54 @@ as_kable_extra(UAE_sleep_OB, caption = 'Sleep by Weight Status', format = "latex
 ```
 
 \FloatBarrier
+
+Note: Bedtime_28hr was used to be able to look at bedtime continuously. Since the latest reported bedtime was 4am, the day was extended to 28 hours to so midnight = 24.00 and 4am = 28.00.
+
+## Overall Averages
+
+```{r IOTF_avg_sleep, echo=FALSE, results='asis'}
+kable(sleep_avg_tab, digits = 3, caption = "Overall average sleep", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
 \clearpage
 
 ## Association Betwen Sleep Sub-Scales and Percent of Overweight Cutoff
 
-### Correlation Matrix
+### Correlation Matrix - Sleep
 
 ```{r IOTF_pOWcutoff_sleep_cor, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_sleep_cormat, digits = 3, caption = "Correlations between sleep percent of overweight", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_sleep_cor_ps, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_sleep_cormat_ps, digits = 3, caption = "Correlations between sleep percent of overweight", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Percent of overweight was not associated with bedtime, waketime, or total sleep.
+
+### t-tests for recommendation categories - Sleep
+
+```{r OTF_pOWcutoff_sleep_ttests, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff.sleep_ttest_tab, caption = 'Percent of Overweight by Sleep by Recommendations', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+### Correlation Matrix - Sleep Behavior
+
+```{r IOTF_pOWcutoff_cshq_cor, echo=FALSE, results='asis'}
 kable(IOTF_pOWcutoff_CSHQ_cormat, digits = 3, caption = "Correlations between sleep subscales and percent of overweight", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_cshq_cor_ps, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_CSHQ_cormat_ps, digits = 3, caption = "Correlations between sleep subscales and percent of overweight", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 \FloatBarrier
@@ -418,7 +460,7 @@ kable(IOTF_pOWcutoff_breathing_tab, digits = 3, caption = "Linear Model: Sleep D
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
-After controlling for family income, mother education, child age, and child sex, percent of overweight was positively associated with sleep disordered breathing such that a child with 110% of overweight, compared to 100% of overweight, would be expected to have a sleep disordered breathing score that was 0.12 points higher(range of scores = 2 - 7).
+After controlling for family income, mother education, child age, and child sex, percent of overweight was positively associated with sleep disordered breathing such that a child with 110% of overweight, compared to 100% of overweight, would be expected to have a sleep disordered breathing score that was 0.16 points higher(range of scores = 3 - 9).
 
 \FloatBarrier
 
@@ -440,6 +482,13 @@ IOTF_pOWcutoff_DisorderedBreathing_raw_plot
 
 ```{r SDQ_OB_tab, echo=FALSE, results='asis'}
 as_kable_extra(UAE_sdq_OB, caption = 'Strengths and Difficulties by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+There were no differences by weight status.
+
+```{r SDQ_overall_tab, echo=FALSE, results='asis'}
+as_kable_extra(UAE_sdq_overall, caption = 'Strengths and Difficulties', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
   kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
 ```
 

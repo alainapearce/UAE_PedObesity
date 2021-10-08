@@ -198,8 +198,7 @@ UAE_fam_OB_stat <-
   )
                           
 ####   Behavioral/Psychological       ####
-
-sleep_tab_OB <- UAE_allDat[c(107, 128, 93:97, 99:102)]
+sleep_tab_OB <- UAE_allDat[c(107, 127:130, 93:97, 99:102)]
 UAE_sleep_OB <-
   tbl_summary(
     data=sleep_tab_OB,
@@ -213,8 +212,8 @@ UAE_sleep_OB <-
     digits = all_continuous() ~ 2) %>%
   add_n()
 
-sleep_tab_OB_stat <- UAE_allDat[c(107, 128, 93:97, 99:102)]
-UAE_sleep_OB <-
+sleep_tab_OB_stat <- UAE_allDat[c(107, 127:130, 93:97, 99:102)]
+UAE_sleep_OBstat <-
   tbl_summary(
     data=sleep_tab_OB,
     by = IOTF_3class, 
@@ -270,6 +269,14 @@ UAE_sdq_OB <-
                 SDQ_HyperactiveProb_raw ~ 'continuous', SDQ_PeerProb_raw ~ 'continuous',
                 SDQ_Prosocial_raw ~ 'continuous', SDQ_TotalProb_raw ~ 'continuous'),
     statistic = all_continuous() ~ c("{mean} [{min} - {max}]"), 
+    missing = "ifany",
+    digits = all_continuous() ~ 2) %>%
+  add_n()
+
+sdq_tab_overall <- UAE_allDat[c(85:90)]
+UAE_sdq_overall <-
+  tbl_summary(
+    data=sdq_tab_overall,
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
   add_n()

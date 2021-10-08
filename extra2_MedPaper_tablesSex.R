@@ -144,7 +144,7 @@ UAE_beh_sex <-
     )
   )
 
-sleep_tab_sex <- UAE_allDat[c(5, 128, 93:97, 99:102, 104)]
+sleep_tab_sex <- UAE_allDat[c(5, 127:130, 93:97, 99:102)]
 UAE_sleep_sex <-
   tbl_summary(
     data=sleep_tab_sex,

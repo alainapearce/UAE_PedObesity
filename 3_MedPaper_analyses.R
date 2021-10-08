@@ -58,6 +58,15 @@ names(IOTF_age_pOWcutoff_tab) <- c('b', 'se', 't', 'p', ' ')
 # correlation with total number of comorbidities
 IOTF_pOWcutoff_nComorbid_cor <- cor.test(UAE_allDat$IOTF_pOWcutoff, UAE_allDat$nComorbid)
 
+# poisson with total number of comorbidities
+IOTF_pOWcutoff_nComorbid_mod <- glm(nComorbid ~ IOTF_pOWcutoff, data = UAE_allDat, family = poisson(link = 'log'))
+IOTF_pOWcutoff_nComorbid_sum <- summary(IOTF_pOWcutoff_nComorbid_mod)
+IOTF_pOWcutoff_nComorbid_odds <- exp(coef(IOTF_pOWcutoff_nComorbid_mod))
+IOTF_pOWcutoff_nComorbid_oddsCI <- exp(confint(IOTF_pOWcutoff_nComorbid_mod))
+IOTF_pOWcutoff_nComorbid_tab <- cbind.data.frame(IOTF_pOWcutoff_nComorbid_sum$coefficients, c('', ''), IOTF_pOWcutoff_nComorbid_odds, IOTF_pOWcutoff_nComorbid_oddsCI)
+names(IOTF_pOWcutoff_nComorbid_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
+IOTF_pOWcutoff_nComorbid_tab <- IOTF_pOWcutoff_nComorbid_tab[c(1, 6, 2, 7:8, 3:5)]
+
 # sex differences in number of comorbidites 
 sex_ncomorbid_ttest <- t.test(nComorbid ~ sex, data = UAE_allDat)
 sex_ncomorbid_sd <- sd.function.na(UAE_allDat, DV = UAE_allDat$nComorbid, IV = UAE_allDat$sex)
@@ -103,28 +112,64 @@ IOTF_pOWcutoff_FamOB_sd <- sd.function.na(UAE_allDat, DV = UAE_allDat$IOTF_pOWcu
 IOTF_weightstatus_FamED_fisher <- fisher.test(xtabs(~IOTF_3class + Fam_ED_YN, data = UAE_allDat))
 
 ##correlations with IOTF_pOWcutoff
-IOTF_pOWcutoff_nFamOB_cor <- cor.test(UAE_allDat$nFam_Obesity, UAE_allDat$IOTF_pOWcutoff)
-
-##sensitivity test with poisson model 
-IOTF_pOWcutoff_nFamOB_mod <- glm(nFam_Obesity ~ Month_AED + Mother_ed + Age_yr + sex + IOTF_pOWcutoff, data = UAE_allDat, family = poisson(link = 'log'))
+IOTF_pOWcutoff_nFamOB_mod <- glm(nFam_Obesity ~ IOTF_pOWcutoff, data = UAE_allDat, family = poisson(link = 'log'))
 IOTF_pOWcutoff_nFamOB_sum <- summary(IOTF_pOWcutoff_nFamOB_mod)
 IOTF_pOWcutoff_nFamOB_odds <- exp(coef(IOTF_pOWcutoff_nFamOB_mod))
 IOTF_pOWcutoff_nFamOB_oddsCI <- exp(confint(IOTF_pOWcutoff_nFamOB_mod))
-IOTF_pOWcutoff_nFamOB_tab <- cbind.data.frame(IOTF_pOWcutoff_nFamOB_sum$coefficients, c('', '', '', '', '', '', '', '***'), IOTF_pOWcutoff_nFamOB_odds, IOTF_pOWcutoff_nFamOB_oddsCI)
+IOTF_pOWcutoff_nFamOB_tab <- cbind.data.frame(IOTF_pOWcutoff_nFamOB_sum$coefficients, c('*', '***'), IOTF_pOWcutoff_nFamOB_odds, IOTF_pOWcutoff_nFamOB_oddsCI)
 names(IOTF_pOWcutoff_nFamOB_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
 IOTF_pOWcutoff_nFamOB_tab <- IOTF_pOWcutoff_nFamOB_tab[c(1, 6, 2, 7:8, 3:5)]
 
+
+##sensitivity test with poisson model 
+IOTF_pOWcutoff_nFamOB_STmod <- glm(nFam_Obesity ~ Month_AED + Mother_ed + Age_yr + sex + IOTF_pOWcutoff, data = UAE_allDat, family = poisson(link = 'log'))
+IOTF_pOWcutoff_nFamOB_STsum <- summary(IOTF_pOWcutoff_nFamOB_STmod)
+IOTF_pOWcutoff_nFamOB_STodds <- exp(coef(IOTF_pOWcutoff_nFamOB_STmod))
+IOTF_pOWcutoff_nFamOB_SToddsCI <- exp(confint(IOTF_pOWcutoff_nFamOB_STmod))
+IOTF_pOWcutoff_nFamOB_STtab <- cbind.data.frame(IOTF_pOWcutoff_nFamOB_STsum$coefficients, c('', '', '', '', '', '', '', '***'), IOTF_pOWcutoff_nFamOB_odds, IOTF_pOWcutoff_nFamOB_oddsCI)
+names(IOTF_pOWcutoff_nFamOB_STtab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
+IOTF_pOWcutoff_nFamOB_STtab <- IOTF_pOWcutoff_nFamOB_STtab[c(1, 6, 2, 7:8, 3:5)]
+
 #add predicted odds of more nFam to data
 IOTF_pOWcutoff_nFamOB_dat <- UAE_allDat[!is.na(UAE_allDat$nFam_Obesity) & !is.na(UAE_allDat$Month_AED) & !is.na(UAE_allDat$Mother_ed), ]
-IOTF_pOWcutoff_nFamOB_dat$nFam_Obesity_probLogit <- predict(IOTF_pOWcutoff_nFamOB_mod, type = 'link')
+IOTF_pOWcutoff_nFamOB_dat$nFam_Obesity_probLogit <- predict(IOTF_pOWcutoff_nFamOB_STmod, type = 'link')
                           
 ####   Sleep       ####
 
-##correlations with IOTF_pOWcutoff
-IOTF_pOWcutoff_CSHQ_cor.varnames <- c(names(UAE_allDat)[c(105, 93)], 'BedResit', 'OnsetDelay', 'Duration', 'Anxiety',
-                                      'NightWaking', 'Parasomnias', 'DisorderBreathing', 'DaySleepiness')
-IOTF_pOWcutoff_CSHQ_cor.vars <- UAE_allDat[c(105, 93:97, 99:102)]
+## means and sd
+sleep_avg_tab <- data.frame(matrix(c(mean(UAE_allDat$Bed_hr, na.rm = TRUE), median(UAE_allDat$Bed_hr, na.rm = TRUE), sd(UAE_allDat$Bed_hr, na.rm = TRUE),
+                                     mean(UAE_allDat$Bedtime_28hr, na.rm = TRUE), median(UAE_allDat$Bedtime_28hr, na.rm = TRUE), sd(UAE_allDat$Bedtime_28hr, na.rm = TRUE),
+                                     mean(UAE_allDat$Waketime_24hr, na.rm = TRUE), median(UAE_allDat$Waketime_24hr, na.rm = TRUE), sd(UAE_allDat$Waketime_24hr, na.rm = TRUE)), nrow = 3, byrow = TRUE))
+
+rownames(sleep_avg_tab) <- c('Bed_hr', 'Bedtime_28hr', 'Waketime')
+names(sleep_avg_tab) <- c('mean', 'median', 'sd')
+
+##sleep correlations with IOTF_pOWcutoff
+IOTF_pOWcutoff_sleep_cor.varnames <- c(names(UAE_allDat)[c(105, 93, 127:128)])
+IOTF_pOWcutoff_sleep_cor.vars <- UAE_allDat[c(105, 93, 127:128)]
+IOTF_pOWcutoff_sleep_cormat <- cor.matrix(IOTF_pOWcutoff_sleep_cor.vars, IOTF_pOWcutoff_sleep_cor.varnames)
+IOTF_pOWcutoff_sleep_cormat_ps <- cor.matrix_ps(IOTF_pOWcutoff_sleep_cor.vars, IOTF_pOWcutoff_sleep_cor.varnames)
+
+##sleep t-test with IOTF_pOWcutoff
+IOTF_pOWcutoff.sleepRec <- t.test(IOTF_pOWcutoff ~ Sleep_Recommendation, data = UAE_allDat)
+IOTF_pOWcutoff.bedtimeRec <- t.test(UAE_allDat$IOTF_pOWcutoff ~ Bedtime_Recommendation, data = UAE_allDat)
+
+IOTF_pOWcutoff.sleep_ttest_tab <- data.frame(matrix(c(round(IOTF_pOWcutoff.sleepRec$statistic, 2), round(IOTF_pOWcutoff.sleepRec$parameter, 2),round(IOTF_pOWcutoff.sleepRec$p.value, 4),
+                                                            round(IOTF_pOWcutoff.sleepRec$estimate[1], 2),round(IOTF_pOWcutoff.sleepRec$estimate[2], 2),
+                                                            round(IOTF_pOWcutoff.bedtimeRec$statistic, 2), round(IOTF_pOWcutoff.bedtimeRec$parameter, 2), round(IOTF_pOWcutoff.bedtimeRec$p.value, 4),
+                                                            round(IOTF_pOWcutoff.bedtimeRec$estimate[1], 2), round(IOTF_pOWcutoff.bedtimeRec$estimate[2], 2)), byrow = TRUE, nrow = 2))
+
+names(IOTF_pOWcutoff.sleep_ttest_tab) <- c('t', 'df', 'pvalue', 'No', 'Yes')
+rownames(IOTF_pOWcutoff.sleep_ttest_tab) <- c('Sleep Duration Rec', 'Bedtime Rec')
+IOTF_pOWcutoff.sleep_ttest_tab$sig <- c('', '.')
+IOTF_pOWcutoff.sleep_ttest_tab <- IOTF_pOWcutoff.sleep_ttest_tab[c(4:5, 1:3, 6)]
+
+##CSHQ correlations with IOTF_pOWcutoff
+IOTF_pOWcutoff_CSHQ_cor.varnames <- c('IOTF_pOWcutoff', 'BedResit', 'OnsetDelay', 'Duration', 'Anxiety',
+                                      'NightWaking', 'Parasomnias', 'DisorderBreathing', 'DaySleepiness', 'Total')
+IOTF_pOWcutoff_CSHQ_cor.vars <- UAE_allDat[c(105, 94:97, 99:102, 104)]
 IOTF_pOWcutoff_CSHQ_cormat <- cor.matrix(IOTF_pOWcutoff_CSHQ_cor.vars, IOTF_pOWcutoff_CSHQ_cor.varnames)
+IOTF_pOWcutoff_CSHQ_cormat_ps <- cor.matrix_ps(IOTF_pOWcutoff_CSHQ_cor.vars, IOTF_pOWcutoff_CSHQ_cor.varnames)
 
 ##CSHQ sensitivity tests for IOTF_pOWcutoff
 
@@ -161,6 +206,28 @@ UAE_allDat$SDQ_EmotProb_Elevated <- ifelse(UAE_allDat$SDQ_ConductProb_cat == 'Cl
 UAE_allDat$SDQ_EmotProb_Elevated <- factor(UAE_allDat$SDQ_EmotProb_Elevated,
                                            levels = c('N', 'Y'))
 
+## conduct problems
+UAE_allDat$SDQ_ConductProb_Elevated <- ifelse(UAE_allDat$SDQ_EmotionProb_cat == 'CloseToAverage', 'N', 'Y')
+UAE_allDat$SDQ_ConductProb_Elevated <- factor(UAE_allDat$SDQ_ConductProb_Elevated,
+                                           levels = c('N', 'Y'))
+
+
+## hyperactivity problems
+UAE_allDat$SDQ_HypeProb_Elevated <- ifelse(UAE_allDat$SDQ_HyperactivityProb_cat == 'CloseToAverage', 'N', 'Y')
+UAE_allDat$SDQ_HypeProb_Elevated <- factor(UAE_allDat$SDQ_HypeProb_Elevated,
+                                           levels = c('N', 'Y'))
+
+## peer problems
+UAE_allDat$SDQ_PeerProb_Elevated <- ifelse(UAE_allDat$SDQ_PeerProb_cat == 'CloseToAverage', 'N', 'Y')
+UAE_allDat$SDQ_PeerProb_Elevated <- factor(UAE_allDat$SDQ_PeerProb_Elevated,
+                                           levels = c('N', 'Y'))
+
+## pro-social problems
+UAE_allDat$SDQ_Prosocial_Low <- ifelse(UAE_allDat$SDQ_Prosocial_cat == 'CloseToAverage', 'N', 'Y')
+UAE_allDat$SDQ_Prosocial_Low <- factor(UAE_allDat$SDQ_Prosocial_Low,
+                                           levels = c('N', 'Y'))
+
+## emotional problems
 IOTF_pOWcutoff_EmotProb_Elevated_mod <- glm(SDQ_EmotProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
 IOTF_pOWcutoff_EmotProb_Elevated_sum <- summary(IOTF_pOWcutoff_EmotProb_Elevated_mod)
 IOTF_pOWcutoff_EmotProb_Elevated_odds <- exp(coef(IOTF_pOWcutoff_EmotProb_Elevated_mod))
@@ -170,10 +237,6 @@ names(IOTF_pOWcutoff_EmotProb_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b'
 IOTF_pOWcutoff_EmotProb_Elevated_tab <- IOTF_pOWcutoff_EmotProb_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
 
 ## conduct problems
-UAE_allDat$SDQ_ConductProb_Elevated <- ifelse(UAE_allDat$SDQ_EmotionProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_ConductProb_Elevated <- factor(UAE_allDat$SDQ_ConductProb_Elevated,
-                                           levels = c('N', 'Y'))
-
 IOTF_pOWcutoff_ConductProb_Elevated_mod <- glm(SDQ_ConductProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
 IOTF_pOWcutoff_ConductProb_Elevated_sum <- summary(IOTF_pOWcutoff_ConductProb_Elevated_mod)
 IOTF_pOWcutoff_ConductProb_Elevated_odds <- exp(coef(IOTF_pOWcutoff_ConductProb_Elevated_mod))
@@ -183,10 +246,6 @@ names(IOTF_pOWcutoff_ConductProb_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e
 IOTF_pOWcutoff_ConductProb_Elevated_tab <- IOTF_pOWcutoff_ConductProb_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
 
 ## hyperactivity problems
-UAE_allDat$SDQ_HypeProb_Elevated <- ifelse(UAE_allDat$SDQ_HyperactivityProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_HypeProb_Elevated <- factor(UAE_allDat$SDQ_HypeProb_Elevated,
-                                           levels = c('N', 'Y'))
-
 IOTF_pOWcutoff_HypeProb_Elevated_mod <- glm(SDQ_HypeProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
 IOTF_pOWcutoff_HypeProb_Elevated_sum <- summary(IOTF_pOWcutoff_HypeProb_Elevated_mod)
 IOTF_pOWcutoff_HypeProb_Elevated_odds <- exp(coef(IOTF_pOWcutoff_HypeProb_Elevated_mod))
@@ -196,10 +255,6 @@ names(IOTF_pOWcutoff_HypeProb_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b'
 IOTF_pOWcutoff_HypeProb_Elevated_tab <- IOTF_pOWcutoff_HypeProb_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
 
 ## peer problems
-UAE_allDat$SDQ_PeerProb_Elevated <- ifelse(UAE_allDat$SDQ_PeerProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_PeerProb_Elevated <- factor(UAE_allDat$SDQ_PeerProb_Elevated,
-                                           levels = c('N', 'Y'))
-
 IOTF_pOWcutoff_peerprob_Elevated_mod <- glm(SDQ_PeerProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
 IOTF_pOWcutoff_peerprob_Elevated_sum <- summary(IOTF_pOWcutoff_peerprob_Elevated_mod)
 IOTF_pOWcutoff_peerprob_Elevated_odds <- exp(coef(IOTF_pOWcutoff_peerprob_Elevated_mod))
@@ -214,14 +269,10 @@ SDQ_PeerProb_dat <- UAE_allDat[!is.na(UAE_allDat$SDQ_PeerProb_raw) & !is.na(UAE_
 SDQ_PeerProb_dat$SDQ_PeerProb_Elevated_predLogit <- predict(IOTF_pOWcutoff_peerprob_Elevated_mod, type = 'link')
 
 ## pro-social problems
-UAE_allDat$SDQ_Prosocial_Low <- ifelse(UAE_allDat$SDQ_Prosocial_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_Prosocial_Low <- factor(UAE_allDat$SDQ_Prosocial_Low,
-                                           levels = c('N', 'Y'))
-
 IOTF_pOWcutoff_prosocial_Low_mod <- glm(SDQ_Prosocial_Low ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
 IOTF_pOWcutoff_prosocial_Low_sum <- summary(IOTF_pOWcutoff_prosocial_Low_mod)
 IOTF_pOWcutoff_prosocial_Low_odds <- exp(coef(IOTF_pOWcutoff_prosocial_Low_mod))
 IOTF_pOWcutoff_prosocial_Low_oddsCI <- exp(confint(IOTF_pOWcutoff_prosocial_Low_mod))
-IOTF_pOWcutoff_prosocial_Low_tab <- cbind.data.frame(IOTF_pOWcutoff_prosocial_Low_sum$coefficients, c('', '', '', '.', '', '', '*', '', '.'), IOTF_pOWcutoff_prosocial_Low_odds, IOTF_pOWcutoff_prosocial_Low_oddsCI)
+IOTF_pOWcutoff_prosocial_Low_tab <- cbind.data.frame(IOTF_pOWcutoff_prosocial_Low_sum$coefficients, c('', '', '', '.', '', '', '.', '', '.'), IOTF_pOWcutoff_prosocial_Low_odds, IOTF_pOWcutoff_prosocial_Low_oddsCI)
 names(IOTF_pOWcutoff_prosocial_Low_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
 IOTF_pOWcutoff_prosocial_Low_tab <- IOTF_pOWcutoff_prosocial_Low_tab[c(1, 6, 2, 7:8, 3:5)]
