@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.10.4)  8 OCT 2021 15:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.10.4)  8 OCT 2021 19:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -794,8 +794,12 @@ ot-1.pdf  used on input line 819.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12 <./UAE_MedPaper_Figs/fig-IOTF_pOWcutoff_nFamOB_adjOdds_plot-1.pdf>] [13] [1
-4
+[12 <./UAE_MedPaper_Figs/fig-IOTF_pOWcutoff_nFamOB_adjOdds_plot-1.pdf>] [13]
+Overfull \hbox (16.94598pt too wide) in paragraph at lines 875--917
+ [][] 
+ []
+
+[14
 
 ]
 Overfull \hbox (263.32945pt too wide) in paragraph at lines 1018--1035
@@ -879,7 +883,7 @@ mf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2021/texmf-dist/font
 s/type1/public/lm/lmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/publ
 ic/lm/lmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmsy
 7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on UAE_MedPaper_2021.pdf (29 pages, 328665 bytes).
+Output written on UAE_MedPaper_2021.pdf (29 pages, 328798 bytes).
 PDF statistics:
  508 PDF objects out of 1000 (max. 8388607)
  448 compressed objects within 5 object streams
