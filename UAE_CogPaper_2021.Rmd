@@ -32,6 +32,7 @@ knitr::opts_chunk$set(tidy = TRUE, tidy.opts = list(comment = FALSE), echo = TRU
 library(knitr)
 library(kableExtra)
 library(lubridate)
+library(reshape2)
 library(stats)
 library(gtsummary)
 theme_gtsummary_compact()

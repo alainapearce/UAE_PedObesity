@@ -34,7 +34,7 @@
 
 ####   Demo Data  Table     ####
 
-sum_tab_OB <- UAE_allDat[c(107, 5, 7, 12, 105, 42:43, 64, 2:3)]
+sum_tab_OB <- UAE_allDat[c(12, 3, 5, 10, 105, 42:43, 64, 2:3)]
 UAE_demo_OB <-
   tbl_summary(
     data=sum_tab_OB,
@@ -48,7 +48,7 @@ UAE_demo_OB_stat <-
   tbl_summary(
     data=sum_tab_OB,
     by = IOTF_3class, 
-    statistic = all_continuous() ~ c("{mean} [{min} - {max}]"), 
+    statistic = all_continuous() ~ c("{mean} [{min} - {max}]"),
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
   add_n() %>%

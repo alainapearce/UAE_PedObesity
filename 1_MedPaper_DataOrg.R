@@ -71,10 +71,10 @@ UAE_CSHQDat$CSHQ_Total <- rowSums(UAE_CSHQ_RawDat[5:37], na.rm = FALSE)
 UAE_CSHQDat$CSHQ_Total_no16 <- rowSums(UAE_CSHQ_RawDat[c(5:19, 21:37)], na.rm = FALSE)
 
 # compile ####
-UAE_allDat = merge(UAE_sumDat[c(1:22, 24:30, 32:37, 39:40)], UAE_demoDat[c(1, 5:11, 13, 15:35)], id = 'ParID', all = TRUE)
-UAE_allDat = merge(UAE_allDat, UAE_healthDat[c(1, 17:30)], id = 'ParID', all = TRUE) 
-UAE_allDat = merge(UAE_allDat, UAE_SDQDat[c(1, 5:16)], id = 'ParID', all = TRUE) 
-UAE_allDat = merge(UAE_allDat, UAE_CSHQDat[c(1, 5:18)], id = 'ParID', all = TRUE)
+UAE_allDat <- merge(UAE_sumDat[c(1:22, 24:30, 32:37, 39:40)], UAE_demoDat[c(1, 5:11, 13, 15:35)], id = 'ParID', all = TRUE)
+UAE_allDat <- merge(UAE_allDat, UAE_healthDat[c(1, 17:30)], id = 'ParID', all = TRUE) 
+UAE_allDat <- merge(UAE_allDat, UAE_SDQDat[c(1, 5:16)], id = 'ParID', all = TRUE) 
+UAE_allDat <- merge(UAE_allDat, UAE_CSHQDat[c(1, 5:18)], id = 'ParID', all = TRUE)
 
 ####        Clean Demographic Data       ####
 
@@ -108,7 +108,7 @@ UAE_allDat$MomNationality <- factor(UAE_allDat$MomNationality,
                                                'Moroccan', 'Egyptian', 'Bahrani'))
 
 ##IOTF BMI25
-UAE_allDat$IOTF_pOWcutoff = 100*(UAE_allDat$BMI/UAE_allDat$IOTF_BMI25)
+UAE_allDat$IOTF_pOWcutoff <- 100*(UAE_allDat$BMI/UAE_allDat$IOTF_BMI25)
 
 ##waist:hip ratio
 UAE_allDat$hw_ratio <- UAE_allDat$Hips_cm/UAE_allDat$Waist_cm
@@ -207,18 +207,18 @@ UAE_allDat$Relationship <- factor(UAE_allDat$Relationship,
 UAE_allDat$Fam_OB_YN <- factor(UAE_allDat$Fam_OB_YN,
                                levels = c('yes', 'no'))
 
-UAE_allDat$Fam_OB_list = as.character(UAE_allDat$Fam_OB_list)
-UAE_allDat$Mother_OBhistory = ifelse(grepl('1', UAE_allDat$Fam_OB_list), 'Mother', 'N')
-UAE_allDat$Father_OBhistory = ifelse(grepl('2', UAE_allDat$Fam_OB_list), 'Father', 'N')
-UAE_allDat$Grandmother_OBhistory = ifelse(grepl('3', UAE_allDat$Fam_OB_list), 'Grandmother', 'N')
-UAE_allDat$Grandfather_OBhistory = ifelse(grepl('4', UAE_allDat$Fam_OB_list), 'Grandfather', 'N')
-UAE_allDat$Sister_OBhistory = ifelse(grepl('5', UAE_allDat$Fam_OB_list), 'Sister', 'N')
-UAE_allDat$Brother_OBhistory = ifelse(grepl('6', UAE_allDat$Fam_OB_list), 'Brother', 'N')
-UAE_allDat$Aunt_OBhistory = ifelse(grepl('7', UAE_allDat$Fam_OB_list), 'Aunt', 'N')
-UAE_allDat$Uncle_OBhistory = ifelse(grepl('8', UAE_allDat$Fam_OB_list), 'Uncle', 'N')
+UAE_allDat$Fam_OB_list <- as.character(UAE_allDat$Fam_OB_list)
+UAE_allDat$Mother_OBhistory <- ifelse(grepl('1', UAE_allDat$Fam_OB_list), 'Mother', 'N')
+UAE_allDat$Father_OBhistory <- ifelse(grepl('2', UAE_allDat$Fam_OB_list), 'Father', 'N')
+UAE_allDat$Grandmother_OBhistory <- ifelse(grepl('3', UAE_allDat$Fam_OB_list), 'Grandmother', 'N')
+UAE_allDat$Grandfather_OBhistory <- ifelse(grepl('4', UAE_allDat$Fam_OB_list), 'Grandfather', 'N')
+UAE_allDat$Sister_OBhistory <- ifelse(grepl('5', UAE_allDat$Fam_OB_list), 'Sister', 'N')
+UAE_allDat$Brother_OBhistory <- ifelse(grepl('6', UAE_allDat$Fam_OB_list), 'Brother', 'N')
+UAE_allDat$Aunt_OBhistory <- ifelse(grepl('7', UAE_allDat$Fam_OB_list), 'Aunt', 'N')
+UAE_allDat$Uncle_OBhistory <- ifelse(grepl('8', UAE_allDat$Fam_OB_list), 'Uncle', 'N')
 
 ##number Obese
-UAE_allDat$nFam_Obesity = rowSums(UAE_allDat[c('Mother_OBhistory', 'Father_OBhistory',
+UAE_allDat$nFam_Obesity <- rowSums(UAE_allDat[c('Mother_OBhistory', 'Father_OBhistory',
                                                'Grandmother_OBhistory', 'Grandfather_OBhistory',
                                                'Sister_OBhistory', 'Brother_OBhistory',
                                                'Aunt_OBhistory', 'Uncle_OBhistory')] != 'N' & 
@@ -231,18 +231,18 @@ UAE_allDat$nFam_Obesity = rowSums(UAE_allDat[c('Mother_OBhistory', 'Father_OBhis
 UAE_allDat$Fam_ED_YN <- factor(UAE_allDat$Fam_ED_YN,
                                levels = c('yes', 'no'))
 
-UAE_allDat$Fam_ED_list = as.character(UAE_allDat$Fam_ED_list)
-UAE_allDat$Mother_EDhistory = ifelse(grepl('1', UAE_allDat$Fam_ED_list), 'Mother', 'N')
-UAE_allDat$Father_EDhistory = ifelse(grepl('2', UAE_allDat$Fam_ED_list), 'Father', 'N')
-UAE_allDat$Grandmother_EDhistory = ifelse(grepl('3', UAE_allDat$Fam_ED_list), 'Grandmother', 'N')
-UAE_allDat$Grandfather_EDhistory = ifelse(grepl('4', UAE_allDat$Fam_ED_list), 'Grandfather', 'N')
-UAE_allDat$Sister_EDhistory = ifelse(grepl('5', UAE_allDat$Fam_ED_list), 'Sister', 'N')
-UAE_allDat$Brother_EDhistory = ifelse(grepl('6', UAE_allDat$Fam_ED_list), 'Brother', 'N')
-UAE_allDat$Aunt_EDhistory = ifelse(grepl('7', UAE_allDat$Fam_ED_list), 'Aunt', 'N')
-UAE_allDat$Uncle_EDhistory = ifelse(grepl('8', UAE_allDat$Fam_ED_list), 'Uncle', 'N')
+UAE_allDat$Fam_ED_list <- as.character(UAE_allDat$Fam_ED_list)
+UAE_allDat$Mother_EDhistory <- ifelse(grepl('1', UAE_allDat$Fam_ED_list), 'Mother', 'N')
+UAE_allDat$Father_EDhistory <- ifelse(grepl('2', UAE_allDat$Fam_ED_list), 'Father', 'N')
+UAE_allDat$Grandmother_EDhistory <- ifelse(grepl('3', UAE_allDat$Fam_ED_list), 'Grandmother', 'N')
+UAE_allDat$Grandfather_EDhistory <- ifelse(grepl('4', UAE_allDat$Fam_ED_list), 'Grandfather', 'N')
+UAE_allDat$Sister_EDhistory <- ifelse(grepl('5', UAE_allDat$Fam_ED_list), 'Sister', 'N')
+UAE_allDat$Brother_EDhistory <- ifelse(grepl('6', UAE_allDat$Fam_ED_list), 'Brother', 'N')
+UAE_allDat$Aunt_EDhistory <- ifelse(grepl('7', UAE_allDat$Fam_ED_list), 'Aunt', 'N')
+UAE_allDat$Uncle_EDhistory <- ifelse(grepl('8', UAE_allDat$Fam_ED_list), 'Uncle', 'N')
 
 ##number Obese
-UAE_allDat$nFam_EatingDisorder = rowSums(UAE_allDat[c('Mother_EDhistory', 'Father_EDhistory',
+UAE_allDat$nFam_EatingDisorder <- rowSums(UAE_allDat[c('Mother_EDhistory', 'Father_EDhistory',
                                                       'Grandmother_EDhistory', 'Grandfather_EDhistory',
                                                       'Sister_EDhistory', 'Brother_EDhistory',
                                                       'Aunt_EDhistory', 'Uncle_EDhistory')] != 'N' &
