@@ -381,21 +381,21 @@ cor.matrix_Method=function(var_vector, var_names, method){
 library(gtsummary)
 
 my_ttest <- function(data, variable, by, ...) {
-  t.test(data[[variable]] ~ as.factor(data[[by]]))$p.value
+  round(t.test(data[[variable]] ~ as.factor(data[[by]]))$p.value, 4)
 }
 
 my_chifisher <- function(data, variable, by, ...) {
   tab <- xtabs(~data[[variable]] + data[[by]])
   if (min(tab) <= 5){
-    fisher.test(tab)$p.value
+    round(fisher.test(tab)$p.value, 4)
   } else {
-    chisq.test(tab)$p.value
+    round(chisq.test(tab)$p.value, 4)
   }
 }
 
 my_anova <- function(data, variable, by, ...) {
   mod <- anova(lm(data[[variable]] ~ as.factor(data[[by]])))
-  return(mod$`Pr(>F)`[1])
+  return(round((mod$`Pr(>F)`[1]), 4))
 }
 
 #### Graphing ####

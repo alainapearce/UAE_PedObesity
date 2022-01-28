@@ -3,7 +3,7 @@
 # medical, family history, and behavior in Emirati children
 # by weight status
 #
-#     Copyright (C) 2020 Alaina L Pearce
+#     Copyright (C) 2021 Alaina L Pearce
 # 
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by

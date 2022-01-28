@@ -1,5 +1,5 @@
 ---
-title: "UAE Medical and Behavioral Paper 1"
+title: "UAE Cognitive Funcintion Paper 2"
 output:
   pdf_document:
     toc: true
@@ -24,7 +24,7 @@ header-includes:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(tidy = TRUE, tidy.opts = list(comment = FALSE), echo = TRUE, fig.width=6, fig.height=4, fig.path='UAE_MedPaper_Figs/fig-', echo=FALSE, warning=FALSE, message=FALSE, comment = NA)
+knitr::opts_chunk$set(tidy = TRUE, tidy.opts = list(comment = FALSE), echo = TRUE, fig.width=6, fig.height=4, fig.path='UAE_CogPaper_Figs/fig-', echo=FALSE, warning=FALSE, message=FALSE, comment = NA)
 ```
 
 <!-- load startup file and any extra packages -->
@@ -46,10 +46,10 @@ source('functions.R')
 ```
 
 ```{r load_scripts, echo=FALSE, results='asis'}
-source('1_MedPaper_DataOrg.R')
-source('2_MedPaper_tablesWeightStatus.R')
-source('3_MedPaper_analyses.R')
-source('4_MedPaper_figs.R')
+source('1_CogPaper_DataOrg.R')
+source('2_CogPaper_tablesWeightStatus.R')
+source('3_CogPaper_analyses.R')
+source('4_CogPaper_figs.R')
 ```
 
 \clearpage
@@ -136,282 +136,11 @@ kable(IOTF_age_pOWcutoff_tab, digits = 3, caption = "Linear Model: pOWcutoff - S
 After controlling for family income, mother education, and child sex, child age was significantly associated with percent of overweight such that for each year older, the expected percent of overweight is predicted to increase 4.24%.
 
 \FloatBarrier
-
 \clearpage
 
-# Medical Comorbidities 
+# Sleep Behavior
 
-```{r Med_OB_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_med_OB, caption = 'Medical Comorbidites by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-\FloatBarrier
-
-## Number of Comorbidites 
-
-### mean (sd) number of comorbidites 
-
-```{r Med_ncomorbid_meansd, echo=FALSE, results='verbatim'}
-mean(UAE_allDat$nComorbid)
-sd(UAE_allDat$nComorbid)
-```
-
-\FloatBarrier
-
-### Associaiton with Number of Comorbidities - Poisson
-
-```{r IOTF_pOWcutoff_ncomorbid_poisson, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_nComorbid_tab, "latex",  digits = 3, caption = "Anemia Status by Weight Status", booktabs=TRUE) %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-There was no association between percent of overweight cutoff and number of comorbidities
-
-\FloatBarrier
-
-### sex differences in number of comorbidites 
-
-```{r Med_ncomorbid_sex, echo=FALSE, results='verbatim'}
-sex_ncomorbid_ttest
-sex_ncomorbid_sd
-```
-
-## Distribution tests by Weight Status
-
-### Vitamin D
-
-```{r IOTF_weightstatus_vitD_fisher, echo=FALSE, results='verbatim'}
-VitD_fisher
-```
-
-\FloatBarrier
-
-### Anemia
-
-```{r IOTF_weightstatus_anemia_tab, echo=FALSE, results='asis'}
-kable(xtabs(~as.factor(ifelse(is.na(UAE_allDat$Anemia), 'N', 'Y')) + IOTF_3class, data = UAE_allDat), "latex",  digits = 3, caption = "Anemia Status by Weight Status", booktabs=TRUE) %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-```{r IOTF_weightstatus_anemia_chi, echo=FALSE, results='verbatim'}
-Anemia_chi
-```
-
-\FloatBarrier
-
-### Hyperlipidemia
-
-```{r IOTF_weightstatus_hyperlipidemia_tab, echo=FALSE, results='asis'}
-kable(xtabs(~as.factor(ifelse(is.na(UAE_allDat$Hyperlipidemia), 'N', 'Y')) + IOTF_3class, data = UAE_allDat), "latex",  digits = 3, caption = "Hyperlipidemia Status by Weight Status", booktabs=TRUE) %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-```{r IOTF_weightstatus_hyperlipidemia_fisher, echo=FALSE, results='verbatim'}
-Hyperlipidemia_fisher
-```
-
-\FloatBarrier
-
-### Thyroid Conditions
-
-```{r IOTF_weightstatus_thyriod_chi, echo=FALSE, results='verbatim'}
-Thyriod_chi
-```
-
-\FloatBarrier
-
-### Glycemic Status
-
-```{r IOTF_weightstatus_glycemic_chi, echo=FALSE, results='verbatim'}
-Glycemic_chi
-```
-
-\FloatBarrier
-
-## Association between Comorbidities and Percent of Overweight Cutoff
-
-### t-tests for Presence/Absence of Comorbidities
-
-```{r IOTF_pOWcutoff_MedComorbid_ttests, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff.MedComorbid_ttest_tab, "latex",  digits = 3, caption = "t-tests for percent of overweight by absence vs presence of medical comorbidity", booktabs=TRUE) %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_anemia_sdtab, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff.Anemia_sd, "latex",  digits = 3, caption = "Standard deviations for percent of overweight by absence vs presence of anemia", booktabs=TRUE) %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-
-There were no difference in percent of overweight cutoff by presence/absence of Thyroid dysfunction or impaired glucose function. However, those with anemia tended to have lower percent of overweight. The mean with anemia was 101% indicating children were overweight on average. The mean for those without anemia were 123%, indicating the children were above the overweight cutoff.
-
-\FloatBarrier
-\clearpage
-
-# Family History
-
-```{r Fam_OB_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_fam_OB, caption = 'Family History by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-\FloatBarrier
-
-## Association with Yes/No Family History
-
-### t-tests for Yes/No History of Obesity
-
-```{r IOTF_pOWcutoff_FamOB_ttests, echo=FALSE, results='verbatim'}
-IOTF_pOWcutoff_FamOB_ttest
-```
-
-\FloatBarrier
-```{r IOTF_pOWcutoff_FamOB_sd, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_FamOB_sd, "latex",  digits = 3, caption = "Standard deviations for percent of overweight by absence vs presence of family history of obesity", booktabs=TRUE) %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-There was no differences in percent of overweight for those whose families had a history of eating disorder (reported by parent). There was a significant difference in percent of overweight between families that reported a history of obesity ('Yes') and those who did not ('No'). Those without a family history of obesity had a mean percent of overweight equal to 94%, indicating the children had healthy weight on average. Children with a family history of obesity had a mean percent of overweight equal to 124%, indicating the children had overweight or obesity.
-
-\FloatBarrier
-
-### distribution test for Yes/Now History of Eating Disorders across Weight Status
-
-```{r IOTF_pOWcutoff_FamED_fisher, echo=FALSE, results='verbatim'}
-IOTF_weightstatus_FamED_fisher
-```
-
-\FloatBarrier
-
-## Family Members with History of Obesity
-
-```{r nFamOB_members_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_nFamOB, caption = 'Overall Family Relationship Categories with History of Obeisty', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-
-\FloatBarrier
-
-### mean (sd) number of family relationship categories 
-
-```{r Med_nFamOB_meansd, echo=FALSE, results='verbatim'}
-mean(UAE_allDat$nFam_Obesity)
-sd(UAE_allDat$nFam_Obesity)
-```
-
-\FloatBarrier
-
-### Association with Number of Relative Categories with History of Obesity - Poisson
-
-```{r IOTF_pOWcutoff_nFam_poisson, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_nFamOB_tab, caption = 'Poisson Model: Number of Family Relationship Categories Obeisty - pOWcutoff', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-\FloatBarrier
-
-Percent of overweight cutoff was  associated with reported number of relative categories with family history of obesity.
-
-\FloatBarrier
-
-### Sensitivity Tests
-
-```{r IOTF_pOWcutoff_nFam_STpoisson, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_nFamOB_STtab, digits = 3, caption = "Linear Model: Number of Family Relationship Categories Obesity - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-After controlling for family income, mother education, child age, and child sex, percent of overweight showed a trend-level association with number of family members with history of obesity. A child with 110% of overweight, compared to 100%, would have 1.08 times the odds of having an additional family member with a history of obesity.
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_nFamOB_adjOdds_plot, echo=FALSE, include = TRUE}
-IOTF_pOWcutoff_nFamOB_adjOdds_plot
-```
-
-```{r IOTF_pOWcutoff_nFamOB_raw_plot, echo=FALSE, include = FALSE}
-IOTF_pOWcutoff_nFamOB_raw_plot
-```
-
-\FloatBarrier
-
-## Family Members with History of Eating Disorders
-
-```{r nFamED_members_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_nFamED, caption = 'Overall Family Relationship Categories with History of Eating Disorders', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-
-\FloatBarrier
-
-### mean (sd) number of family relationship categories 
-
-```{r Med_nFamED_meansd, echo=FALSE, results='verbatim'}
-mean(UAE_allDat$nFam_EatingDisorder)
-sd(UAE_allDat$nFam_EatingDisorder)
-```
-
-\FloatBarrier
-\clearpage
-
-# Sleep
-
-```{r Beh_OB_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_sleep_OB, caption = 'Sleep by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-\FloatBarrier
-
-Note: Bedtime_28hr was used to be able to look at bedtime continuously. Since the latest reported bedtime was 4am, the day was extended to 28 hours to so midnight = 24.00 and 4am = 28.00.
-
-## Overall Averages
-
-```{r IOTF_avg_sleep, echo=FALSE, results='asis'}
-kable(sleep_avg_tab, digits = 3, caption = "Overall average sleep", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-\clearpage
-
-## Association Betwen Sleep Sub-Scales and Percent of Overweight Cutoff
-
-### Correlation Matrix - Sleep
-
-```{r IOTF_pOWcutoff_sleep_cor, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_sleep_cormat, digits = 3, caption = "Correlations between sleep percent of overweight", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_sleep_cor_ps, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_sleep_cormat_ps, digits = 3, caption = "Correlations between sleep percent of overweight", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-Percent of overweight was not associated with bedtime, waketime, or total sleep.
-
-### t-tests for recommendation categories - Sleep
-
-```{r OTF_pOWcutoff_sleep_ttests, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff.sleep_ttest_tab, caption = 'Percent of Overweight by Sleep by Recommendations', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-### Correlation Matrix - Sleep Behavior
+## Correlation Matrix
 
 ```{r IOTF_pOWcutoff_cshq_cor, echo=FALSE, results='asis'}
 kable(IOTF_pOWcutoff_CSHQ_cormat, digits = 3, caption = "Correlations between sleep subscales and percent of overweight", booktabs=TRUE)  %>%
@@ -621,70 +350,3 @@ kable(IOTF_pOWcutoff_prosocial_Low_tab, digits = 3, caption = "Logistic Model: P
 
 \clearpage
 \FloatBarrier
-
-# Extra Tables by Sex
-```{r load_extraTables_script, echo=FALSE}
-source('extra2_MedPaper_tablesSex.R')
-```
-
-\FloatBarrier
-## Participant Characteristics
-```{r Demo_sex_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_demo_sex, caption = 'Demographic Characteristics by Sex', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-There were no differences by sex with the exception of females having a higher hip-to-waist ratio, which would be expected for this age range.
-
-\FloatBarrier
-\clearpage
-
-## Medical Comorbidities 
-
-```{r Med_sex_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_med_sex, caption = 'Medical Comorbidities by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-Presence of different co-morbidities did not differ by sex, nor did the number of co-morbidities
-
-\FloatBarrier
-\clearpage
-
-## Family History
-
-```{r Fam_sex_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_fam_sex, caption = 'Family History by Sex', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-There were no differences by sex.
-
-\FloatBarrier
-\clearpage
-
-## Sleep
-```{r Beh_sex_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_sleep_sex, caption = 'Sleep by Sex', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-There were no differences by sex.
-
-\FloatBarrier
-\clearpage
-
-## Strengths and Difficulties Questionnaire
-
-```{r SDQ_sex_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_sdq_sex, caption = 'Strengths and Difficulty by Sex', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-There were no differences by sex.
-
-\FloatBarrier
-\clearpage
-
-\end{document}
-

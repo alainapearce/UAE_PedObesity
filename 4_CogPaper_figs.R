@@ -1,9 +1,8 @@
-# This script was written by Alaina Pearce in 2021
+# This script was written by Alaina Pearce in 2022
 # to set up/organize data for the paper examining
-# medical, famility history, and behavior in Emirati children
-# by weight status
+# cognitive function in Emirati children by weight status
 #
-#     Copyright (C) 2020 Alaina L Pearce
+#     Copyright (C) 2022 Alaina L Pearce
 # 
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -25,7 +24,7 @@
 # library(ggridges)
 
 ## load data/clean - uncomment if running separately
-# source('1_MedBeh_DataOrg.R')
+# source('1_CogPaper_DataOrg.R')
 
 ####   Demo Data  Figs     ####
 UAE_allDat$all_group <- 1
@@ -47,38 +46,11 @@ IOTF_pOWcutoff_plot <- ggplot(UAE_allDat, aes(x = IOTF_pOWcutoff, y = all_group,
         panel.background = element_blank())
 
 
-####   Family History       ####
-
-if(!exists('IOTF_pOWcutoff_nFamOB_dat') || !is.data.frame(get('IOTF_pOWcutoff_nFamOB_dat'))){
- source('3_MedPaper_analyses.R') 
-}
-
-IOTF_pOWcutoff_nFamOB_adjOdds_plot <- ggplot(IOTF_pOWcutoff_nFamOB_dat, aes(y = exp(nFam_Obesity_probLogit), x = IOTF_pOWcutoff)) +
-  geom_point() +
-  geom_smooth(method = 'lm', formula = y~x) +
-  ggtitle('Corrleation between Percent of Overweight Cutoff cuttoff and Number of Family Members with History of Obesity (adjusted for covariates') +
-  scale_y_continuous(name=paste0('Adjusted Odds of having an adiition family relationship', '\n',
-                                'category with OB (income, mother ed, age, and sex)')) +
-  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
-  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
-        panel.background = element_blank())
-
-IOTF_pOWcutoff_nFamOB_raw_plot <- ggplot(UAE_allDat, aes(y = nFam_Obesity, x = IOTF_pOWcutoff)) +
-  geom_point() +
-  geom_smooth(method = 'lm', formula = y~x) +
-  ggtitle('Corrleation between Percent of Overweight Cutoff cuttoff and Number of Family Members with History of Obesity') +
-  scale_y_continuous(name='# Family Relationship Categories with OB') +
-  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
-  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
-        panel.background = element_blank())
-                          
 #### Sleep ####
 
 ## Sleep Onset Delay
 if(!exists('CHSQ_SleepDelay_dat') || !is.data.frame(get('CHSQ_SleepDelay_dat'))){
-  source('3_MedPaper_analyses.R') 
+  source('3_CogPaper_analyses.R') 
 }
 
 IOTF_pOWcutoff_SleepDelay_adj_plot <- ggplot(CHSQ_SleepDelay_dat, aes(y = CSHQ_SleepOnsetDelay_pred, x = IOTF_pOWcutoff)) +
@@ -104,7 +76,7 @@ IOTF_pOWcutoff_SleepDelay_raw_plot <- ggplot(UAE_allDat, aes(y = CSHQ_SleepOnset
 
 ## Sleep Disordered Breathing
 if(!exists('CHSQ_DisorderedBreathing_dat') || !is.data.frame(get('CHSQ_DisorderedBreathing_dat'))){
-  source('3_MedPaper_analyses.R') 
+  source('3_CogPaper_analyses.R') 
 }
 
 IOTF_pOWcutoff_DisorderedBreathing_adj_plot <- ggplot(CHSQ_DisorderedBreathing_dat, aes(y = CSHQ_SleepDisorderBreathing_pred, x = IOTF_pOWcutoff)) +
