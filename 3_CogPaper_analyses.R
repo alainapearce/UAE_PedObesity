@@ -33,129 +33,356 @@
 
 ####   Demo Data  Tables     ####
 
-# t-test for sex and IOTF_pOWcutoff 
-IOTF_pOWcutoff.sex_ttest <- t.test(IOTF_pOWcutoff ~ sex, data = UAE_allDat)
+# t-test for sex and pOW 
+pOW.sex_ttest <- t.test(pOW ~ sex, data = UAE_allDat)
 
-# correlations with IOTF_pOWcutoff 
-IOTF_pOWcutoff_demo_cor.varnames <- names(UAE_allDat)[c(5, 18:19, 68)]
-IOTF_pOWcutoff_demo_cor.vars <- UAE_allDat[c(5, 18:19, 68)]
-IOTF_pOWcutoff_demo_cormat <- data.frame(cor.matrix(IOTF_pOWcutoff_demo_cor.vars, IOTF_pOWcutoff_demo_cor.varnames))
-IOTF_pOWcutoff_demo_cormat_ps <- data.frame(cor.matrix_ps(IOTF_pOWcutoff_demo_cor.vars, IOTF_pOWcutoff_demo_cor.varnames))
+# correlations with pOW 
+pOW_demo_cor.varnames <- names(UAE_allDat)[c(5, 18:19, 82)]
+pOW_demo_cor.vars <- UAE_allDat[c(5, 18:19, 82)]
+pOW_demo_cormat <- data.frame(cor.matrix(pOW_demo_cor.vars, pOW_demo_cor.varnames))
+pOW_demo_cormat_ps <- data.frame(cor.matrix_ps(pOW_demo_cor.vars, pOW_demo_cor.varnames))
 
 # monthly income ANOVA
-IOTF_pOWcutoff_income_mod <- lm(IOTF_pOWcutoff ~ Month_AED, data = UAE_allDat)
-IOTF_pOWcutoff_income_anova <- Anova(IOTF_pOWcutoff_income_mod, type = 3, test.statistic = 'F')
+pOW_income_mod <- lm(pOW ~ Month_AED, data = UAE_allDat)
+pOW_income_anova <- Anova(pOW_income_mod, type = 3, test.statistic = 'F')
 
 ##sensitivity test with linear model 
-IOTF_age_pOWcutoff_mod <- lm(IOTF_pOWcutoff ~ Month_AED + Mother_ed + Age_yr + sex, data = UAE_allDat)
+IOTF_age_pOWcutoff_mod <- lm(pOW ~ Month_AED + Mother_ed + Age_yr + sex, data = UAE_allDat)
 IOTF_age_pOWcutoff_sum <- summary(IOTF_age_pOWcutoff_mod)
-IOTF_age_pOWcutoff_tab <- cbind.data.frame(IOTF_age_pOWcutoff_sum$coefficients, c('', '', '', '', '', '**', ''))
+IOTF_age_pOWcutoff_tab <- cbind.data.frame(IOTF_age_pOWcutoff_sum$coefficients, c('**', '', '', '', '', '**', ''))
 names(IOTF_age_pOWcutoff_tab) <- c('b', 'se', 't', 'p', ' ')
 
-####   CSHQ       ####
-## correlations with IOTF_pOWcutoff
-IOTF_pOWcutoff_CSHQ_cor.varnames <- c('IOTF_pOWcutoff', 'BedResit', 'OnsetDelay', 'Duration', 'Anxiety', 'NightWaking', 'Parasomnias', 'DisorderBreathing', 'DaySleepiness', 'Total')
-IOTF_pOWcutoff_CSHQ_cor.vars <- UAE_allDat[c(68, 36:39, 41:44, 46)]
-IOTF_pOWcutoff_CSHQ_cormat <- cor.matrix(IOTF_pOWcutoff_CSHQ_cor.vars, IOTF_pOWcutoff_CSHQ_cor.varnames)
-IOTF_pOWcutoff_CSHQ_cormat_ps <- cor.matrix_ps(IOTF_pOWcutoff_CSHQ_cor.vars, IOTF_pOWcutoff_CSHQ_cor.varnames)
+####   Neuropsych Data       ####
 
-##CSHQ sensitivity tests for IOTF_pOWcutoff
+##correlations with IOTF_BMI25p
+neuropsych_cor_varnames <- c('blockT', 'matrixT', 'PRI', 'ds_fSS', 'ds_bSS', 'ds_SS', 'codingSS', 'age', 'pOW', 'hw_ratio', 'nComorbid')
+neuropsych_cor_vars = UAE_allDat[c(48, 50, 52, 55, 57, 59, 61, 5, 82:83, 95)]
+neuropsych_cormat <- data.frame(cor.matrix(neuropsych_cor_vars, neuropsych_cor_varnames))
+neuropsych_cormat_ps <- data.frame(cor.matrix_ps(neuropsych_cor_vars, neuropsych_cor_varnames))
 
-### Sleep onset delay
-IOTF_pOWcutoff_sleepdelay_mod <- lm(CSHQ_SleepOnsetDelay ~ Month_AED + Mother_ed + Age_yr + sex + IOTF_pOWcutoff, data = UAE_allDat)
-IOTF_pOWcutoff_sleepdelay_sum <- summary(IOTF_pOWcutoff_sleepdelay_mod)
-IOTF_pOWcutoff_sleepdelay_tab <- cbind.data.frame(IOTF_pOWcutoff_sleepdelay_sum$coefficients, c('', '', '', '', '', '.', '', '*'))
-names(IOTF_pOWcutoff_sleepdelay_tab) <- c('b', 'se', 't', 'p', ' ')
-
-#add predicted sleep onset delay to data
-CHSQ_SleepDelay_dat <- UAE_allDat[!is.na(UAE_allDat$CSHQ_SleepOnsetDelay) & !is.na(UAE_allDat$Month_AED) & !is.na(UAE_allDat$Mother_ed), ]
-CHSQ_SleepDelay_dat$CSHQ_SleepOnsetDelay_pred <- predict(IOTF_pOWcutoff_sleepdelay_mod, type = 'response')
-
-### Sleep disordered breathing
-
-IOTF_pOWcutoff_breathing_mod <- lm(CSHQ_SleepDisorderBreathing ~ Month_AED + Mother_ed + Age_yr + sex + IOTF_pOWcutoff, data = UAE_allDat)
-IOTF_pOWcutoff_breathing_sum <- summary(IOTF_pOWcutoff_breathing_mod)
-IOTF_pOWcutoff_breathing_tab <- cbind.data.frame(IOTF_pOWcutoff_breathing_sum$coefficients, c('', '', '', '', '', '', '', '**'))
-names(IOTF_pOWcutoff_breathing_tab) <- c('b', 'se', 't', 'p', ' ')
-
-#add predicted sleep disordered breathing to data
-CHSQ_DisorderedBreathing_dat <- UAE_allDat[!is.na(UAE_allDat$CSHQ_SleepDisorderBreathing) & !is.na(UAE_allDat$Month_AED) & !is.na(UAE_allDat$Mother_ed), ]
-CHSQ_DisorderedBreathing_dat$CSHQ_SleepDisorderBreathing_pred <- predict(IOTF_pOWcutoff_breathing_mod, type = 'response')
-
-#### SDQ ####
-
-##SDQ sensitivity tests for IOTF_pOWcutoff
-
-##center for interaction
-UAE_allDat$IOTF_pOWcutoff_c100 <- UAE_allDat$IOTF_pOWcutoff - 100
-
-## emotional problems
-UAE_allDat$SDQ_EmotProb_Elevated <- ifelse(UAE_allDat$SDQ_ConductProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_EmotProb_Elevated <- factor(UAE_allDat$SDQ_EmotProb_Elevated, levels = c('N', 'Y'))
-
-## conduct problems
-UAE_allDat$SDQ_ConductProb_Elevated <- ifelse(UAE_allDat$SDQ_EmotionProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_ConductProb_Elevated <- factor(UAE_allDat$SDQ_ConductProb_Elevated,  levels = c('N', 'Y'))
+neuropsych_cor_IQ70_vars = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, c(48, 50, 52, 55, 57, 59, 61, 5, 82:83, 95)]
+neuropsych_IQ70_cormat <- data.frame(cor.matrix(neuropsych_cor_IQ70_vars, neuropsych_cor_varnames))
+neuropsych_IQ70_cormat_ps <- data.frame(cor.matrix_ps(neuropsych_cor_IQ70_vars, neuropsych_cor_varnames))
 
 
-## hyperactivity problems
-UAE_allDat$SDQ_HypeProb_Elevated <- ifelse(UAE_allDat$SDQ_HyperactivityProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_HypeProb_Elevated <- factor(UAE_allDat$SDQ_HypeProb_Elevated,  levels = c('N', 'Y'))
+## Models
+UAE_allDat$pOW_c100 <- UAE_allDat$pOW - 100
+UAE_allDat$pOW_c100_sq <- UAE_allDat$pOW_c100 * UAE_allDat$pOW_c100
 
-## peer problems
-UAE_allDat$SDQ_PeerProb_Elevated <- ifelse(UAE_allDat$SDQ_PeerProb_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_PeerProb_Elevated <- factor(UAE_allDat$SDQ_PeerProb_Elevated, levels = c('N', 'Y'))
+#BlockT
+pOW_BlockT_mod <- lm(WASI_BlockT ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
 
-## pro-social problems
-UAE_allDat$SDQ_Prosocial_Low <- ifelse(UAE_allDat$SDQ_Prosocial_cat == 'CloseToAverage', 'N', 'Y')
-UAE_allDat$SDQ_Prosocial_Low <- factor(UAE_allDat$SDQ_Prosocial_Low,  levels = c('N', 'Y'))
+pOW_BlockT_quadmod <- lm(WASI_BlockT ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100 + pOW_c100_sq, data = UAE_allDat)
 
-## emotional problems
-IOTF_pOWcutoff_EmotProb_Elevated_mod <- glm(SDQ_EmotProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
-IOTF_pOWcutoff_EmotProb_Elevated_sum <- summary(IOTF_pOWcutoff_EmotProb_Elevated_mod)
-IOTF_pOWcutoff_EmotProb_Elevated_odds <- exp(coef(IOTF_pOWcutoff_EmotProb_Elevated_mod))
-IOTF_pOWcutoff_EmotProb_Elevated_oddsCI <- exp(confint(IOTF_pOWcutoff_EmotProb_Elevated_mod))
-IOTF_pOWcutoff_EmotProb_Elevated_tab <- cbind.data.frame(IOTF_pOWcutoff_EmotProb_Elevated_sum$coefficients, c('', '', '', '', '', '.', '', '', ''), IOTF_pOWcutoff_EmotProb_Elevated_odds, IOTF_pOWcutoff_EmotProb_Elevated_oddsCI)
-names(IOTF_pOWcutoff_EmotProb_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
-IOTF_pOWcutoff_EmotProb_Elevated_tab <- IOTF_pOWcutoff_EmotProb_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
+anova(pOW_BlockT_mod, pOW_BlockT_quadmod)
 
-## conduct problems
-IOTF_pOWcutoff_ConductProb_Elevated_mod <- glm(SDQ_ConductProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
-IOTF_pOWcutoff_ConductProb_Elevated_sum <- summary(IOTF_pOWcutoff_ConductProb_Elevated_mod)
-IOTF_pOWcutoff_ConductProb_Elevated_odds <- exp(coef(IOTF_pOWcutoff_ConductProb_Elevated_mod))
-IOTF_pOWcutoff_ConductProb_Elevated_oddsCI <- exp(confint(IOTF_pOWcutoff_ConductProb_Elevated_mod))
-IOTF_pOWcutoff_ConductProb_Elevated_tab <- cbind.data.frame(IOTF_pOWcutoff_ConductProb_Elevated_sum$coefficients, c('', '', '', '', '', '', '', '', ''), IOTF_pOWcutoff_ConductProb_Elevated_odds, IOTF_pOWcutoff_ConductProb_Elevated_oddsCI)
-names(IOTF_pOWcutoff_ConductProb_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
-IOTF_pOWcutoff_ConductProb_Elevated_tab <- IOTF_pOWcutoff_ConductProb_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
+pOW_BlockT_quad_sum <- summary(pOW_BlockT_quadmod)
 
-## hyperactivity problems
-IOTF_pOWcutoff_HypeProb_Elevated_mod <- glm(SDQ_HypeProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
-IOTF_pOWcutoff_HypeProb_Elevated_sum <- summary(IOTF_pOWcutoff_HypeProb_Elevated_mod)
-IOTF_pOWcutoff_HypeProb_Elevated_odds <- exp(coef(IOTF_pOWcutoff_HypeProb_Elevated_mod))
-IOTF_pOWcutoff_HypeProb_Elevated_oddsCI <- exp(confint(IOTF_pOWcutoff_HypeProb_Elevated_mod))
-IOTF_pOWcutoff_HypeProb_Elevated_tab <- cbind.data.frame(IOTF_pOWcutoff_HypeProb_Elevated_sum$coefficients, c('', '', '', '', '', '', '', '', ''), IOTF_pOWcutoff_HypeProb_Elevated_odds, IOTF_pOWcutoff_HypeProb_Elevated_oddsCI)
-names(IOTF_pOWcutoff_HypeProb_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
-IOTF_pOWcutoff_HypeProb_Elevated_tab <- IOTF_pOWcutoff_HypeProb_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
+##find vertex - remember, centered at 100 so add 100 to interpret
+pOW_BlockT_quad_vertex <- -pOW_BlockT_quad_sum$coefficients[8, 1]/(2*pOW_BlockT_quad_sum$coefficients[9, 1])
+  
+#get dataset with full data for predicted value
+UAE_allDat_WASI <- UAE_allDat[!is.na(UAE_allDat$Mother_ed) & !is.na(UAE_allDat$Month_AED), ]
+UAE_allDat_WASI$BlockT_quad_pred <- predict(pOW_BlockT_quadmod, type = 'response')
 
-## peer problems
-IOTF_pOWcutoff_peerprob_Elevated_mod <- glm(SDQ_PeerProb_Elevated ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
-IOTF_pOWcutoff_peerprob_Elevated_sum <- summary(IOTF_pOWcutoff_peerprob_Elevated_mod)
-IOTF_pOWcutoff_peerprob_Elevated_odds <- exp(coef(IOTF_pOWcutoff_peerprob_Elevated_mod))
-IOTF_pOWcutoff_peerprob_Elevated_oddsCI <- exp(confint(IOTF_pOWcutoff_peerprob_Elevated_mod))
-IOTF_pOWcutoff_peerprob_Elevated_tab <- cbind.data.frame(IOTF_pOWcutoff_peerprob_Elevated_sum$coefficients, c('', '', '.', '', '*', '', '', '*', '*'), IOTF_pOWcutoff_peerprob_Elevated_odds, IOTF_pOWcutoff_peerprob_Elevated_oddsCI)
-names(IOTF_pOWcutoff_peerprob_Elevated_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
-IOTF_pOWcutoff_peerprob_Elevated_tab <- IOTF_pOWcutoff_peerprob_Elevated_tab[c(1, 6, 2, 7:8, 3:5)]
+#BlockT - IQ 70
+pOW_BlockT_IQ70_quadmod <- lm(WASI_BlockT ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100 + pOW_c100_sq, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_BlockT_IQ70_quad_sum <- summary(pOW_BlockT_IQ70_quadmod)
 
-IOTF_pOWcutoff_peerprob_Elevated_emtrends <- emtrends(IOTF_pOWcutoff_peerprob_Elevated_mod, ~ IOTF_pOWcutoff_c100 | sex , var = 'IOTF_pOWcutoff_c100')
+#get dataset with full data for predicted value
+UAE_allDat_WASI70 <- UAE_allDat[!is.na(UAE_allDat$Mother_ed) & !is.na(UAE_allDat$Month_AED) & UAE_allDat$WASI_PRI_IQ >= 70, ]
+UAE_allDat_WASI70$BlockT_quad_pred <- predict(pOW_BlockT_IQ70_quadmod, type = 'response')
 
-SDQ_PeerProb_dat <- UAE_allDat[!is.na(UAE_allDat$SDQ_PeerProb_raw) & !is.na(UAE_allDat$Month_AED) & !is.na(UAE_allDat$Mother_ed), ]
-SDQ_PeerProb_dat$SDQ_PeerProb_Elevated_predLogit <- predict(IOTF_pOWcutoff_peerprob_Elevated_mod, type = 'link')
+#MatrixT
+pOW_MatrixT_mod <- lm(WASI_MatrixT ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
 
-## pro-social problems
-IOTF_pOWcutoff_prosocial_Low_mod <- glm(SDQ_Prosocial_Low ~ Month_AED + Mother_ed + Age_yr + sex*IOTF_pOWcutoff_c100, family = binomial(link = 'logit'), data = UAE_allDat)
-IOTF_pOWcutoff_prosocial_Low_sum <- summary(IOTF_pOWcutoff_prosocial_Low_mod)
-IOTF_pOWcutoff_prosocial_Low_odds <- exp(coef(IOTF_pOWcutoff_prosocial_Low_mod))
-IOTF_pOWcutoff_prosocial_Low_oddsCI <- exp(confint(IOTF_pOWcutoff_prosocial_Low_mod))
-IOTF_pOWcutoff_prosocial_Low_tab <- cbind.data.frame(IOTF_pOWcutoff_prosocial_Low_sum$coefficients, c('', '', '', '*', '', '', '', '', '.'), IOTF_pOWcutoff_prosocial_Low_odds, IOTF_pOWcutoff_prosocial_Low_oddsCI)
-names(IOTF_pOWcutoff_prosocial_Low_tab) <- c('b', 'se', 'z', 'p', ' ', 'e^b', 'e^2.5 CI', 'e^97.5 CI')
-IOTF_pOWcutoff_prosocial_Low_tab <- IOTF_pOWcutoff_prosocial_Low_tab[c(1, 6, 2, 7:8, 3:5)]
+pOW_MatrixT_quadmod <- lm(WASI_MatrixT ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100 + pOW_c100_sq, data = UAE_allDat)
+
+anova(pOW_MatrixT_mod, pOW_MatrixT_quadmod)
+
+pOW_MatrixT_sum <- summary(pOW_MatrixT_mod)
+UAE_allDat_WASI$MatrixT_pred <- predict(pOW_MatrixT_mod, type = 'response')
+
+
+pOW_MatrixT_IQ70_mod <- lm(WASI_MatrixT ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_MatrixT_IQ70_sum <- summary(pOW_MatrixT_IQ70_mod)
+UAE_allDat_WASI70$MatrixT_pred <- predict(pOW_MatrixT_IQ70_mod, type = 'response')
+
+
+#PRI
+pOW_PRI_mod <- lm(WASI_PRI_IQ ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
+
+pOW_PRI_quadmod <- lm(WASI_PRI_IQ ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100 + pOW_c100_sq, data = UAE_allDat)
+
+anova(pOW_PRI_mod, pOW_PRI_quadmod)
+
+pOW_PRI_quad_sum <- summary(pOW_PRI_quadmod)
+
+pOW_PRI_IQ70_mod <- lm(WASI_PRI_IQ ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_PRI_IQ70_quad_sum <- summary(pOW_PRI_IQ70_mod)
+
+## Digit Span
+#forward
+pOW_dsforward_mod <- lm(DigitSpan_ForwardSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
+pOW_dsforward_sum <- summary(pOW_dsforward_mod)
+UAE_allDat_WASI$dsforward_pred <- predict(pOW_dsforward_mod, type = 'response')
+
+pOW_IQ70_dsforward_mod <- lm(DigitSpan_ForwardSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_IQ70_dsforward_sum <- summary(pOW_IQ70_dsforward_mod)
+UAE_allDat_WASI70$dsforward_pred <- predict(pOW_IQ70_dsforward_mod, type = 'response')
+
+#backward
+pOW_dsbackward_mod <- lm(DigitSpan_BackwardSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
+pOW_dsbackward_sum <- summary(pOW_dsbackward_mod)
+UAE_allDat_WASI$dsbackward_pred <- predict(pOW_dsbackward_mod, type = 'response')
+
+pOW_IQ70_dsbackward_mod <- lm(DigitSpan_BackwardSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_IQ70_dsbackward_sum <- summary(pOW_IQ70_dsbackward_mod)
+UAE_allDat_WASI70$dsbackward_pred <- predict(pOW_IQ70_dsbackward_mod, type = 'response')
+
+#total
+pOW_dstotal_mod <- lm(DigitSpan_totalSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
+pOW_dstotal_sum <- summary(pOW_dstotal_mod)
+
+pOW_IQ70_dstotal_mod <- lm(DigitSpan_totalSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_IQ70_dstotal_sum <- summary(pOW_IQ70_dstotal_mod)
+
+## coding
+#total
+pOW_coding_mod <- lm(CodingSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat)
+pOW_coding_sum <- summary(pOW_coding_mod)
+UAE_allDat_WASI$coding_pred <- predict(pOW_coding_mod, type = 'response')
+
+pOW_IQ70_coding_mod <- lm(CodingSS ~ Month_AED + Mother_ed + Age_yr + sex + pOW_c100, data = UAE_allDat[UAE_allDat$WASI_PRI_IQ >= 70, ])
+pOW_IQ70_coding_sum <- summary(pOW_IQ70_coding_mod)
+UAE_allDat_WASI70$coding_pred <- predict(pOW_IQ70_coding_mod, type = 'response')
+
+## Nback ####
+pOW_Nback_varnames <- names(UAE_goodNBackDat[c(11, 82:83, 105, 116, 108, 119, 122:123, 102, 113)])
+pOW_Nback_vars <- UAE_goodNBackDat[c(11, 82:83, 105, 116, 108, 119, 122:123, 102, 113)]
+
+nback_cormat <- data.frame(cor.matrix(pOW_Nback_vars, pOW_Nback_varnames))
+nback_cormat_ps <- data.frame(cor.matrix_ps(pOW_Nback_vars, pOW_Nback_varnames))
+
+pOW_IQ70_Nback_vars <- UAE_goodNBackDat[UAE_goodNBackDat$WASI_PRI_IQ >= 70, c(11, 82:83, 105, 116, 108, 119, 122:123, 102, 113)]
+nback_IQ70_cormat <- data.frame(cor.matrix(pOW_IQ70_Nback_vars, pOW_Nback_varnames))
+nback_IQ70_cormat_ps <- data.frame(cor.matrix_ps(pOW_IQ70_Nback_vars, pOW_Nback_varnames))
+
+#####################################
+####
+####   Nback Performance - Models  ####
+####
+#####################################
+UAE_goodNBackDat_long$pOW_c100 <- UAE_goodNBackDat_long$pOW - 100
+
+##Load x percent of overweight ####
+
+#BalAcc
+pOW_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long)
+pOW_BalAccInt_sum <- summary(pOW_BalAccInt_mod)
+pOW_BalAccInt_anova <- anova(pOW_BalAccInt_mod, test.statistic = 'F')
+
+UAE_goodNBack_modDat <- UAE_goodNBackDat_long[!is.na(UAE_goodNBackDat_long$Month_AED) & !is.na(UAE_goodNBackDat_long$Mother_ed), ]
+UAE_goodNBack_modDat$BalAcc_pOW_pred <- predict(pOW_BalAccInt_mod, type = 'response')
+
+pOW_IQg70_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+pOW_IQg70_BalAccInt_sum <- summary(pOW_IQg70_BalAccInt_mod)
+pOW_IQg70_BalAccInt_anova <- anova(pOW_IQg70_BalAccInt_mod, test.statistic = 'F')
+
+#pFA
+pOW_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long)
+pOW_pFAInt_sum <- summary(pOW_pFAInt_mod)
+pOW_pFAInt_anova <- anova(pOW_pFAInt_mod, test.statistic = 'F')
+
+pOW_IQg70_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+pOW_IQg70_pFAInt_sum <- summary(pOW_IQg70_pFAInt_mod)
+pOW_IQg70_pFAInt_anova <- anova(pOW_IQg70_pFAInt_mod, test.statistic = 'F')
+
+#dprime
+pOW_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long)
+pOW_dPrimeInt_sum <- summary(pOW_dPrimeInt_mod)
+pOW_dPrimeInt_anova <- anova(pOW_dPrimeInt_mod, test.statistic = 'F')
+
+pOW_IQg70_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+pOW_IQg70_dPrimeInt_sum <- summary(pOW_IQg70_dPrimeInt_mod)
+pOW_IQg70_dPrimeInt_anova <- anova(pOW_IQg70_dPrimeInt_mod, test.statistic = 'F')
+
+#meanRT
+pOW_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long)
+pOW_meanRTInt_sum <- summary(pOW_meanRTInt_mod)
+pOW_meanRTInt_anova <- anova(pOW_meanRTInt_mod, test.statistic = 'F')
+
+pOW_IQg70_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + pOW_c100*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+pOW_IQg70_meanRTInt_sum <- summary(pOW_IQg70_meanRTInt_mod)
+pOW_IQg70_meanRTInt_anova <- anova(pOW_IQg70_meanRTInt_mod, test.statistic = 'F')
+
+##Exploratory : Percent overweight x N comorbidites ####
+#BalAcc
+ncomorbid_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long)
+ncomorbid_BalAccInt_sum <- summary(ncomorbid_BalAccInt_mod)
+
+ncomorbid_BalAccInt_slopes <- emmeans::emtrends(ncomorbid_BalAccInt_mod, ~pOW_c100|nComorbid, var = 'pOW_c100', at = list(nComorbid = c(0, 1, 2, 3)))
+
+UAE_goodNBack_modDat$BalACC_ncomorbid <- predict(ncomorbid_BalAccInt_mod, type = 'response')
+
+ncomorbid_IQg70_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+ncomorbid_IQg70_BalAccInt_sum <- summary(ncomorbid_IQg70_BalAccInt_mod)
+
+#pFA
+ncomorbid_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long)
+ncomorbid_pFAInt_sum <- summary(ncomorbid_pFAInt_mod)
+
+ncomorbid_pFA_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100 + nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long)
+ncomorbid_pFA_sum <- summary(ncomorbid_pFA_mod)
+
+ncomorbid_IQg70_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+ncomorbid_IQg70_pFAInt_sum <- summary(ncomorbid_IQg70_pFAInt_mod)
+
+#dprime
+ncomorbid_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long)
+ncomorbid_dPrimeInt_sum <- summary(ncomorbid_dPrimeInt_mod)
+
+ncomorbid_dPrimeInt_slopes <- emmeans::emtrends(ncomorbid_dPrimeInt_mod, ~pOW_c100|nComorbid, var = 'pOW_c100', at = list(nComorbid = c(0, 1, 2, 3)))
+
+UAE_goodNBack_modDat$dPrime_ncomorbid <- predict(ncomorbid_dPrimeInt_mod, type = 'response')
+
+ncomorbid_IQg70_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+ncomorbid_IQg70_dPrimeInt_sum <- summary(ncomorbid_IQg70_dPrimeInt_mod)
+
+#meanRT
+ncomorbid_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + pOW_c100*nComorbid + Load + (1|ParID), data = UAE_goodNBackDat_long)
+ncomorbid_meanRTInt_sum <- summary(ncomorbid_meanRTInt_mod)
+
+
+
+##Load x Total Sleep
+#BalAcc
+Sleep_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long)
+Sleep_BalAccInt_sum <- summary(Sleep_BalAccInt_mod)
+Sleep_BalAccInt_anova <- anova(Sleep_BalAccInt_mod, test.statistic = 'F')
+
+Sleep_IQg70_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+Sleep_IQg70_BalAccInt_sum <- summary(Sleep_IQg70_BalAccInt_mod)
+Sleep_IQg70_BalAccInt_anova <- anova(Sleep_IQg70_BalAccInt_mod, test.statistic = 'F')
+
+#pFA
+Sleep_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long)
+Sleep_pFAInt_sum = summary(Sleep_pFAInt_mod)
+Sleep_pFAInt_anova <- anova(Sleep_pFAInt_mod, test.statistic = 'F')
+
+Sleep_pFAInt_slopes <- emmeans::emtrends(Sleep_pFAInt_mod, ~CSHQ_Total_no16|Load, var = 'CSHQ_Total_no16')
+
+UAE_goodNBack_sleepmodDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$CSHQ_Total_no16), ]
+UAE_goodNBack_sleepmodDat$pFA_sleep_pred <- predict(Sleep_pFAInt_mod, type = 'response')
+
+#check without outliers
+Sleep_no109_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$ParID != 109, ])
+Sleep_no109_pFAInt_sum = summary(Sleep_no109_pFAInt_mod)
+Sleep_no109_pFAInt_anova <- anova(Sleep_no109_pFAInt_mod, test.statistic = 'F')
+
+Sleep_IQg07_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+Sleep_IQg70_pFAInt_sum = summary(Sleep_IQg07_pFAInt_mod)
+Sleep_IQg70_pFAInt_anova <- anova(Sleep_IQg07_pFAInt_mod, test.statistic = 'F')
+
+
+#dprime
+Sleep_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long)
+Sleep_dPrimeInt_sum <- summary(Sleep_dPrimeInt_mod)
+Sleep_dPrimeInt_anova <- anova(Sleep_dPrimeInt_mod, test.statistic = 'F')
+
+Sleep_dPrimeInt_slopes <- emmeans::emtrends(Sleep_dPrimeInt_mod, ~CSHQ_Total_no16|Load, var = 'CSHQ_Total_no16')
+
+UAE_goodNBack_sleepmodDat$dPrime_sleep_pred <- predict(Sleep_dPrimeInt_mod, type = 'response')
+
+Sleep_IQg70_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+Sleep_IQg70_dPrimeInt_sum <- summary(Sleep_IQg70_dPrimeInt_mod)
+Sleep_IQg70_dPrimeInt_anova <- anova(Sleep_IQg70_dPrimeInt_mod, test.statistic = 'F')
+
+#meanRT
+Sleep_meanRTInt_mod = lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long)
+Sleep_meanRTInt_sum = summary(Sleep_meanRTInt_mod)
+
+Sleep_IQg70_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + CSHQ_Total_no16*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+Sleep_IQg70_meanRTInt_sum <- summary(Sleep_IQg70_meanRTInt_mod)
+Sleep_IQg70_meanRTInt_anova <- anova(Sleep_IQg70_meanRTInt_mod, test.statistic = 'F')
+
+##Load x SDQ Total Probs
+#BalAcc
+SDQ_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_BalAccInt_sum <- summary(SDQ_BalAccInt_mod)
+SDQ_BalAccInt_anova <- anova(SDQ_BalAccInt_mod, test.statistic = 'F')
+
+SDQ_IQg70_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_BalAccInt_sum <- summary(SDQ_IQg70_BalAccInt_mod)
+SDQ_IQg70_BalAccInt_anova <- anova(SDQ_IQg70_BalAccInt_mod, test.statistic = 'F')
+
+#pFA
+SDQ_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_pFAInt_sum = summary(SDQ_pFAInt_mod)
+SDQ_pFAInt_anova <- anova(SDQ_pFAInt_mod, test.statistic = 'F')
+
+SDQ_pFAInt_slopes <- emmeans::emtrends(SDQ_pFAInt_mod, ~SDQ_TotalProb_raw|Load, var = 'SDQ_TotalProb_raw')
+
+UAE_goodNBack_SDQmodDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$SDQ_TotalProb_raw), ]
+UAE_goodNBack_SDQmodDat$pFA_sdq_pred <- predict(SDQ_pFAInt_mod, type = 'response')
+
+
+SDQ_IQg07_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_pFAInt_sum = summary(SDQ_IQg07_pFAInt_mod)
+SDQ_IQg70_pFAInt_anova <- anova(SDQ_IQg07_pFAInt_mod, test.statistic = 'F')
+
+### exploratory - subscales
+### hyperactivity
+SDQhyper_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + SDQ_HyperactiveProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQhyper_pFAInt_sum = summary(SDQhyper_pFAInt_mod)
+SDQhyper_pFAInt_anova <- anova(SDQhyper_pFAInt_mod, test.statistic = 'F')
+
+SDQhyper_pFAInt_slopes <- emmeans::emtrends(SDQhyper_pFAInt_mod, ~SDQ_HyperactiveProb_raw|Load, var = 'SDQ_HyperactiveProb_raw')
+
+UAE_goodNBack_SDQhypermodDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$SDQ_HyperactiveProb_raw), ]
+UAE_goodNBack_SDQhypermodDat$pFA_sdqhyper_pred <- predict(SDQhyper_pFAInt_mod, type = 'response')
+
+### emotional
+SDQemot_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + SDQ_EmotionProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQemot_pFAInt_sum = summary(SDQemot_pFAInt_mod)
+SDQemot_pFAInt_anova <- anova(SDQemot_pFAInt_mod, test.statistic = 'F')
+
+SDQemot_pFAInt_slopes <- emmeans::emtrends(SDQemot_pFAInt_mod, ~SDQ_EmotionProb_raw|Load, var = 'SDQ_EmotionProb_raw')
+
+UAE_goodNBack_SDQemotmodDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$SDQ_EmotionProb_raw), ]
+UAE_goodNBack_SDQemotmodDat$pFA_sdqemot_pred <- predict(SDQemot_pFAInt_mod, type = 'response')
+
+### conduct
+SDQconduct_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + SDQ_ConductProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQconduct_pFAInt_sum = summary(SDQconduct_pFAInt_mod)
+SDQconduct_pFAInt_anova <- anova(SDQconduct_pFAInt_mod, test.statistic = 'F')
+
+SDQconduct_pFAInt_slopes <- emmeans::emtrends(SDQconduct_pFAInt_mod, ~SDQ_ConductProb_raw|Load, var = 'SDQ_ConductProb_raw')
+
+UAE_goodNBack_SDQconductmodDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$SDQ_ConductProb_raw), ]
+UAE_goodNBack_SDQconductmodDat$pFA_sdqconduct_pred <- predict(SDQconduct_pFAInt_mod, type = 'response')
+
+### peer
+SDQpeer_pFAInt_mod = lmer(pFA ~ Month_AED + Mother_ed + Age_yr + SDQ_PeerProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQpeer_pFAInt_sum = summary(SDQpeer_pFAInt_mod)
+SDQpeer_pFAInt_anova <- anova(SDQpeer_pFAInt_mod, test.statistic = 'F')
+
+
+#dprime
+SDQ_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_dPrimeInt_sum <- summary(SDQ_dPrimeInt_mod)
+SDQ_dPrimeInt_anova <- anova(SDQ_dPrimeInt_mod, test.statistic = 'F')
+
+SDQ_IQg70_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_dPrimeInt_sum <- summary(SDQ_IQg70_dPrimeInt_mod)
+SDQ_IQg70_dPrimeInt_anova <- anova(SDQ_IQg70_dPrimeInt_mod, test.statistic = 'F')
+
+#meanRT
+SDQ_meanRTInt_mod = lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_meanRTInt_sum = summary(SDQ_meanRTInt_mod)
+
+SDQ_IQg70_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + SDQ_TotalProb_raw*Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_meanRTInt_sum <- summary(SDQ_IQg70_meanRTInt_mod)
+SDQ_IQg70_meanRTInt_anova <- anova(SDQ_IQg70_meanRTInt_mod, test.statistic = 'F')
+
+

@@ -165,7 +165,7 @@ UAE_allDat$Aunt_OBhistory <- ifelse(grepl('7', UAE_allDat$Fam_OB_list), 'Aunt', 
 UAE_allDat$Uncle_OBhistory <- ifelse(grepl('8', UAE_allDat$Fam_OB_list), 'Uncle', 'N')
 
 ##number Obese
-UAE_allDat$nFam_Obesity <- rowSums(UAE_allDat[c('Mother_OBhistory', 'Father_OBhistory', 'Grandmother_OBhistory', 'Grandfather_OBhistory', 'Sister_OBhistory', 'Brother_OBhistory',  'Aunt_OBhistory', 'Uncle_OBhistory')] != 'N' &  !is.na(UAE_allDat[c('Mother_OBhistory', 'Grandmother_OBhistory', 'Grandfather_OBhistory', 'Sister_OBhistory', 'Brother_OBhistory', 'Aunt_OBhistory', 'Uncle_OBhistory')]))
+UAE_allDat$nFam_Obesity <- rowSums(UAE_allDat[c('Mother_OBhistory', 'Father_OBhistory', 'Grandmother_OBhistory', 'Grandfather_OBhistory', 'Sister_OBhistory', 'Brother_OBhistory',  'Aunt_OBhistory', 'Uncle_OBhistory')] != 'N')
 
 ##Eating Disorder
 UAE_allDat$Fam_ED_YN <- factor(UAE_allDat$Fam_ED_YN,  levels = c('yes', 'no'))

@@ -33,6 +33,11 @@ UAE_sumDat <- read.csv('Data/UAE_cogBMI_summary_10.1.21.csv', header = TRUE, na.
 UAE_demoDat <- read.csv('Data/UAE_cogBMI_demo_10.1.21.csv', header = TRUE, na.strings = c("NA", "", "<NA>", "N/A"))
 names(UAE_demoDat)[35] <- c('Month_AED')
 
+#medical
+UAE_healthDat <- read.csv('Data/UAE_cogBMI_health_10.1.21.csv', header = TRUE, na.strings = c("NA", "", "<NA>", "N/A"))
+names(UAE_healthDat)[c(20:21)] <- c('ThyroidConditions', 'GlycemicStatus')
+
+
 ## may use as moderators to test hypothesis from USA paper
 
 #mental health
@@ -75,6 +80,7 @@ UAE_allDat <- merge(UAE_sumDat[c(1:10, 14:15, 18:21)], UAE_demoDat[c(1, 8, 11, 1
 UAE_allDat <- merge(UAE_allDat, UAE_SDQDat[c(1, 5:16)], id = 'ParID', all = TRUE) 
 UAE_allDat <- merge(UAE_allDat, UAE_CSHQDat[c(1, 5:18)], id = 'ParID', all = TRUE)
 UAE_allDat <- merge(UAE_allDat, UAE_sumDat[c(1, 24:30, 32:37, 39:40)], id = 'ParID', all = TRUE) 
+UAE_allDat <- merge(UAE_allDat, UAE_healthDat[c(1, 17:30)], id = 'ParID', all = TRUE)
 UAE_allDat <- merge(UAE_allDat, UAE_NbackDat[c(1:4, 17, 5, 18)], id = 'ParID', all = TRUE)
 
 ####        Clean Demographic Data       ####
@@ -97,7 +103,7 @@ UAE_allDat$DadNationality <- factor(UAE_allDat$DadNationality, levels = c('Emira
 UAE_allDat$MomNationality <- factor(UAE_allDat$MomNationality, levels = c('Emirati', 'Omani', 'Yemeni', 'Moroccan', 'Egyptian', 'Bahrani'))
 
 ##IOTF BMI25
-UAE_allDat$IOTF_pOWcutoff <- 100*(UAE_allDat$BMI/UAE_allDat$IOTF_BMI25)
+UAE_allDat$pOW <- 100*(UAE_allDat$BMI/UAE_allDat$IOTF_BMI25)
 
 ##waist:hip ratio
 UAE_allDat$hw_ratio <- UAE_allDat$Hips_cm/UAE_allDat$Waist_cm
@@ -105,6 +111,24 @@ UAE_allDat$hw_ratio <- UAE_allDat$Hips_cm/UAE_allDat$Waist_cm
 ##reduced weight status
 UAE_allDat$IOTF_3class <- ifelse(UAE_allDat$IOTF_WeightStatus == 'MorbidlyObese' | UAE_allDat$IOTF_WeightStatus == 'Obese', 'OB',  ifelse(UAE_allDat$IOTF_WeightStatus == 'Overweight', 'OW', 'HW'))
 UAE_allDat$IOTF_3class <- factor(UAE_allDat$IOTF_3class,  levels = c('HW', 'OW', 'OB'))
+
+#### Medical Information ####
+
+UAE_allDat$Anemia_YN <- ifelse(is.na(UAE_allDat$Anemia), 'N', 'Y')
+UAE_allDat$Hyperlipidemia_YN <- ifelse(is.na(UAE_allDat$Hyperlipidemia), 'N', 'Y')
+UAE_allDat$Thyriod_YN <- ifelse(is.na(UAE_allDat$ThyroidConditions), 'N', 'Y')
+UAE_allDat$ImpariedGlucose_YN <- ifelse(is.na(UAE_allDat$GlycemicStatus), 'N', 'Y')
+UAE_allDat$AcanthosisNigricans_YN <- ifelse(is.na(UAE_allDat$AcanthosisNigricans), 'N', 'Y')
+UAE_allDat$Hypertension_YN <- ifelse(is.na(UAE_allDat$Hypertension), 'N', 'Y')
+UAE_allDat$MetabolicSyndrome_YN <- ifelse(is.na(UAE_allDat$MetabolicSyndrome), 'N', 'Y')
+UAE_allDat$Growth.Stature_YN <- ifelse(is.na(UAE_allDat$Growth.Stature), 'N', 'Y')
+UAE_allDat$PCOS_YN <- ifelse(is.na(UAE_allDat$PCOS), 'N', 'Y')
+UAE_allDat$Other_YN <- ifelse(is.na(UAE_allDat$Other), 'N', 'Y')
+
+#number of comorbid conditions
+UAE_allDat$nComorbid <- rowSums(UAE_allDat[c(85:94)] == 'Y')
+
+
 
 ####        Clean Nback Data       ####
 
@@ -115,4 +139,40 @@ UAE_allDat$BothPractices <- ifelse(UAE_allDat$B1_Practice == 'Y' & UAE_allDat$B2
 
 UAE_goodNBackDat <- UAE_allDat[UAE_allDat$BothLoads == 'Y' & UAE_allDat$BothPractices == 'Y', ]
 
-UAE_goodNBackDat_long <- merge(UAE_goodNBackDat[c(1:61, 68:70)], UAE_NbackDat_long, id = 'ParID', all.x = TRUE, all.y = FALSE)
+UAE_goodNBackDat <- merge(UAE_goodNBackDat, UAE_NbackDat, id = 'ParID', all.x = TRUE, all.y = FALSE)
+
+UAE_goodNBackDat_long <- merge(UAE_goodNBackDat[c(1:97)], UAE_NbackDat_long, id = 'ParID', all.x = TRUE, all.y = FALSE)
+
+##d'
+library(psycho)
+UAE_goodNBackDat$B1_nCorReject <- 45 - UAE_goodNBackDat$B1_nFA
+UAE_goodNBackDat$B2_nCorReject <- 45 - UAE_goodNBackDat$B2_nFA
+
+UAE_goodNBackDat_long$nCorReject <- 45 - UAE_goodNBackDat_long$nFA
+
+B1_dprime_mat <- dprime(n_hit = UAE_goodNBackDat$B1_nCor, 
+                       n_miss = UAE_goodNBackDat$B1_nMiss, 
+                       n_fa = UAE_goodNBackDat$B1_nFA, 
+                       n_cr = UAE_goodNBackDat$B1_nCorReject)
+B2_dprime_mat <- dprime(n_hit = UAE_goodNBackDat$B2_nCor, 
+                       n_miss = UAE_goodNBackDat$B2_nMiss, 
+                       n_fa = UAE_goodNBackDat$B2_nFA, 
+                       n_cr = UAE_goodNBackDat$B2_nCorReject)
+
+dprime_mat <- dprime(n_hit = UAE_goodNBackDat_long$nCor, 
+                    n_miss = UAE_goodNBackDat_long$nMiss, 
+                    n_fa = UAE_goodNBackDat_long$nFA, 
+                    n_cr = UAE_goodNBackDat_long$nCorReject)
+
+
+UAE_goodNBackDat$B1_dprime <- B1_dprime_mat$dprime
+UAE_goodNBackDat$B2_dprime <- B2_dprime_mat$dprime
+
+UAE_goodNBackDat_long$dprime <- dprime_mat$dprime
+
+#change to percents
+UAE_goodNBackDat_long$BalAcc <- UAE_goodNBackDat_long$BalAcc*100
+UAE_goodNBackDat_long$pFA <- UAE_goodNBackDat_long$pFA*100
+UAE_goodNBackDat_long$pCor <- UAE_goodNBackDat_long$pCor*100
+UAE_goodNBackDat_long$pAcc <- UAE_goodNBackDat_long$pAcc*100
+UAE_goodNBackDat_long$pMiss <- UAE_goodNBackDat_long$pMiss*100

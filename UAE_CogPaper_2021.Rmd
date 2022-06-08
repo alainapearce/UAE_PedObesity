@@ -41,6 +41,8 @@ library(car)
 library(emmeans)
 library(ggplot2)
 library(ggridges)
+library(lme4)
+library(lmerTest)
 
 source('functions.R')
 ```
@@ -68,8 +70,8 @@ BMI $\%$ of overweight = $\frac{child BMI}{BMI\: at\: age-\: and\: sex-\: adjust
 
 \FloatBarrier
 
-```{r IOTF_pOWcutoff_DensityPlot, echo=FALSE, include = TRUE}
-IOTF_pOWcutoff_plot
+```{r pOW_DensityPlot, echo=FALSE, include = TRUE}
+pOW_plot
 ```
 
 Density plot of percent of overweight by sex. The shaded regions indicated those with healthy weight (blue), overweight (yellow), and obesity (red). The points show denisity of participants by sex (purple circles = female, orange triangles = males).
@@ -79,8 +81,16 @@ Density plot of percent of overweight by sex. The shaded regions indicated those
 
 # Participant Characteristics
 
+```{r Demo_sex_tab, echo=FALSE, results='asis'}
+as_kable_extra(demo_tab_merge, caption = 'Demographic Characteristics by Sex', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+\FloatBarrier
+\clearpage
+
 ```{r Demo_OB_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_demo_OB, caption = 'Demographic Characteristics by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+as_kable_extra(UAE_demo_OB_stat, caption = 'Demographic Characteristics by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
   kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
 ```
 
@@ -90,19 +100,19 @@ as_kable_extra(UAE_demo_OB, caption = 'Demographic Characteristics by Weight Sta
 ## Associations between Demographics and Percent of Overweight Cutoff
 
 ### t-test for sex
-```{r IOTF_pOWcutoff_sex_ttest, echo=FALSE, results='verbatim'}
-IOTF_pOWcutoff.sex_ttest
+```{r pOW_sex_ttest, echo=FALSE, results='verbatim'}
+pOW.sex_ttest
 ```
 
 ### Correlation Matrix
 
-```{r IOTF_pOWcutoff_demo_cors, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_demo_cormat, "latex",  digits = 3, caption = "Correlations between percent of overweight cuttoff and demographic characteristics", booktabs=TRUE) %>%
+```{r pOW_demo_cors, echo=FALSE, results='asis'}
+kable(pOW_demo_cormat, "latex",  digits = 3, caption = "Correlations between percent of overweight cuttoff and demographic characteristics", booktabs=TRUE) %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
-```{r IOTF_pOWcutoff_demo_cormat_ps, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_demo_cormat_ps, "latex",  digits = 3, caption = "P-vales for the correlations between percent of overweight cuttoff and demographic characteristics", booktabs=TRUE) %>%
+```{r pOW_demo_cormat_ps, echo=FALSE, results='asis'}
+kable(pOW_demo_cormat_ps, "latex",  digits = 3, caption = "P-vales for the correlations between percent of overweight cuttoff and demographic characteristics", booktabs=TRUE) %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -114,8 +124,8 @@ Only child age was associated with percent of overweight cutoff - older children
 
 ### One-Way ANOVA for Income Categories
 
-```{r IOTF_pOWcutoff_income_anova, echo=FALSE, results='verbatim'}
-IOTF_pOWcutoff_income_anova
+```{r pOW_income_anova, echo=FALSE, results='verbatim'}
+pOW_income_anova
 ```
 
 \FloatBarrier
@@ -126,227 +136,779 @@ There was no difference in percent of overweight by monthly income category.
 
 ### Sensitivity Tests
 
-```{r IOTF_pOWcutoff_age_mod, echo=FALSE, results='asis'}
+```{r pOW_age_mod, echo=FALSE, results='asis'}
 kable(IOTF_age_pOWcutoff_tab, digits = 3, caption = "Linear Model: pOWcutoff - SES category + Maternal Education + Age + Sex", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
 \FloatBarrier
 
-After controlling for family income, mother education, and child sex, child age was significantly associated with percent of overweight such that for each year older, the expected percent of overweight is predicted to increase 4.24%.
+After controlling for family income, mother education, and child sex, child age was significantly associated with percent of overweight such that for each year older, the expected percent of overweight is predicted to increase 4.24% points.
 
 \FloatBarrier
 \clearpage
 
-# Sleep Behavior
+# Neuropsychological Assessments 
+
+```{r neuropsych_sex_tab, echo=FALSE, results='asis'}
+as_kable_extra(neuropsych_tab_merge, caption = 'Neuropsychological Performance by Sex Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+\FloatBarrier
+
+Percent of overweight and height:weight ratio were not associated with any of the neuropsychological assessments. Number of comorbidities was associated with total digit span SS such that the higher number of comorbidities the lower the standard score.
+
+\FloatBarrier
+\clearpage
+
+```{r neuropsych_OB_tab, echo=FALSE, results='asis'}
+as_kable_extra(UAE_neuropsych_OBstat, caption = 'Neuropsychological Performance by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+\FloatBarrier
+Performance on neuropsychological assessments did not differ by weight status. There were 5 people who had Performance IQ < 70 so all results are presented with and without those 5. Likely the PRI < 70 was due in part to attention/engagement and may not accurately reflect PRI.
+
+\FloatBarrier
+\clearpage
 
 ## Correlation Matrix
 
-```{r IOTF_pOWcutoff_cshq_cor, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_CSHQ_cormat, digits = 3, caption = "Correlations between sleep subscales and percent of overweight", booktabs=TRUE)  %>%
+```{r pOW_neuropsych_cor, echo=FALSE, results='asis'}
+kable(neuropsych_cormat, digits = 3, caption = "Correlations between neuropsychological performance and percent of overweight", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 \FloatBarrier
 
-```{r IOTF_pOWcutoff_cshq_cor_ps, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_CSHQ_cormat_ps, digits = 3, caption = "Correlations between sleep subscales and percent of overweight", booktabs=TRUE)  %>%
+```{r pOW_neuropsych_corps, echo=FALSE, results='asis'}
+kable(neuropsych_cormat_ps, digits = 3, caption = "Correlation p values between neuropsychological performance and percent of overweight ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Percent of overweight and height:weight ratio were not associated with any of the neuropsychological assessments. Number of comorbidities was associated with total digit span SS such that the higher number of comorbidities the lower the standard score.
+
+\FloatBarrier
+
+## Correlation Matrix - IQ >= 70
+
+```{r pOW_neuropsych_IQ70_cor, echo=FALSE, results='asis'}
+kable(neuropsych_IQ70_cormat, digits = 3, caption = "Correlations between neuropsychological performance and percent of overweight", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 \FloatBarrier
 
-Examining correlations between sleep sub-scales and percent of overweight cutoff reveals greater percent of overweight cutoff was associated with greater parent reported sleep onset delay and sleep disordered breathing.
+```{r pOW_neuropsych_IQ70_corps, echo=FALSE, results='asis'}
+kable(neuropsych_IQ70_cormat_ps, digits = 3, caption = "Correlation p values between neuropsychological performance and percent of overweight ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+After exculding the 5 participants with IQ < 70, percent of overweight and height:weight ratio were not associated with any of the neuropsychological assessments. Number of comorbidities was still associated with total digit span SS such that the higher number of comorbidities the lower the standard score. After excluding the 5 participants, greater number of comorbidities was also associated with lower Block T-scores and backward digit span SS.
+
+\FloatBarrier
+\clearpage
+
+## WASI - Block
+\FloatBarrier
+```{r pOW_block_fig, echo=FALSE, include = TRUE}
+pOW_BlockT_plot
+```
 
 \FloatBarrier
 
-### Sensitivity Tests
+```{r pOW_block_modtest, echo=FALSE}
+anova(pOW_BlockT_mod, pOW_BlockT_quadmod)
+```
 
-#### Sleep Onset Delay
+\FloatBarrier
 
-```{r IOTF_pOWcutoff_sleepdelay, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_sleepdelay_tab, digits = 3, caption = "Linear Model: Sleep Onset Delay - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
+After looking at the association between Block T-score and percent of overweight, a non-linear association was suspected. Adding a quadratic term to the model significantly improved model fit.
+
+\FloatBarrier
+
+```{r pOW_block_mod, echo=FALSE, results='asis'}
+kable(pOW_BlockT_quad_sum$coefficients, digits = 3, caption = "WASI Block model", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
-After controlling for family income, mother education, child age, and child sex, percent of overweight was positively associated with sleep onset delay such that a child with 110% of overweight, compared to 100% of overweight, would be expected to have a sleep onset delay score that was 0.06 points higher (range of scores = 0 - 3). Additionally, age was positively associated with sleep onset delay such that each year older, the expected sleep disordered breathing score would be 0.12 points higher (range of scores = 0 - 7).
+\FloatBarrier
+
+After controlling for income, maternal education, age, and sex, there was a significant quadratic effect of percent of overweight on Block performance. The linear association between percent of overweight and performance becomes less positive as percent of overweight increases such that the slope changes from positive to negative at 131% of overweight cutoff. This indicates that both performance is worse in those with both low and height weight for their age and sex. Additionally, those whose families made >\$75,000 AED had Block T-Scores that were 8 point higher than those whose families made between \$25,000-\$55,000 AED.
 
 \FloatBarrier
 
-```{r IOTF_pOWcutoff_sleepdelay_adj_plot, echo=FALSE, include = TRUE}
-IOTF_pOWcutoff_SleepDelay_adj_plot
-```
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_sleepdelay_raw_plot, echo=FALSE, include = FALSE}
-IOTF_pOWcutoff_SleepDelay_raw_plot
-```
-
-\FloatBarrier
-
-#### Sleep Disordered Breathing
-
-```{r IOTF_pOWcutoff_disbreathing, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_breathing_tab, digits = 3, caption = "Linear Model: Sleep Disordered Breathing - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
+```{r pOW_IQ70_block_mod, echo=FALSE, results='asis'}
+kable(pOW_BlockT_IQ70_quad_sum$coefficients, digits = 3, caption = "WASI Block model - IQ >= 70", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
-After controlling for family income, mother education, child age, and child sex, percent of overweight was positively associated with sleep disordered breathing such that a child with 110% of overweight, compared to 100% of overweight, would be expected to have a sleep disordered breathing score that was 0.16 points higher(range of scores = 3 - 9).
-
 \FloatBarrier
 
-```{r IOTF_pOWcutoff_disbreathing_adj_plot, echo=FALSE, include = TRUE}
-IOTF_pOWcutoff_DisorderedBreathing_adj_plot
+Pattern of results remained unchanged when restricting to IQ >=70 with just a little loss in significance due to lower participant numbers.
+
+\FloatBarrier
+```{r pOW_IQ70block_fig, echo=FALSE, include = TRUE}
+pOW_IQ70_BlockT_plot
+```
+
+\FloatBarrier
+\clearpage
+
+## WASI - Matrix
+
+```{r pOW_matrix_fig, echo=FALSE, include = TRUE}
+pOW_MatrixT_plot
 ```
 
 \FloatBarrier
 
-```{r IOTF_pOWcutoff_disbreathing_raw_plot, echo=FALSE, include = FALSE}
-IOTF_pOWcutoff_DisorderedBreathing_raw_plot
+The model for Matrix performance was not improved by adding a quadratic term. 
+
+```{r pOW_matrix_modtest, echo=FALSE}
+anova(pOW_MatrixT_mod, pOW_MatrixT_quadmod)
 ```
 
 \FloatBarrier
+
+```{r pOW_matrix_mod, echo=FALSE, results='asis'}
+kable(pOW_MatrixT_sum$coefficients, digits = 3, caption = "WASI Matrix model", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Matrix performance was not associated with percent of overweight. There was, however, a difference by income such that those whose families made >\$75,000 AED had Matrix T-Scores that were 9 points higher than those whose families made between \$25,000-\$55,000 AED.
+
+\FloatBarrier
+
+```{r pOW_IQ70_matrix_mod, echo=FALSE, results='asis'}
+kable(pOW_MatrixT_IQ70_sum$coefficients, digits = 3, caption = "WASI Matrix model - IQ >= 70", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+```{r pOW_IQ70matrix_fig, echo=FALSE, include = TRUE}
+pOW_IQ70_MatrixT_plot
+```
+
+\FloatBarrier
+\clearpage
+
+## WASI - PRI
+
+```{r pOW_PRI_modtest, echo=FALSE}
+anova(pOW_PRI_mod, pOW_PRI_quadmod)
+```
+\FloatBarrier
+
+There is a trend for a quadratic term improving the model fit.
+
+\FloatBarrier
+
+```{r pOW_PRI_mod, echo=FALSE, results='asis'}
+kable(pOW_PRI_quad_sum$coefficients, digits = 3, caption = "WASI PRI model", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+<!-- ```{r pOW_IQ70_PRI_mod, echo=FALSE, results='asis'} -->
+<!-- kable(pOW_PRI_IQ70_quad_sum$coefficients, digits = 3, caption = "WASI PRI model - IQ >= 70", booktabs=TRUE)  %>% -->
+<!--   kable_styling(latex_opticons = c("hold_position", "repeat_header")) -->
+<!-- ``` -->
+<!-- \FloatBarrier -->
+
 
 \clearpage
 
-# Strengths and Difficulties Questionnaire
-
-```{r SDQ_OB_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_sdq_OB, caption = 'Strengths and Difficulties by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+## Digit Span - Forward
+\FloatBarrier
+```{r pOW_dsforward_fig, echo=FALSE, include = TRUE}
+pOW_DSforward_plot
 ```
-
-There were no differences by weight status.
-
-```{r SDQ_overall_tab, echo=FALSE, results='asis'}
-as_kable_extra(UAE_sdq_overall, caption = 'Strengths and Difficulties', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
-  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
-```
-
-There were no differences by weight status.
-
-## Exploratory Sex x Percent of Overweight Models
-
-### Emotional Problems
-
-Often complains of headaches
-
-Many worries
-
-Often unhappy, downhearted
-
-Nervous or clingy in new situations
-
-Many fears, easily scared 
 
 \FloatBarrier
-
-```{r IOTF_pOWcutoff_emotprobs_elevated_logit, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_EmotProb_Elevated_tab, digits = 3, caption = "Logistic Model: Emotional Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
+```{r pOW_dsforward_mod, echo=FALSE, results='asis'}
+kable(pOW_dsforward_sum$coefficients, digits = 3, caption = "Digist Span Forward SS model", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
-
 \FloatBarrier
 
-## Conduct Problems
-
-Often has temper tantrums or hot tempers 
-
-Generally obedient - Reverse Scored
-
-Often fights with other children
-
-Often lies or cheats 
-
-Steals from home, school or elsewhere 
+There was no association with percent of overweight or any other demographic variable.
 
 \FloatBarrier
-
-```{r IOTF_pOWcutoff_conductprobs_elevated_logit, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_ConductProb_Elevated_tab, digits = 3, caption = "Logistic Model: Conduct Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
+```{r pOW_IQ70_dsforward_mod, echo=FALSE, results='asis'}
+kable(pOW_IQ70_dsforward_sum$coefficients, digits = 3, caption = "Digist Span Forward SS model - IQ >= 70", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
 
 \FloatBarrier
-
-### Hyperactivity
-
-Restless, overactive
-
-Constantly fidgeting or squirming 
-
-Easily distracted, concentration wanders 
-
-Thinks things out before acting   - Reverse Scored
-
-Sees tasks through to the end - Reverse Scored
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_hypeprobs_elevated_logit, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_HypeProb_Elevated_tab, digits = 3, caption = "Logistic Model: Hyperactivity Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-### Peer Problems
-
-Rather solitary, tends to play alone 
-
-Has at least one good friend - Reverse Scored
-
-Generally liked by other children - Reverse Scored
-
-Picked on or bullied
-
-Gets on better with adults than with other children
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_peerprobs_elevated_logit, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_peerprob_Elevated_tab, digits = 3, caption = "Logistic Model: Peer Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-When examining odds of experiencing elevated peer problems, controlling for family income, mother education, child age, and child sex, percent of overweight, there was a significant sex x percent of overweight interaction. 
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_peerprobs_elevated_emtremds, echo=FALSE, results='verbatim'}
-IOTF_pOWcutoff_peerprob_Elevated_emtrends
-```
-
-\FloatBarrier
-
-For females, a female child with 110% of overweight cutoff would have 1.27 times the odds of experiencing elevate peer problems than a female child with 100% of overweight cutoff. There was no association between percent of overweight cutoff and odds of peer problems in males.
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_peerprob_adjOdds_plot, echo=FALSE, include = FALSE}
-IOTF_pOWcutoff_peerprob_ElevatedCat_adjOdds_plot
-```
-
-\FloatBarrier
-
-## Prosocial
-
-Considerate of other people's feelings
-
-Shares readily with other children
-
-Helpful if someone is hurt
-
-Kind to younger children
-
-Often volunteers to help others
-
-\FloatBarrier
-
-```{r IOTF_pOWcutoff_prosocialprobs_low_logit, echo=FALSE, results='asis'}
-kable(IOTF_pOWcutoff_prosocial_Low_tab, digits = 3, caption = "Logistic Model: Prosocial Problems (Low vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-
 \clearpage
+
+## Digit Span - Backward
+\FloatBarrier
+```{r pOW_dsbackward_fig, echo=FALSE, include = TRUE}
+pOW_DSbackward_plot
+```
+
+\FloatBarrier
+```{r pOW_dsbackward_mod, echo=FALSE, results='asis'}
+kable(pOW_dsbackward_sum$coefficients, digits = 3, caption = "Digist Span Backward SS model", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+There was no association with percent of overweight. There was, however, an association with age such that older children tended to have lower standard scores than younger children. Males also had a trend level lower performance than females.
+
+\FloatBarrier
+```{r pOW_IQ70_dsbackward_mod, echo=FALSE, results='asis'}
+kable(pOW_IQ70_dsbackward_sum$coefficients, digits = 3, caption = "Digist Span Backward SS model - IQ >= 70", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+\clearpage
+
+## Digit Span - Total
+```{r pOW_dstotal_mod, echo=FALSE, results='asis'}
+kable(pOW_dstotal_sum$coefficients, digits = 3, caption = "Digist Span Total SS model", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+```{r pOW_IQ70_dstotal_mod, echo=FALSE, results='asis'}
+kable(pOW_IQ70_dstotal_sum$coefficients, digits = 3, caption = "Digist Span Total SS model - IQ >= 70", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+\clearpage
+
+## Coding
+\FloatBarrier
+```{r pOW_coding_fig, echo=FALSE, include = TRUE}
+pOW_coding_plot
+```
+
+\FloatBarrier
+```{r pOW_coding_mod, echo=FALSE, results='asis'}
+kable(pOW_coding_sum$coefficients, digits = 3, caption = "Coding SS model", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+There was no association with percent of overweight. There was, however, an association with age such that older children had lower SS compared to younger children.
+
+\FloatBarrier
+
+```{r pOW_IQ70_coding_mod, echo=FALSE, results='asis'}
+kable(pOW_IQ70_coding_sum$coefficients, digits = 3, caption = "Coding SS model - IQ >= 70", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+\clearpage
+
+# Nback
+\FloatBarrier
+```{r nback_tab, echo=FALSE, results='asis'}
+as_kable_extra(UAE_nback_tab, caption = 'Nback Performance by Sex Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+\FloatBarrier
+\clearpage
+
+```{r nback_OB_tab, echo=FALSE, results='asis'}
+as_kable_extra(UAE_nback_OBstat, caption = 'Nback Performance by Weight Status', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+\FloatBarrier
+
+There was a trend for children with HW to have lower percent correct hits and ballanced accuracy during 1-back compared to those with overweight or obesity. There was a significant effect for 1-back d' such that those with HW showed lower sensitivity. May be due to those with lower weights being included in the HW category as <85th percentile.
+
+\FloatBarrier
+\clearpage
+
+### Correlation Matrix
+
+```{r pOW_nback_cor, echo=FALSE, results='asis'}
+kable(nback_cormat, digits = 3, caption = "Correlations between Nback performance and percent of overweight", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+```{r pOW_nback_corps, echo=FALSE, results='asis'}
+kable(nback_cormat_ps, digits = 3, caption = "Correlation p values between Nback performance and percent of overweight ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Percent of overweight was positively correlated with 1-back d' sensitivity.
+
+\FloatBarrier
+
+### Correlation Matrix - IQ >= 70
+
+```{r pOW_nback_IQ70_cor, echo=FALSE, results='asis'}
+kable(nback_IQ70_cormat, digits = 3, caption = "Correlations between neuropsychological performance and percent of overweight", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+```{r pOW_nback_IQ70_corps, echo=FALSE, results='asis'}
+kable(nback_IQ70_cormat_ps, digits = 3, caption = "Correlation p values between neuropsychological performance and percent of overweight ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+After excluding those with performance IQ < 70, percent of overweight was positively correlated with both 1-back d' sensitivity and ballanced accuracy.
+
+## Nback - percent of overweight models
+
+### Ballanced Accuracy
+
+\FloatBarrier
+```{r pOW_balacc_fig, echo=FALSE, include = TRUE}
+pOW_Nback_plot
+```
+\FloatBarrier
+
+```{r pOW_balacc_block_mod, echo=FALSE, results='asis'}
+kable(pOW_BalAccInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: Ballanced Accuracy", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+There was no interaction and no main effect of percent of overweight. There was a significant effect of Load with better ballanced accuracy in 1- than 2-back. Age was positively associated with ballanced accuracy overall.
+
+\FloatBarrier
+
+```{r pOW_IQ70_balacc_block_mod, echo=FALSE, results='asis'}
+kable(pOW_IQg70_BalAccInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+#### Comorbidity
+
+\FloatBarrier
+```{r pOW_ncomorbid_balacc_fig, echo=FALSE, include = TRUE}
+pOW_ncomorbid_BalAcc_plot
+```
+\FloatBarrier
+
+```{r pOW_ncomorbid_balacc_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_BalAccInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: Ballanced Accuracy", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r pOW_ncomorbid_balacc_block_slopes, echo=FALSE, results='asis'}
+kable(test(ncomorbid_BalAccInt_slopes), digits = 3, caption = "Nback nComorbid x Percent of Overweight: Balanced Accuracy simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+After controlling for Load, there was a significant interaction between percent of overweight and number of comorbidities such that the association between percent of overweight and balanced accuracy becomes more negative with increasing number of comorbidities. With zero comorbidities there was a significant positive association such that if percent of overweight increased by 10, ballanced accuracy is expected to increased by almost 1 percent (0.9). There was not a significant association for those with 1 or 2 comorbidities but a trend for a negative association for those with 3 comorbidities such that if percent of overweight increased by 10, balanced accuracy would be expected to decrease by almost 1 percent (0.7). There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
+
+\FloatBarrier
+
+```{r pOW_nocomorbid_IQ70_balacc_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_IQg70_BalAccInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+### False Alarms
+
+```{r pOW_FA_block_mod, echo=FALSE, results='asis'}
+kable(pOW_pFAInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: d'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+There was no interaction and no main effect of percent of overweight. There was a significant effect of Load with lower false alarm percentage in 1- than 2-back. Age was negatively associated with false alarm percentage overall.
+
+\FloatBarrier
+
+```{r pOW_IQ70_balacc_FA_mod, echo=FALSE, results='asis'}
+kable(pOW_IQg70_pFAInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+#### Comorbidity
+
+\FloatBarrier
+```{r pOW_ncomorbid_pFA_fig, echo=FALSE, include = TRUE}
+pOW_ncomorbid_BalAcc_plot
+```
+\FloatBarrier
+
+```{r pOW_ncomorbid_pFA_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_pFAInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: Percent False Alarm", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+After controlling for Load, there was no  interaction between percent of overweight and number of comorbidities. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
+
+\FloatBarrier
+
+```{r pOW_IQ70_pFA_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_IQg70_pFAInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+### d'
+\FloatBarrier
+
+```{r pOW_dprime_block_mod, echo=FALSE, results='asis'}
+kable(pOW_dPrimeInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: d'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+There was no interaction and no main effect of percent of overweight. There was a significant effect of Load with better d' in 1- than 2-back. Age was positively associated with d' overall.
+
+\FloatBarrier
+
+```{r pOW_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
+kable(pOW_IQg70_dPrimeInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+#### Comorbidity
+
+\FloatBarrier
+```{r pOW_ncomorbid_dprime_fig, echo=FALSE, include = TRUE}
+pOW_ncomorbid_dprime_plot
+```
+\FloatBarrier
+
+```{r pOW_ncomorbid_dprime_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: d'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r pOW_ncomorbid_dprime_block_slopes, echo=FALSE, results='asis'}
+kable(test(ncomorbid_dPrimeInt_slopes), digits = 3, caption = "Nback nComorbid x Percent of Overweight: d' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+After controlling for Load, there was a significant interaction between percent of overweight and number of comorbidities such that the association between percent of overweight and d' becomes more negative with increasing number of comorbidities. With zero comorbidities there was a significant positive association such that if percent of overweight increased by 10, d' is expected to increased by 0.06. There was not a significant association for those with 1 or 2 comorbidities but a trend for a negative association for those with 3 comorbidities such that if percent of overweight increased by 10, d' would be expected to decrease by 0.05. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
+
+\FloatBarrier
+
+```{r pOW_ncomorbid_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_IQg70_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: d' - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+## Nback - sleep models
+
+### Ballanced Accuracy
+
+```{r cshq_balacc_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_BalAccInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Ballanced Accuracy", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+There was no interaction and no main effect of total sleep score. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
+
+\FloatBarrier
+```{r cshq_IQ70_balacc_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_IQg70_BalAccInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+### Flase Alarms
+\FloatBarrier
+```{r cshq_pFA_fig, echo=FALSE, include = TRUE}
+Nback_sleep_pFA_plot
+```
+\FloatBarrier
+
+```{r cshq_pFA_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_pFAInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Percent False Alarms'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r cshq_pFA_block_slopes, echo=FALSE, results='asis'}
+kable(test(Sleep_pFAInt_slopes), digits = 3, caption = "Nback Load x PCSHQ Total: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+There was a significant interaction between load and total sleep score such that 1-back percent False Alarms was positively related to total sleep score while there was no association fopr 2-back. Age was positively associated with percent False Alarms overall.
+
+\FloatBarrier
+
+```{r cshq_no109_pFA_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_no109_pFAInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Percent False Alarms no outlier'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+Pattern of results remained unchanged when removing 1 outlier.
+
+\FloatBarrier
+
+```{r cshq_IQ70_pFA_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_IQg70_pFAInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+### d'
+
+\FloatBarrier
+```{r cshq_dprime_fig, echo=FALSE, include = TRUE}
+Nback_sleep_dPrime_plot
+```
+\FloatBarrier
+
+```{r cshq_dprime_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_dPrimeInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: d'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r cshq_dprime_block_slopes, echo=FALSE, results='asis'}
+kable(test(Sleep_dPrimeInt_slopes), digits = 3, caption = "Nback Load x PCSHQ Total: d' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+There was a trend-level interaction between load and total sleep score such that 1-back d' was significantly negatively associated with toaal sleep score while 2-back was not associated.
+
+\FloatBarrier
+
+```{r cshq_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
+kable(Sleep_IQg70_dPrimeInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: d' - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+## Nback - SDQ
+
+### Ballanced Accuracy
+
+```{r sdq_balacc_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_BalAccInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Ballanced Accuracy", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+There was no interaction but there was a trending main effect of total SDQ score. Higher SDQ scores were associated with lower balanced accuracy overall. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
+
+\FloatBarrier
+```{r sdq_IQ70_balacc_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_IQg70_BalAccInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+### Flase Alarms
+\FloatBarrier
+```{r sdq_pFA_fig, echo=FALSE, include = TRUE}
+Nback_SDQtotal_pFA_plot
+```
+\FloatBarrier
+
+```{r sdq_pFA_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Percent False Alarms'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r sdq_pFA_block_slopes, echo=FALSE, results='asis'}
+kable(test(SDQ_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Total: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+There was a significant interaction between load and total sleep score such that there was a trend for 1-Back percent False Alarms positively associated with SDQ total score. There was no association for 2-back. There was a significant effect of Load with lower percent False Alarms in 1- than 2-back. Age was positively associated with percent False Alarms overall.
+
+\FloatBarrier
+
+```{r sdq_IQ70_pFA_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_IQg70_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
+\FloatBarrier
+
+#### Hyperactivity Problems
+\FloatBarrier
+```{r sdqhyper_pFA_fig, echo=FALSE, include = TRUE}
+Nback_SDQhyper_pFA_plot
+```
+\FloatBarrier
+
+```{r sdqhyper_pFA_block_mod, echo=FALSE, results='asis'}
+kable(SDQhyper_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Hyperactivity: Percent False Alarms'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r sdqhyper_pFA_block_slopes, echo=FALSE, results='asis'}
+kable(test(SDQhyper_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Hyperactivity: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+#### Emotional Problems
+\FloatBarrier
+```{r sdqemot_pFA_fig, echo=FALSE, include = TRUE}
+Nback_SDQemot_pFA_plot
+```
+\FloatBarrier
+
+```{r sdqemot_pFA_block_mod, echo=FALSE, results='asis'}
+kable(SDQemot_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Emotional: Percent False Alarms'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r sdqemot_pFA_block_slopes, echo=FALSE, results='asis'}
+kable(test(SDQemot_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Emotional: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+#### Conduct Problems
+\FloatBarrier
+```{r sdqconduct_pFA_fig, echo=FALSE, include = TRUE}
+Nback_SDQconduct_pFA_plot
+```
+\FloatBarrier
+
+```{r sdqconduct_pFA_block_mod, echo=FALSE, results='asis'}
+kable(SDQconduct_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Conduct: Percent False Alarms'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+```{r sdqconduct_pFA_block_slopes, echo=FALSE, results='asis'}
+kable(test(SDQconduct_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Conduct: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+#### Peer Problems
+
+\FloatBarrier
+
+```{r sdqpeer_pFA_block_mod, echo=FALSE, results='asis'}
+kable(SDQpeer_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Peer: Percent False Alarms'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+### d'
+
+\FloatBarrier
+
+```{r sdq_dprime_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_dPrimeInt_anova, digits = 3, caption = "Nback Load x SDQ Total: d'", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+
+\FloatBarrier
+
+There was no interaction between load and total SDA score but there was a main effect of total SDQ such that d' was worse with increasing (worse) SDQ Total Problem score. There was a significant effect of Load with better d' in 1- than 2-back. Age was positively associated with d' overall.
+
+\FloatBarrier
+
+```{r sdq_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_IQg70_dPrimeInt_anova, digits = 3, caption = "Nback Load x SDQ Total: d' - IQ >=70 ", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+Pattern of results remained unchanged when restricting to IQ >=70.
+
 \FloatBarrier

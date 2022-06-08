@@ -202,12 +202,12 @@ CHSQ_DisorderedBreathing_dat$CSHQ_SleepDisorderBreathing_pred <- predict(IOTF_pO
 UAE_allDat$IOTF_pOWcutoff_c100 <- UAE_allDat$IOTF_pOWcutoff - 100
 
 ## emotional problems
-UAE_allDat$SDQ_EmotProb_Elevated <- ifelse(UAE_allDat$SDQ_ConductProb_cat == 'CloseToAverage', 'N', 'Y')
+UAE_allDat$SDQ_EmotProb_Elevated <- ifelse(UAE_allDat$SDQ_EmotionProb_cat == 'CloseToAverage', 'N', 'Y')
 UAE_allDat$SDQ_EmotProb_Elevated <- factor(UAE_allDat$SDQ_EmotProb_Elevated,
                                            levels = c('N', 'Y'))
 
 ## conduct problems
-UAE_allDat$SDQ_ConductProb_Elevated <- ifelse(UAE_allDat$SDQ_EmotionProb_cat == 'CloseToAverage', 'N', 'Y')
+UAE_allDat$SDQ_ConductProb_Elevated <- ifelse(UAE_allDat$SDQ_ConductProb_cat == 'CloseToAverage', 'N', 'Y')
 UAE_allDat$SDQ_ConductProb_Elevated <- factor(UAE_allDat$SDQ_ConductProb_Elevated,
                                            levels = c('N', 'Y'))
 
