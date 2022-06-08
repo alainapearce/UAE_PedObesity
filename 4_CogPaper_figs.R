@@ -211,6 +211,41 @@ pOW_ncomorbid_dprime_plot = ggplot(UAE_goodNBack_modDat, aes(y = dPrime_ncomorbi
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
         panel.background = element_blank())
 
+## Exploratory with sleep ####
+sleep_mean <- mean(UAE_goodNBack_sleep_modDat$CSHQ_Total_no16, na.rm = TRUE)
+sleep_sd <- sd(UAE_goodNBack_sleep_modDat$CSHQ_Total_no16, na.rm = TRUE)
+UAE_goodNBack_sleep_modDat$CSHQ_Total_no16_cat <- ifelse(UAE_goodNBack_sleep_modDat$CSHQ_Total_no16 <= (sleep_mean - sleep_sd), 'SD-1', ifelse(UAE_goodNBack_sleep_modDat$CSHQ_Total_no16 >= (sleep_mean + sleep_sd), 'SD+1', 'Center'))
+
+pOW_sleep_pFA_plot = ggplot(UAE_goodNBack_sleep_modDat, aes(y = pFA_sleep, x = pOW, Group = factor(CSHQ_Total_no16_cat))) +
+  geom_smooth(method = 'lm', formula = y~x, aes(color = factor(CSHQ_Total_no16_cat))) +
+  geom_point(aes(color = factor(CSHQ_Total_no16_cat)), size = 3) +
+  ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
+  scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
+                                '(income, mother ed, age, and sex)')) +
+  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
+  scale_color_manual(values = c("mediumpurple1", "purple", "purple4")) +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+        panel.background = element_blank())
+
+## Exploratory with SDQ ####
+SDQ_mean <- mean(UAE_goodNBack_SDQ_modDat$SDQ_TotalProb_raw, na.rm = TRUE)
+SDQ_sd <- sd(UAE_goodNBack_SDQ_modDat$SDQ_TotalProb_raw, na.rm = TRUE)
+UAE_goodNBack_SDQ_modDat$SDQ_TotalProb_raw_cat <- ifelse(UAE_goodNBack_SDQ_modDat$SDQ_TotalProb_raw <= (SDQ_mean - SDQ_sd), 'SD-1', ifelse(UAE_goodNBack_SDQ_modDat$SDQ_TotalProb_raw >= (SDQ_mean + SDQ_sd), 'SD+1', 'Center'))
+
+pOW_SDQ_pFA_plot = ggplot(UAE_goodNBack_SDQ_modDat, aes(y = pFA_SDQ, x = pOW, Group = factor(SDQ_TotalProb_raw_cat))) +
+  geom_smooth(method = 'lm', formula = y~x, aes(color = factor(SDQ_TotalProb_raw_cat))) +
+  geom_point(aes(color = factor(SDQ_TotalProb_raw_cat)), size = 3) +
+  ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
+  scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
+                                '(income, mother ed, age, and sex)')) +
+  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
+  scale_color_manual(values = c("mediumpurple1", "purple", "purple4")) +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+        panel.background = element_blank())
+
+
 ## sleep ####
 Nback_sleep_pFA_plot = ggplot(UAE_goodNBack_sleepmodDat, aes(y = pFA_sleep_pred, x = CSHQ_Total_no16, Group = Load, color = Load)) +
   geom_smooth(method = 'lm', formula = y~x) +

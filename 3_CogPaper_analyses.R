@@ -254,6 +254,88 @@ ncomorbid_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + pOW
 ncomorbid_meanRTInt_sum <- summary(ncomorbid_meanRTInt_mod)
 
 
+##Exploratory : Percent overweight x sleep ####
+##center sleep to put on similar scale
+UAE_goodNBackDat_long$CSHQ_Total_no16_cmean <- UAE_goodNBackDat_long$CSHQ_Total_no16 - mean(UAE_goodNBackDat_long$CSHQ_Total_no16, na.rm = TRUE)
+
+#BalAcc
+sleep_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+sleep_BalAccInt_sum <- summary(sleep_BalAccInt_mod)
+
+sleep_IQg70_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+sleep_IQg70_BalAccInt_sum <- summary(sleep_IQg70_BalAccInt_mod)
+
+#pFA
+sleep_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+sleep_pFAInt_sum <- summary(sleep_pFAInt_mod)
+
+sleep_pFAInt_slopes <- emmeans::emtrends(sleep_pFAInt_mod, ~pOW_c100|CSHQ_Total_no16_cmean, var = 'pOW_c100', at = list(CSHQ_Total_no16_cmean = c(-8, 0, 8)))
+
+UAE_goodNBack_sleep_modDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$CSHQ_Total_no16), ]
+
+UAE_goodNBack_sleep_modDat$pFA_sleep <- predict(sleep_pFAInt_mod, type = 'response')
+
+UAE_goodNBackDat_no109_long <- UAE_goodNBackDat_long[UAE_goodNBackDat_long$ParID != 109, ]
+
+sleep_no109_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_no109_long)
+sleep_no109_pFAInt_sum <- summary(sleep_no109_pFAInt_mod)
+
+sleep_no109_pFAInt_slopes <- emmeans::emtrends(sleep_no109_pFAInt_mod, ~pOW_c100|CSHQ_Total_no16_cmean, var = 'pOW_c100', at = list(CSHQ_Total_no16_cmean = c(-8, 0, 8)))
+
+sleep_IQg70_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+sleep_IQg70_pFAInt_sum <- summary(sleep_IQg70_pFAInt_mod)
+
+#dprime
+sleep_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+sleep_dPrimeInt_sum <- summary(sleep_dPrimeInt_mod)
+
+sleep_IQg70_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+sleep_IQg70_dPrimeInt_sum <- summary(sleep_IQg70_dPrimeInt_mod)
+
+#meanRT
+sleep_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + pOW_c100*CSHQ_Total_no16_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+sleep_meanRTInt_sum <- summary(sleep_meanRTInt_mod)
+
+##Exploratory : Percent overweight x SDQ ####
+##center sleep to put on similar scale
+UAE_goodNBackDat_long$SDQ_TotalProb_raw_cmean <- UAE_goodNBackDat_long$SDQ_TotalProb_raw - mean(UAE_goodNBackDat_long$SDQ_TotalProb_raw, na.rm = TRUE)
+
+UAE_goodNBackDat_no109_long$SDQ_TotalProb_raw_cmean <- UAE_goodNBackDat_no109_long$SDQ_TotalProb_raw - mean(UAE_goodNBackDat_no109_long$SDQ_TotalProb_raw, na.rm = TRUE)
+
+#BalAcc
+SDQ_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_BalAccInt_sum <- summary(SDQ_BalAccInt_mod)
+
+SDQ_IQg70_BalAccInt_mod <- lmer(BalAcc ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_BalAccInt_sum <- summary(SDQ_IQg70_BalAccInt_mod)
+
+#pFA
+SDQ_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_pFAInt_sum <- summary(SDQ_pFAInt_mod)
+
+SDQ_pFAInt_slopes <- emmeans::emtrends(SDQ_pFAInt_mod, ~pOW_c100|SDQ_TotalProb_raw_cmean, var = 'pOW_c100', at = list(SDQ_TotalProb_raw_cmean = c(-5, 0, 5)))
+
+UAE_goodNBack_SDQ_modDat <- UAE_goodNBack_modDat[!is.na(UAE_goodNBack_modDat$SDQ_TotalProb_raw), ]
+
+UAE_goodNBack_SDQ_modDat$pFA_SDQ <- predict(SDQ_pFAInt_mod, type = 'response')
+
+SDQ_no109_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_no109_long)
+SDQ_no109_pFAInt_sum <- summary(SDQ_no109_pFAInt_mod)
+
+SDQ_IQg70_pFAInt_mod <- lmer(pFA ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_pFAInt_sum <- summary(SDQ_IQg70_pFAInt_mod)
+
+#dprime
+SDQ_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_dPrimeInt_sum <- summary(SDQ_dPrimeInt_mod)
+
+SDQ_IQg70_dPrimeInt_mod <- lmer(dprime ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long[UAE_goodNBackDat_long$WASI_PRI_IQ >= 70, ])
+SDQ_IQg70_dPrimeInt_sum <- summary(SDQ_IQg70_dPrimeInt_mod)
+
+#meanRT
+SDQ_meanRTInt_mod <- lmer(meanRTcor ~ Month_AED + Mother_ed + Age_yr + pOW_c100*SDQ_TotalProb_raw_cmean + Load + (1|ParID), data = UAE_goodNBackDat_long)
+SDQ_meanRTInt_sum <- summary(SDQ_meanRTInt_mod)
+
 
 ##Load x Total Sleep
 #BalAcc
