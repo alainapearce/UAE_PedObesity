@@ -54,7 +54,7 @@ pOW_BlockT_plot = ggplot(UAE_allDat_WASI, aes(y = BlockT_quad_pred, x = pOW)) +
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and WASI Block T-score (adjusting for covariates)') +
   scale_y_continuous(name=paste('Adjusted Block T-Score', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -66,7 +66,7 @@ pOW_IQ70_BlockT_plot = ggplot(UAE_allDat_WASI70, aes(y = BlockT_quad_pred, x = p
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and WASI Block T-score (adjusting for covariates) for those with IQ > 70') +
   scale_y_continuous(name=paste('Adjusted Block T-Score', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
@@ -78,7 +78,7 @@ pOW_MatrixT_plot = ggplot(UAE_allDat_WASI, aes(y = MatrixT_pred, x = pOW)) +
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and WASI Matrix T-score (adjusting for covariates)') +
   scale_y_continuous(name=paste('Adjusted Matrix T-Score', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -90,7 +90,7 @@ pOW_IQ70_MatrixT_plot = ggplot(UAE_allDat_WASI70, aes(y = MatrixT_pred, x = pOW)
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and WASI Matrix T-score (adjusting for covariates) for those with IQ > 70') +
   scale_y_continuous(name=paste('Adjusted Matrix T-Score', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -103,7 +103,7 @@ pOW_DSforward_plot = ggplot(UAE_allDat_WASI, aes(y = dsforward_pred, x = pOW)) +
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Digit Span Forward SS (adjusting for covariates)') +
   scale_y_continuous(name=paste('Adjusted Digit Span Forward SS', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -115,7 +115,7 @@ pOW_IQ70_DSforward_plot = ggplot(UAE_allDat_WASI70, aes(y = dsforward_pred, x = 
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Digit Span Forward SS (adjusting for covariates) for those with IQ > 70') +
   scale_y_continuous(name=paste('Adjusted Digit Span Forward SS', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -128,7 +128,7 @@ pOW_DSbackward_plot = ggplot(UAE_allDat_WASI, aes(y = dsbackward_pred, x = pOW))
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Digit Span Backward SS (adjusting for covariates)') +
   scale_y_continuous(name=paste('Adjusted Digit Span Backward SS', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -140,7 +140,7 @@ pOW_IQ70_DSbackward_plot = ggplot(UAE_allDat_WASI70, aes(y = dsbackward_pred, x 
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Digit Span Backward SS (adjusting for covariates) for those with IQ > 70') +
   scale_y_continuous(name=paste('Adjusted Digit Span Backward SS', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -153,7 +153,7 @@ pOW_coding_plot = ggplot(UAE_allDat_WASI, aes(y = coding_pred, x = pOW)) +
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Coding SS (adjusting for covariates)') +
   scale_y_continuous(name=paste('Adjusted Coding SS', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -165,9 +165,39 @@ pOW_IQ70_coding_plot = ggplot(UAE_allDat_WASI70, aes(y = coding_pred, x = pOW)) 
   geom_point(size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Coding SS (adjusting for covariates) for those with IQ > 70') +
   scale_y_continuous(name=paste('Adjusted Coding SS', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+        panel.background = element_blank())
+
+## sleep interaction
+pOW_coding_sleep_plot = ggplot(UAE_allDat_codingmod, aes(y = coding_pred, x = pOW)) +
+  geom_smooth(method = 'lm', formula = y~x) +
+  geom_point(size = 3) +
+  ggtitle('Association between Percent of Overweight Cutoff and Coding SS (adjusting for covariates)') +
+  scale_y_continuous(name=paste('Adjusted Coding SS', '\n', 
+                                '(income, mother ed, and age)')) +
+  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
+  scale_color_manual(values = c("purple", "darkorange")) +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+        panel.background = element_blank())
+
+## Exploratory with sleep ####
+sleep_coding_mean <- mean(UAE_allDat_codingmod$CSHQ_Total_no16, na.rm = TRUE)
+sleep_coding_sd <- sd(UAE_allDat_codingmod$CSHQ_Total_no16, na.rm = TRUE)
+UAE_allDat_codingmod$CSHQ_Total_no16_cat <- ifelse(UAE_allDat_codingmod$CSHQ_Total_no16 <= (sleep_coding_mean - sleep_coding_sd), 'SD-1', ifelse(UAE_allDat_codingmod$CSHQ_Total_no16 >= (sleep_coding_mean + sleep_coding_sd), 'SD+1', 'Center'))
+
+pOW_sleep_pFA_plot = ggplot(UAE_allDat_codingmod, aes(y = coding_pred, x = pOW, Group = factor(CSHQ_Total_no16_cat))) +
+  geom_smooth(method = 'lm', formula = y~x, aes(color = factor(CSHQ_Total_no16_cat))) +
+  geom_point(aes(color = factor(CSHQ_Total_no16_cat)), size = 3) +
+  ggtitle('Association between Percent of Overweight Cutoff and Coding performance (adjusting for covariates)') +
+  scale_y_continuous(name=paste('Coding', '\n', 
+                                '(income, mother ed, and age)')) +
+  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
+  scale_color_manual(values = c("mediumpurple1", "purple", "purple4")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
         panel.background = element_blank())
@@ -179,7 +209,7 @@ pOW_Nback_plot = ggplot(UAE_goodNBack_modDat, aes(y = BalAcc_pOW_pred, x = pOW, 
   geom_point(aes(color = Load), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
   scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -192,7 +222,7 @@ pOW_ncomorbid_BalAcc_plot = ggplot(UAE_goodNBack_modDat, aes(y = BalACC_ncomorbi
   geom_point(aes(color = factor(nComorbid)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
   scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("violet", "mediumpurple1", "purple", "purple4")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -204,7 +234,7 @@ pOW_ncomorbid_dprime_plot = ggplot(UAE_goodNBack_modDat, aes(y = dPrime_ncomorbi
   geom_point(aes(color = factor(nComorbid)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
   scale_y_continuous(name=paste("d'", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("violet", "mediumpurple1", "purple", "purple4")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -221,7 +251,7 @@ pOW_sleep_pFA_plot = ggplot(UAE_goodNBack_sleep_modDat, aes(y = pFA_sleep, x = p
   geom_point(aes(color = factor(CSHQ_Total_no16_cat)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
   scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("mediumpurple1", "purple", "purple4")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -238,7 +268,7 @@ pOW_SDQ_pFA_plot = ggplot(UAE_goodNBack_SDQ_modDat, aes(y = pFA_SDQ, x = pOW, Gr
   geom_point(aes(color = factor(SDQ_TotalProb_raw_cat)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
   scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("mediumpurple1", "purple", "purple4")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -252,7 +282,7 @@ Nback_sleep_pFA_plot = ggplot(UAE_goodNBack_sleepmodDat, aes(y = pFA_sleep_pred,
   geom_point(aes(color = Load), size = 3) +
   ggtitle("Association between Sleep and Nback False Alarm Percent (adjusting for covariates)") +
   scale_y_continuous(name=paste("Adjusted False Alarm Percent", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Total Sleep') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -264,7 +294,7 @@ Nback_sleep_dPrime_plot = ggplot(UAE_goodNBack_sleepmodDat, aes(y = dPrime_sleep
   geom_point(aes(color = Load), size = 3) +
   ggtitle("Association between Sleep and Nback d' (adjusting for covariates)") +
   scale_y_continuous(name=paste("Adjusted d'", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Total Sleep') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -276,7 +306,7 @@ Nback_SDQtotal_pFA_plot = ggplot(UAE_goodNBack_SDQmodDat, aes(y = pFA_sdq_pred, 
   geom_point(aes(color = Load), size = 3) +
   ggtitle("Association between SDQ Total and Nback Percent False Alarms (adjusting for covariates)") +
   scale_y_continuous(name=paste("Adjusted Percent False Alarms", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Total SDQ Problems') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -288,7 +318,7 @@ Nback_SDQhyper_pFA_plot = ggplot(UAE_goodNBack_SDQhypermodDat, aes(y = pFA_sdqhy
   geom_point(aes(color = Load), size = 3) +
   ggtitle("Association between SDQ Hyperactive and Nback Percent False Alarms (adjusting for covariates)") +
   scale_y_continuous(name=paste("Adjusted Percent False Alarms", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Hyperactive SDQ Problems') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -300,7 +330,7 @@ Nback_SDQemot_pFA_plot = ggplot(UAE_goodNBack_SDQemotmodDat, aes(y = pFA_sdqemot
   geom_point(aes(color = Load), size = 3) +
   ggtitle("Association between SDQ Emotional and Nback Percent False Alarms (adjusting for covariates)") +
   scale_y_continuous(name=paste("Adjusted Percent False Alarms", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Emotional SDQ Problems') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -312,7 +342,7 @@ Nback_SDQconduct_pFA_plot = ggplot(UAE_goodNBack_SDQconductmodDat, aes(y = pFA_s
   geom_point(aes(color = Load), size = 3) +
   ggtitle("Association between SDQ Conduct and Nback Percent False Alarms (adjusting for covariates)") +
   scale_y_continuous(name=paste("Adjusted Percent False Alarms", '\n', 
-                                '(income, mother ed, age, and sex)')) +
+                                '(income, mother ed, and age)')) +
   scale_x_continuous(name='Conduct SDQ Problems') +
   scale_color_manual(values = c("purple", "darkorange")) +
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),

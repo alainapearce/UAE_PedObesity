@@ -171,6 +171,22 @@ UAE_goodNBackDat$B2_dprime <- B2_dprime_mat$dprime
 UAE_goodNBackDat_long$dprime <- dprime_mat$dprime
 
 #change to percents
+UAE_goodNBackDat$B1_BalAcc <- UAE_goodNBackDat$B1_BalAcc*100
+UAE_goodNBackDat$B1_pFA <- UAE_goodNBackDat$B1_pFA*100
+UAE_goodNBackDat$B1_pCor <- UAE_goodNBackDat$B1_pCor*100
+UAE_goodNBackDat$B1_pAcc <- UAE_goodNBackDat$B1_pAcc*100
+UAE_goodNBackDat$B1_pMiss <- UAE_goodNBackDat$B1_pMiss*100
+UAE_goodNBackDat$B1_meanRTcor <- UAE_goodNBackDat$B1_meanRTcor*1000
+UAE_goodNBackDat$B1_medRTcor <- UAE_goodNBackDat$B1_meanRTcor*1000
+
+UAE_goodNBackDat$B2_BalAcc <- UAE_goodNBackDat$B2_BalAcc*100
+UAE_goodNBackDat$B2_pFA <- UAE_goodNBackDat$B2_pFA*100
+UAE_goodNBackDat$B2_pCor <- UAE_goodNBackDat$B2_pCor*100
+UAE_goodNBackDat$B2_pAcc <- UAE_goodNBackDat$B2_pAcc*100
+UAE_goodNBackDat$B2_pMiss <- UAE_goodNBackDat$B2_pMiss*100
+UAE_goodNBackDat$B2_meanRTcor <- UAE_goodNBackDat$B2_meanRTcor*1000
+UAE_goodNBackDat$B2_medRTcor <- UAE_goodNBackDat$B2_meanRTcor*1000
+
 UAE_goodNBackDat_long$BalAcc <- UAE_goodNBackDat_long$BalAcc*100
 UAE_goodNBackDat_long$pFA <- UAE_goodNBackDat_long$pFA*100
 UAE_goodNBackDat_long$pCor <- UAE_goodNBackDat_long$pCor*100
