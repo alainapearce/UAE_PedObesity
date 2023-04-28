@@ -172,25 +172,12 @@ pOW_IQ70_coding_plot = ggplot(UAE_allDat_WASI70, aes(y = coding_pred, x = pOW)) 
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
         panel.background = element_blank())
 
-## sleep interaction
-pOW_coding_sleep_plot = ggplot(UAE_allDat_codingmod, aes(y = coding_pred, x = pOW)) +
-  geom_smooth(method = 'lm', formula = y~x) +
-  geom_point(size = 3) +
-  ggtitle('Association between Percent of Overweight Cutoff and Coding SS (adjusting for covariates)') +
-  scale_y_continuous(name=paste('Adjusted Coding SS', '\n', 
-                                '(income, mother ed, and age)')) +
-  scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
-  scale_color_manual(values = c("purple", "darkorange")) +
-  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
-        panel.background = element_blank())
-
 ## Exploratory with sleep ####
 sleep_coding_mean <- mean(UAE_allDat_codingmod$CSHQ_Total_no16, na.rm = TRUE)
 sleep_coding_sd <- sd(UAE_allDat_codingmod$CSHQ_Total_no16, na.rm = TRUE)
 UAE_allDat_codingmod$CSHQ_Total_no16_cat <- ifelse(UAE_allDat_codingmod$CSHQ_Total_no16 <= (sleep_coding_mean - sleep_coding_sd), 'SD-1', ifelse(UAE_allDat_codingmod$CSHQ_Total_no16 >= (sleep_coding_mean + sleep_coding_sd), 'SD+1', 'Center'))
 
-pOW_sleep_pFA_plot = ggplot(UAE_allDat_codingmod, aes(y = coding_pred, x = pOW, Group = factor(CSHQ_Total_no16_cat))) +
+pOW_sleep_coding_plot = ggplot(UAE_allDat_codingmod, aes(y = coding_pred, x = pOW, Group = factor(CSHQ_Total_no16_cat))) +
   geom_smooth(method = 'lm', formula = y~x, aes(color = factor(CSHQ_Total_no16_cat))) +
   geom_point(aes(color = factor(CSHQ_Total_no16_cat)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Coding performance (adjusting for covariates)') +
@@ -250,7 +237,7 @@ pOW_sleep_pFA_plot = ggplot(UAE_goodNBack_sleep_modDat, aes(y = pFA_sleep, x = p
   geom_smooth(method = 'lm', formula = y~x, aes(color = factor(CSHQ_Total_no16_cat))) +
   geom_point(aes(color = factor(CSHQ_Total_no16_cat)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
-  scale_y_continuous(name=paste('Ballanced Accuracy', '\n', 
+  scale_y_continuous(name=paste('Percent False Alarms', '\n', 
                                 '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("mediumpurple1", "purple", "purple4")) +

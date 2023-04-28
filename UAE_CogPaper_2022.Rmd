@@ -507,6 +507,11 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 
 ### Sleep
 \FloatBarrier
+```{r pOW_coding_sleep_fig, echo=FALSE, include = TRUE}
+pOW_sleep_coding_plot
+```
+
+\FloatBarrier
 ```{r pOW_coding_sleep_mod, echo=FALSE, results='asis'}
 kable(pOW_coding_sleep_sum$coefficients, digits = 3, caption = "Coding SS model - Sleep Interaction", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))

@@ -621,6 +621,169 @@ kable(IOTF_pOWcutoff_prosocial_Low_tab, digits = 3, caption = "Logistic Model: P
 \clearpage
 \FloatBarrier
 
+# Remove Short Stature/Growth Hormone Deficiency
+
+## Association with Yes/No Family History
+
+no change in pattern of results 
+
+### t-tests for Yes/No History of Obesity
+
+```{r IOTF_pOWcutoff_FamOB_ttests_subset, echo=FALSE, results='verbatim'}
+IOTF_pOWcutoff_FamOB_ttest_subset
+```
+
+\FloatBarrier
+
+### distribution test for Yes/Now History of Eating Disorders across Weight Status
+
+```{r IOTF_pOWcutoff_FamED_fisher_subset, echo=FALSE, results='verbatim'}
+IOTF_weightstatus_FamED_fisher_subset
+```
+
+\FloatBarrier
+
+### Association with Number of Relative Categories with History of Obesity - Poisson
+
+no change in pattern of results
+
+```{r IOTF_pOWcutoff_nFam_poisson_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_nFamOB_tab_subset, caption = 'Poisson Model: Number of Family Relationship Categories Obeisty - pOWcutoff (subset revomve short stature/growth probs)', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+
+\FloatBarrier
+
+### Sensitivity Tests
+
+```{r IOTF_pOWcutoff_nFam_STpoisson_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_nFamOB_STtab_subset, digits = 3, caption = "Linear Model: Number of Family Relationship Categories Obesity - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+\clearpage
+
+## Sleep
+
+no change in pattern
+
+### Association Betwen Sleep Sub-Scales and Percent of Overweight Cutoff
+
+### Correlation Matrix - Sleep
+
+### t-tests for recommendation categories - Sleep
+
+```{r OTF_pOWcutoff_sleep_ttests_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff.sleep_ttest_tab_subset, caption = 'Percent of Overweight by Sleep by Recommendations (subset revomve short stature/growth probs)', format = "latex", booktabs = TRUE, longtable = FALSE) %>%
+  kableExtra::kable_styling(latex_options = "hold_position",  full_width = FALSE)
+```
+
+### Correlation Matrix - Sleep Behavior
+
+```{r IOTF_pOWcutoff_cshq_cor_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_CSHQ_cormat_subset, digits = 3, caption = "Correlations between sleep subscales and percent of overweight (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_cshq_cor_ps_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_CSHQ_cormat_ps_subset, digits = 3, caption = "Correlations between sleep subscales and percent of overweight (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+### Sensitivity Tests
+
+#### Sleep Onset Delay
+
+```{r IOTF_pOWcutoff_sleepdelay_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_sleepdelay_tab_subset, digits = 3, caption = "Linear Model: Sleep Onset Delay - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+#### Sleep Disordered Breathing
+
+```{r IOTF_pOWcutoff_disbreathing_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_breathing_tab_subset, digits = 3, caption = "Linear Model: Sleep Disordered Breathing - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\clearpage
+
+# Strengths and Difficulties Questionnaire
+
+no change in overall pattern - interaction became less significant due to loss of power but pattern remained the same
+
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_emotprobs_elevated_logit_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_EmotProb_Elevated_tab_subset, digits = 3, caption = "Logistic Model: Emotional Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+## Conduct Problems
+
+
+```{r IOTF_pOWcutoff_conductprobs_elevated_logit_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_ConductProb_Elevated_tab_subset, digits = 3, caption = "Logistic Model: Conduct Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+### Hyperactivity
+
+
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_hypeprobs_elevated_logit_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_HypeProb_Elevated_tab_subset, digits = 3, caption = "Logistic Model: Hyperactivity Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+\FloatBarrier
+
+### Peer Problems
+
+
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_peerprobs_elevated_logit_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_peerprob_Elevated_tab_subset, digits = 3, caption = "Logistic Model: Peer Problems (Elevated vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_peerprobs_elevated_emtremds_subset, echo=FALSE, results='verbatim'}
+IOTF_pOWcutoff_peerprob_Elevated_emtrends_subset
+```
+
+
+\FloatBarrier
+
+## Prosocial
+
+
+\FloatBarrier
+
+```{r IOTF_pOWcutoff_prosocialprobs_low_logit_subset, echo=FALSE, results='asis'}
+kable(IOTF_pOWcutoff_prosocial_Low_tab_subset, digits = 3, caption = "Logistic Model: Prosocial Problems (Low vs Not) - SES category + Maternal Education + Age + Sex + pOWcutoff (subset revomve short stature/growth probs)", booktabs=TRUE)  %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"))
+```
+
+
+\clearpage
+\FloatBarrier
+
+
 # Extra Tables by Sex
 ```{r load_extraTables_script, echo=FALSE}
 source('extra2_MedPaper_tablesSex.R')

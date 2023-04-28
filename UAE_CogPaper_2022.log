@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  15 JUN 2022 09:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  16 JUN 2022 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1310,32 +1310,39 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [23
 
  <./UAE_CogPaper_Figs/fig-pOW_coding_fig-1.pdf>]
+<UAE_CogPaper_Figs/fig-pOW_coding_sleep_fig-1.pdf, id=306, 432.61626pt x 280.04
+625pt>
+File: UAE_CogPaper_Figs/fig-pOW_coding_sleep_fig-1.pdf Graphic file (type pdf)
+<use UAE_CogPaper_Figs/fig-pOW_coding_sleep_fig-1.pdf>
+Package pdftex.def Info: UAE_CogPaper_Figs/fig-pOW_coding_sleep_fig-1.pdf used 
+on input line 1298.
+(pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[24] [25] [26
+[24 <./UAE_CogPaper_Figs/fig-pOW_coding_sleep_fig-1.pdf>] [25] [26
 
 ] [27
 
 ]
-Overfull \hbox (272.757pt too wide) in paragraph at lines 1473--1496
+Overfull \hbox (272.757pt too wide) in paragraph at lines 1477--1500
  [][] 
  []
 
 [28
 
 ]
-Overfull \hbox (247.93437pt too wide) in paragraph at lines 1516--1537
+Overfull \hbox (247.93437pt too wide) in paragraph at lines 1520--1541
  [][] 
  []
 
 
-Overfull \hbox (249.73964pt too wide) in paragraph at lines 1544--1565
+Overfull \hbox (249.73964pt too wide) in paragraph at lines 1548--1569
  [][] 
  []
 
 
-Overfull \hbox (248.07297pt too wide) in paragraph at lines 1581--1602
+Overfull \hbox (248.07297pt too wide) in paragraph at lines 1585--1606
  [][] 
  []
 
@@ -1345,16 +1352,16 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [29
 
 ]
-Overfull \hbox (249.73964pt too wide) in paragraph at lines 1609--1630
+Overfull \hbox (249.73964pt too wide) in paragraph at lines 1613--1634
  [][] 
  []
 
 
-<UAE_CogPaper_Figs/fig-pOW_balacc_fig-1.pdf, id=350, 432.61626pt x 280.04625pt>
+<UAE_CogPaper_Figs/fig-pOW_balacc_fig-1.pdf, id=361, 432.61626pt x 280.04625pt>
 File: UAE_CogPaper_Figs/fig-pOW_balacc_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-pOW_balacc_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-pOW_balacc_fig-1.pdf used on inp
-ut line 1646.
+ut line 1650.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 [30]
 
@@ -1369,25 +1376,25 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [33]
-<UAE_CogPaper_Figs/fig-pOW_ncomorbid_balacc_fig-1.pdf, id=397, 432.61626pt x 28
+<UAE_CogPaper_Figs/fig-pOW_ncomorbid_balacc_fig-1.pdf, id=408, 432.61626pt x 28
 0.04625pt>
 File: UAE_CogPaper_Figs/fig-pOW_ncomorbid_balacc_fig-1.pdf Graphic file (type p
 df)
 <use UAE_CogPaper_Figs/fig-pOW_ncomorbid_balacc_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-pOW_ncomorbid_balacc_fig-1.pdf u
-sed on input line 1885.
+sed on input line 1889.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [34 <./UAE_CogPaper_Figs/fig-pOW_ncomorbid_balacc_fig-1.pdf>] [35]
-<UAE_CogPaper_Figs/fig-pOW_ncomorbid_dprime_fig-1.pdf, id=424, 432.61626pt x 28
+<UAE_CogPaper_Figs/fig-pOW_ncomorbid_dprime_fig-1.pdf, id=435, 432.61626pt x 28
 0.04625pt>
 File: UAE_CogPaper_Figs/fig-pOW_ncomorbid_dprime_fig-1.pdf Graphic file (type p
 df)
 <use UAE_CogPaper_Figs/fig-pOW_ncomorbid_dprime_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-pOW_ncomorbid_dprime_fig-1.pdf u
-sed on input line 2049.
+sed on input line 2053.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 [36] [37 <./UAE_CogPaper_Figs/fig-pOW_ncomorbid_dprime_fig-1.pdf>]
 
@@ -1398,12 +1405,12 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [39]
-<UAE_CogPaper_Figs/fig-pOW_sleep_pFA_fig-1.pdf, id=468, 432.61626pt x 280.04625
+<UAE_CogPaper_Figs/fig-pOW_sleep_pFA_fig-1.pdf, id=479, 432.61626pt x 280.04625
 pt>
 File: UAE_CogPaper_Figs/fig-pOW_sleep_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-pOW_sleep_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-pOW_sleep_pFA_fig-1.pdf used on 
-input line 2283.
+input line 2287.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1425,12 +1432,12 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [44]
-<UAE_CogPaper_Figs/fig-pOW_SDQ_pFA_fig-1.pdf, id=520, 432.61626pt x 280.04625pt
+<UAE_CogPaper_Figs/fig-pOW_SDQ_pFA_fig-1.pdf, id=531, 432.61626pt x 280.04625pt
 >
 File: UAE_CogPaper_Figs/fig-pOW_SDQ_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-pOW_SDQ_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-pOW_SDQ_pFA_fig-1.pdf used on in
-put line 2606.
+put line 2610.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1439,53 +1446,53 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[46] [47] [48] <UAE_CogPaper_Figs/fig-cshq_pFA_fig-1.pdf, id=566, 432.61626pt x
+[46] [47] [48] <UAE_CogPaper_Figs/fig-cshq_pFA_fig-1.pdf, id=577, 432.61626pt x
  280.04625pt>
 File: UAE_CogPaper_Figs/fig-cshq_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-cshq_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-cshq_pFA_fig-1.pdf used on input
- line 2910.
+ line 2914.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [49 <./UAE_CogPaper_Figs/fig-cshq_pFA_fig-1.pdf>]
-<UAE_CogPaper_Figs/fig-cshq_dprime_fig-1.pdf, id=585, 421.575pt x 280.04625pt>
+<UAE_CogPaper_Figs/fig-cshq_dprime_fig-1.pdf, id=596, 421.575pt x 280.04625pt>
 File: UAE_CogPaper_Figs/fig-cshq_dprime_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-cshq_dprime_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-cshq_dprime_fig-1.pdf used on in
-put line 3010.
+put line 3014.
 (pdftex.def)             Requested size: 421.58038pt x 280.04982pt.
 [50]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [51 <./UAE_CogPaper_Figs/fig-cshq_dprime_fig-1.pdf>] <UAE_CogPaper_Figs/fig-sdq
-_pFA_fig-1.pdf, id=612, 432.61626pt x 280.04625pt>
+_pFA_fig-1.pdf, id=623, 432.61626pt x 280.04625pt>
 File: UAE_CogPaper_Figs/fig-sdq_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-sdq_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-sdq_pFA_fig-1.pdf used on input 
-line 3146.
+line 3150.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 [52]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [53 <./UAE_CogPaper_Figs/fig-sdq_pFA_fig-1.pdf>]
-<UAE_CogPaper_Figs/fig-sdqhyper_pFA_fig-1.pdf, id=642, 432.61626pt x 280.04625p
+<UAE_CogPaper_Figs/fig-sdqhyper_pFA_fig-1.pdf, id=653, 432.61626pt x 280.04625p
 t>
 File: UAE_CogPaper_Figs/fig-sdqhyper_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-sdqhyper_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-sdqhyper_pFA_fig-1.pdf used on i
-nput line 3225.
+nput line 3229.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
-Overfull \hbox (136.47787pt too wide) in paragraph at lines 3225--3226
+Overfull \hbox (136.47787pt too wide) in paragraph at lines 3229--3230
  \T1/lmr/bx/n/10 4.6.2.1 Hy-per-ac-tiv-ity Prob-lems[] [] 
  []
 
 
-Overfull \hbox (22.10745pt too wide) in paragraph at lines 3253--3261
+Overfull \hbox (22.10745pt too wide) in paragraph at lines 3257--3265
  [][] 
  []
 
@@ -1493,28 +1500,28 @@ Overfull \hbox (22.10745pt too wide) in paragraph at lines 3253--3261
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [54 <./UAE_CogPaper_Figs/fig-sdqhyper_pFA_fig-1.pdf>]
-<UAE_CogPaper_Figs/fig-sdqemot_pFA_fig-1.pdf, id=661, 432.61626pt x 280.04625pt
+<UAE_CogPaper_Figs/fig-sdqemot_pFA_fig-1.pdf, id=672, 432.61626pt x 280.04625pt
 >
 File: UAE_CogPaper_Figs/fig-sdqemot_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-sdqemot_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-sdqemot_pFA_fig-1.pdf used on in
-put line 3270.
+put line 3274.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
-Overfull \hbox (118.31787pt too wide) in paragraph at lines 3270--3271
+Overfull \hbox (118.31787pt too wide) in paragraph at lines 3274--3275
  \T1/lmr/bx/n/10 4.6.2.2 Emo-tional Prob-lems[] [] 
  []
 
 
-<UAE_CogPaper_Figs/fig-sdqconduct_pFA_fig-1.pdf, id=662, 432.61626pt x 280.0462
+<UAE_CogPaper_Figs/fig-sdqconduct_pFA_fig-1.pdf, id=673, 432.61626pt x 280.0462
 5pt>
 File: UAE_CogPaper_Figs/fig-sdqconduct_pFA_fig-1.pdf Graphic file (type pdf)
 <use UAE_CogPaper_Figs/fig-sdqconduct_pFA_fig-1.pdf>
 Package pdftex.def Info: UAE_CogPaper_Figs/fig-sdqconduct_pFA_fig-1.pdf used on
- input line 3315.
+ input line 3319.
 (pdftex.def)             Requested size: 432.635pt x 280.05836pt.
 
-Overfull \hbox (109.64539pt too wide) in paragraph at lines 3315--3316
+Overfull \hbox (109.64539pt too wide) in paragraph at lines 3319--3320
  \T1/lmr/bx/n/10 4.6.2.3 Con-duct Prob-lems[] [] 
  []
 
@@ -1523,19 +1530,19 @@ Overfull \hbox (109.64539pt too wide) in paragraph at lines 3315--3316
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [56 <./UAE_CogPaper_Figs/fig-sdqconduct_pFA_fig-1.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3441.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3445.
 [57]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3441.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3445.
 (./UAE_CogPaper_2022.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3441.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3441.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3441.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3445.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3445.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3445.
  ) 
 Here is how much of TeX's memory you used:
- 16705 strings out of 492995
- 251010 string characters out of 6132704
+ 16710 strings out of 492995
+ 251251 string characters out of 6132704
  389264 words of memory out of 5000000
- 19591 multiletter control sequences out of 15000+600000
+ 19595 multiletter control sequences out of 15000+600000
  59740 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,13n,40p,843b,459s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1554,10 +1561,10 @@ lm/lmr7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmr8.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/loca
 l/texlive/2017/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2
 017/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on UAE_CogPaper_2022.pdf (57 pages, 586776 bytes).
+Output written on UAE_CogPaper_2022.pdf (57 pages, 599902 bytes).
 PDF statistics:
- 882 PDF objects out of 1000 (max. 8388607)
- 746 compressed objects within 8 object streams
+ 893 PDF objects out of 1000 (max. 8388607)
+ 754 compressed objects within 8 object streams
  280 named destinations out of 1000 (max. 500000)
- 12544 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 12549 words of extra memory for PDF output out of 14400 (max. 10000000)
 
