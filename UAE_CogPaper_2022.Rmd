@@ -43,6 +43,7 @@ library(ggplot2)
 library(ggridges)
 library(lme4)
 library(lmerTest)
+library(EZ2)
 
 source('functions.R')
 ```
@@ -575,7 +576,7 @@ as_kable_extra(UAE_nback_OBstat, caption = 'Nback Performance by Weight Status',
 ```
 \FloatBarrier
 
-There was a trend for children with HW to have lower percent correct hits and ballanced accuracy during 1-back compared to those with overweight or obesity. There was a significant effect for 1-back d' such that those with HW showed lower sensitivity. May be due to those with lower weights being included in the HW category as <85th percentile.
+There was a trend for children with HW to have lower percent correct hits and ballanced accuracy during 1-back compared to those with overweight or obesity. There was a significant effect for 1-back Percent Hits such that those with HW showed lower sensitivity. May be due to those with lower weights being included in the HW category as <85th percentile.
 
 \FloatBarrier
 \clearpage
@@ -594,7 +595,7 @@ kable(nback_cormat_ps, digits = 3, caption = "Correlation p values between Nback
 ```
 \FloatBarrier
 
-Percent of overweight was positively correlated with 1-back d' sensitivity.
+Percent of overweight was positively correlated with 1-back Percent Hits sensitivity.
 
 \FloatBarrier
 
@@ -612,7 +613,7 @@ kable(nback_IQ70_cormat_ps, digits = 3, caption = "Correlation p values between 
 ```
 \FloatBarrier
 
-After excluding those with performance IQ < 70, percent of overweight was positively correlated with both 1-back d' sensitivity and ballanced accuracy.
+After excluding those with performance IQ < 70, percent of overweight was positively correlated with both 1-back Percent Hits sensitivity and ballanced accuracy.
 
 ## Nback - Load x Percent of Overweigth
 
@@ -666,21 +667,21 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 
 \FloatBarrier
 
-### d' 
+### Percent Hits
 \FloatBarrier
 
-```{r pOW_dprime_block_mod, echo=FALSE, results='asis'}
-kable(pOW_dPrimeInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: d'", booktabs=TRUE)  %>%
+```{r pOW_phits_block_mod, echo=FALSE, results='asis'}
+kable(pOW_phits_anova, digits = 3, caption = "Nback Load x Percent of Overweight: Percent Hits", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
 \FloatBarrier
-There was no interaction and no main effect of percent of overweight. There was a significant effect of Load with better d' in 1- than 2-back. Age was positively associated with d' overall.
+There was no interaction and no main effect of percent of overweight. There was a significant effect of Load with better Percent Hits in 1- than 2-back. Age was positively associated with Percent Hits overall.
 
 \FloatBarrier
 
-```{r pOW_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
-kable(pOW_IQg70_dPrimeInt_anova, digits = 3, caption = "Nback Load x Percent of Overweight: d' - IQ >=70 ", booktabs=TRUE)  %>%
+```{r pOW_IQ70_phits_block_mod, echo=FALSE, results='asis'}
+kable(pOW_IQg70_phits_anova, digits = 3, caption = "Nback Load x Percent of Overweight: Percent Hits - IQ >=70 ", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -772,32 +773,30 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 
 \FloatBarrier
 
-### d'
+### Percent Hits
 \FloatBarrier
-```{r pOW_ncomorbid_dprime_fig, echo=FALSE, include = TRUE}
-pOW_ncomorbid_dprime_plot
+```{r pOW_ncomorbid_phit_fig, echo=FALSE, include = TRUE}
+pOW_ncomorbid_phit_plot
 ```
 \FloatBarrier
 
-```{r pOW_ncomorbid_dprime_block_mod, echo=FALSE, results='asis'}
-kable(ncomorbid_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: d'", booktabs=TRUE)  %>%
+```{r pOW_ncomorbid_phit_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_hitInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: Percent Hits", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
 \FloatBarrier
 
-```{r pOW_ncomorbid_dprime_block_slopes, echo=FALSE, results='asis'}
-kable(test(ncomorbid_dPrimeInt_slopes), digits = 3, caption = "Nback nComorbid x Percent of Overweight: d' simple slopes", booktabs=TRUE)  %>%
+```{r pOW_ncomorbid_phit_block_slopes, echo=FALSE, results='asis'}
+kable(test(ncomorbid_hitInt_slopes), digits = 3, caption = "Nback nComorbid x Percent of Overweight: Percent Hits simple slopes", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
-\FloatBarrier
-After controlling for Load, there was a significant interaction between percent of overweight and number of comorbidities such that the association between percent of overweight and d' becomes more negative with increasing number of comorbidities. With zero comorbidities there was a significant positive association such that if percent of overweight increased by 10, d' is expected to increased by 0.06. There was not a significant association for those with 1 or 2 comorbidities but a trend for a negative association for those with 3 comorbidities such that if percent of overweight increased by 10, d' would be expected to decrease by 0.05. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
 
 \FloatBarrier
 
-```{r pOW_ncomorbid_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
-kable(ncomorbid_IQg70_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: d' - IQ >=70 ", booktabs=TRUE)  %>%
+```{r pOW_ncomorbid_IQ70_phit_block_mod, echo=FALSE, results='asis'}
+kable(ncomorbid_IQg70_hitInt_sum$coefficients, digits = 3, caption = "Nback nComorbid x Percent of Overweight: Percent Hits - IQ >=70 ", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -899,11 +898,11 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 
 \FloatBarrier
 
-### d' 
+### Percent Hits 
 \FloatBarrier
 
-```{r pOW_sleep_dprime_block_mod, echo=FALSE, results='asis'}
-kable(sleep_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback CSHQ x Percent of Overweight: d'", booktabs=TRUE)  %>%
+```{r pOW_sleep_phit_block_mod, echo=FALSE, results='asis'}
+kable(sleep_hitInt_sum$coefficients, digits = 3, caption = "Nback CSHQ x Percent of Overweight: Percent Hits", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -913,8 +912,8 @@ After controlling for Load, there no interaction between percent of overweight a
 
 \FloatBarrier
 
-```{r pOW_sleep_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
-kable(sleep_IQg70_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback CSHQ x Percent of Overweight: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
+```{r pOW_sleep_IQ70_phit_block_mod, echo=FALSE, results='asis'}
+kable(sleep_IQg70_hitInt_sum$coefficients, digits = 3, caption = "Nback CSHQ x Percent of Overweight: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -928,7 +927,7 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 \FloatBarrier
 
 ```{r pOW_Sleep_RT_block_mod, echo=FALSE, results='asis'}
-kable(sleep_meanRTInt_sum$coefficients, digits = 3, caption = "Nback Sleep Total Problems x Percent of Overweight: d'", booktabs=TRUE)  %>%
+kable(sleep_meanRTInt_sum$coefficients, digits = 3, caption = "Nback Sleep Total Problems x Percent of Overweight: Percent Hits", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -1019,12 +1018,12 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 
 \FloatBarrier
 
-### d'
+### Percent Hits
 
 \FloatBarrier
 
-```{r pOW_SDQ_dprime_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback SDQ Total Problems x Percent of Overweight: d'", booktabs=TRUE)  %>%
+```{r pOW_SDQ_phit_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_hitInt_sum$coefficients, digits = 3, caption = "Nback SDQ Total Problems x Percent of Overweight: Percent Hits", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -1034,8 +1033,8 @@ After controlling for Load, there no interaction between percent of overweight a
 
 \FloatBarrier
 
-```{r pOW_SDQ_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_IQg70_dPrimeInt_sum$coefficients, digits = 3, caption = "Nback SDQ Total Problems x Percent of Overweight: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
+```{r pOW_SDQ_IQ70_phit_block_mod, echo=FALSE, results='asis'}
+kable(SDQ_IQg70_hitInt_sum$coefficients, digits = 3, caption = "Nback SDQ Total Problems x Percent of Overweight: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -1049,7 +1048,7 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 \FloatBarrier
 
 ```{r pOW_SDQ_RT_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_meanRTInt_sum$coefficients, digits = 3, caption = "Nback SDQ Total Problems x Percent of Overweight: d'", booktabs=TRUE)  %>%
+kable(SDQ_meanRTInt_sum$coefficients, digits = 3, caption = "Nback SDQ Total Problems x Percent of Overweight: Percent Hits", booktabs=TRUE)  %>%
   kable_styling(latex_options = c("hold_position", "repeat_header"))
 ```
 
@@ -1069,267 +1068,3 @@ Pattern of results remained unchanged when restricting to IQ >=70.
 
 \FloatBarrier
 
-## Nback x Load - sleep models
-
-### Ballanced Accuracy
-
-```{r cshq_balacc_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_BalAccInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Ballanced Accuracy", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-There was no interaction and no main effect of total sleep score. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
-
-\FloatBarrier
-```{r cshq_IQ70_balacc_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_IQg70_BalAccInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-Pattern of results remained unchanged when restricting to IQ >=70.
-
-\FloatBarrier
-
-### Flase Alarms
-\FloatBarrier
-```{r cshq_pFA_fig, echo=FALSE, include = TRUE}
-Nback_sleep_pFA_plot
-```
-\FloatBarrier
-
-```{r cshq_pFA_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_pFAInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Percent False Alarms'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r cshq_pFA_block_slopes, echo=FALSE, results='asis'}
-kable(test(Sleep_pFAInt_slopes), digits = 3, caption = "Nback Load x PCSHQ Total: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-There was a significant interaction between load and total sleep score such that 1-back percent False Alarms was positively related to total sleep score while there was no association fopr 2-back. Age was positively associated with percent False Alarms overall.
-
-\FloatBarrier
-
-```{r cshq_no109_pFA_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_no109_pFAInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Percent False Alarms no outlier'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-Pattern of results remained unchanged when removing 1 outlier.
-
-\FloatBarrier
-
-```{r cshq_IQ70_pFA_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_IQg70_pFAInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-Pattern of results remained unchanged when restricting to IQ >=70.
-
-\FloatBarrier
-
-### d'
-
-\FloatBarrier
-```{r cshq_dprime_fig, echo=FALSE, include = TRUE}
-Nback_sleep_dPrime_plot
-```
-\FloatBarrier
-
-```{r cshq_dprime_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_dPrimeInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: d'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r cshq_dprime_block_slopes, echo=FALSE, results='asis'}
-kable(test(Sleep_dPrimeInt_slopes), digits = 3, caption = "Nback Load x PCSHQ Total: d' simple slopes", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-There was a trend-level interaction between load and total sleep score such that 1-back d' was significantly negatively associated with toaal sleep score while 2-back was not associated.
-
-\FloatBarrier
-
-```{r cshq_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
-kable(Sleep_IQg70_dPrimeInt_anova, digits = 3, caption = "Nback Load x CSHQ Total: d' - IQ >=70 ", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-Pattern of results remained unchanged when restricting to IQ >=70.
-
-\FloatBarrier
-
-## Nback - SDQ
-
-### Ballanced Accuracy
-
-```{r sdq_balacc_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_BalAccInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Ballanced Accuracy", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-There was no interaction but there was a trending main effect of total SDQ score. Higher SDQ scores were associated with lower balanced accuracy overall. There was a significant effect of Load with better balanced accuracy in 1- than 2-back. Age was positively associated with balanced accuracy overall.
-
-\FloatBarrier
-```{r sdq_IQ70_balacc_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_IQg70_BalAccInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Ballanced Accuracy - IQ >=70 ", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-\FloatBarrier
-
-Pattern of results remained unchanged when restricting to IQ >=70.
-
-\FloatBarrier
-
-### Flase Alarms
-\FloatBarrier
-```{r sdq_pFA_fig, echo=FALSE, include = TRUE}
-Nback_SDQtotal_pFA_plot
-```
-\FloatBarrier
-
-```{r sdq_pFA_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Percent False Alarms'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r sdq_pFA_block_slopes, echo=FALSE, results='asis'}
-kable(test(SDQ_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Total: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-There was a significant interaction between load and total sleep score such that there was a trend for 1-Back percent False Alarms positively associated with SDQ total score. There was no association for 2-back. There was a significant effect of Load with lower percent False Alarms in 1- than 2-back. Age was positively associated with percent False Alarms overall.
-
-\FloatBarrier
-
-```{r sdq_IQ70_pFA_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_IQg70_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Total: Percent False Alarms - IQ >=70 ", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-Pattern of results remained unchanged when restricting to IQ >=70.
-
-\FloatBarrier
-
-#### Hyperactivity Problems
-\FloatBarrier
-```{r sdqhyper_pFA_fig, echo=FALSE, include = TRUE}
-Nback_SDQhyper_pFA_plot
-```
-\FloatBarrier
-
-```{r sdqhyper_pFA_block_mod, echo=FALSE, results='asis'}
-kable(SDQhyper_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Hyperactivity: Percent False Alarms'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r sdqhyper_pFA_block_slopes, echo=FALSE, results='asis'}
-kable(test(SDQhyper_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Hyperactivity: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-#### Emotional Problems
-\FloatBarrier
-```{r sdqemot_pFA_fig, echo=FALSE, include = TRUE}
-Nback_SDQemot_pFA_plot
-```
-\FloatBarrier
-
-```{r sdqemot_pFA_block_mod, echo=FALSE, results='asis'}
-kable(SDQemot_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Emotional: Percent False Alarms'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r sdqemot_pFA_block_slopes, echo=FALSE, results='asis'}
-kable(test(SDQemot_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Emotional: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-#### Conduct Problems
-\FloatBarrier
-```{r sdqconduct_pFA_fig, echo=FALSE, include = TRUE}
-Nback_SDQconduct_pFA_plot
-```
-\FloatBarrier
-
-```{r sdqconduct_pFA_block_mod, echo=FALSE, results='asis'}
-kable(SDQconduct_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Conduct: Percent False Alarms'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-```{r sdqconduct_pFA_block_slopes, echo=FALSE, results='asis'}
-kable(test(SDQconduct_pFAInt_slopes), digits = 3, caption = "Nback Load x SDQ Conduct: Percent False Alarms' simple slopes", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-#### Peer Problems
-
-\FloatBarrier
-
-```{r sdqpeer_pFA_block_mod, echo=FALSE, results='asis'}
-kable(SDQpeer_pFAInt_anova, digits = 3, caption = "Nback Load x SDQ Peer: Percent False Alarms'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-### d'
-
-\FloatBarrier
-
-```{r sdq_dprime_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_dPrimeInt_anova, digits = 3, caption = "Nback Load x SDQ Total: d'", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-
-\FloatBarrier
-
-There was no interaction between load and total SDA score but there was a main effect of total SDQ such that d' was worse with increasing (worse) SDQ Total Problem score. There was a significant effect of Load with better d' in 1- than 2-back. Age was positively associated with d' overall.
-
-\FloatBarrier
-
-```{r sdq_IQ70_dprime_block_mod, echo=FALSE, results='asis'}
-kable(SDQ_IQg70_dPrimeInt_anova, digits = 3, caption = "Nback Load x SDQ Total: d' - IQ >=70 ", booktabs=TRUE)  %>%
-  kable_styling(latex_options = c("hold_position", "repeat_header"))
-```
-
-\FloatBarrier
-
-Pattern of results remained unchanged when restricting to IQ >=70.
-
-\FloatBarrier

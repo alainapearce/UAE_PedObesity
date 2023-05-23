@@ -216,11 +216,11 @@ pOW_ncomorbid_BalAcc_plot = ggplot(UAE_goodNBack_modDat, aes(y = BalACC_ncomorbi
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
         panel.background = element_blank())
 
-pOW_ncomorbid_dprime_plot = ggplot(UAE_goodNBack_modDat, aes(y = dPrime_ncomorbid, x = pOW, Group = factor(nComorbid))) +
+pOW_ncomorbid_phit_plot = ggplot(UAE_goodNBack_modDat, aes(y = phit_ncomorbid, x = pOW, Group = factor(nComorbid))) +
   geom_smooth(method = 'lm', formula = y~x, aes(color = factor(nComorbid))) +
   geom_point(aes(color = factor(nComorbid)), size = 3) +
   ggtitle('Association between Percent of Overweight Cutoff and Nback performance (adjusting for covariates)') +
-  scale_y_continuous(name=paste("d'", '\n', 
+  scale_y_continuous(name=paste("Percent Hits", '\n', 
                                 '(income, mother ed, and age)')) +
   scale_x_continuous(name='Percent of IOTF Overweight Cuttoff') +
   scale_color_manual(values = c("violet", "mediumpurple1", "purple", "purple4")) +
@@ -276,11 +276,11 @@ Nback_sleep_pFA_plot = ggplot(UAE_goodNBack_sleepmodDat, aes(y = pFA_sleep_pred,
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
         panel.background = element_blank())
 
-Nback_sleep_dPrime_plot = ggplot(UAE_goodNBack_sleepmodDat, aes(y = dPrime_sleep_pred, x = CSHQ_Total_no16, Group = Load, color = Load)) +
+Nback_sleep_phit_plot = ggplot(UAE_goodNBack_sleepmodDat, aes(y = phit_sleep_pred, x = CSHQ_Total_no16, Group = Load, color = Load)) +
   geom_smooth(method = 'lm', formula = y~x) +
   geom_point(aes(color = Load), size = 3) +
-  ggtitle("Association between Sleep and Nback d' (adjusting for covariates)") +
-  scale_y_continuous(name=paste("Adjusted d'", '\n', 
+  ggtitle("Association between Sleep and Nback Percent Hits (adjusting for covariates)") +
+  scale_y_continuous(name=paste("Adjusted Percent Hits", '\n', 
                                 '(income, mother ed, and age)')) +
   scale_x_continuous(name='Total Sleep') +
   scale_color_manual(values = c("purple", "darkorange")) +

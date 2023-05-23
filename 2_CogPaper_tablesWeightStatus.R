@@ -162,27 +162,27 @@ UAE_neuropsych_IQ70_OBstat <-
 
 
 ###   Nback Data       ####
-nback_tab <- UAE_goodNBackDat[c(101, 112, 105, 116, 108, 119, 122:123, 102, 113, 103, 114)]
+nback_tab <- UAE_goodNBackDat[c(101, 112, 105, 116, 108, 119, 102, 113, 103, 114)]
 UAE_nback_tab <-
   tbl_summary(
     data=nback_tab,
-    value = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_dprime ~ "1-Back: d'", B2_dprime ~ "2-Back: d'", B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
-    label = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_dprime ~ "1-Back: d'", B2_dprime ~ "2-Back: d'", B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
-    type = list(B1_pCor ~ 'continuous', B2_pCor ~ 'continuous', B1_pFA ~ 'continuous', B2_pFA ~ 'continuous', B1_BalAcc ~ 'continuous', B2_BalAcc ~ 'continuous', B1_dprime ~ 'continuous', B2_dprime ~ 'continuous', B1_meanRTcor ~ 'continuous', B2_meanRTcor ~ 'continuous', B1_medRTcor ~ 'continuous', B2_medRTcor ~ 'continuous'),
+    value = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
+    label = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
+    type = list(B1_pCor ~ 'continuous', B2_pCor ~ 'continuous', B1_pFA ~ 'continuous', B2_pFA ~ 'continuous', B1_BalAcc ~ 'continuous', B2_BalAcc ~ 'continuous', B1_meanRTcor ~ 'continuous', B2_meanRTcor ~ 'continuous', B1_medRTcor ~ 'continuous', B2_medRTcor ~ 'continuous'),
     statistic = all_continuous() ~ c("{mean} ({sd}) [{min} - {max}]"), 
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
   add_n()
 
-nback_tab_sex <- UAE_goodNBackDat[c(9, 101, 112, 105, 116, 108, 119, 122:123, 102, 113, 103, 114)]
+nback_tab_sex <- UAE_goodNBackDat[c(9, 101, 112, 105, 116, 108, 119, 102, 113, 103, 114)]
 
 UAE_nback_sexstat <-
   tbl_summary(
     data=nback_tab_sex,
     by = sex,
-    value = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_dprime ~ "1-Back: d'", B2_dprime ~ "2-Back: d'", B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
-    label = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_dprime ~ "1-Back: d'", B2_dprime ~ "22-Back: d'", B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
-    type = list(B1_pCor ~ 'continuous', B2_pCor ~ 'continuous', B1_pFA ~ 'continuous', B2_pFA ~ 'continuous', B1_BalAcc ~ 'continuous', B2_BalAcc ~ 'continuous', B1_dprime ~ 'continuous', B2_dprime ~ 'continuous', B1_meanRTcor ~ 'continuous', B2_meanRTcor ~ 'continuous', B1_medRTcor ~ 'continuous', B2_medRTcor ~ 'continuous'),
+    value = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
+    label = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
+    type = list(B1_pCor ~ 'continuous', B2_pCor ~ 'continuous', B1_pFA ~ 'continuous', B2_pFA ~ 'continuous', B1_BalAcc ~ 'continuous', B2_BalAcc ~ 'continuous', B1_meanRTcor ~ 'continuous', B2_meanRTcor ~ 'continuous', B1_medRTcor ~ 'continuous', B2_medRTcor ~ 'continuous'),
     statistic = all_continuous() ~ c("{mean} ({sd}) [{min} - {max}]"), 
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
@@ -201,15 +201,15 @@ nback_tab_merge <-
     tab_spanner = c('**All**', '**Sex**')
   )
 
-nback_tab_OB <- UAE_goodNBackDat[c(84, 101, 112, 105, 116, 108, 119, 122:123, 102, 113, 103, 114)]
+nback_tab_OB <- UAE_goodNBackDat[c(84, 101, 112, 105, 116, 108, 119, 102, 113, 103, 114)]
 
 UAE_nback_OBstat <-
   tbl_summary(
     data=nback_tab_OB,
     by = IOTF_3class,
-    value = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_dprime ~ "1-Back: d'", B2_dprime ~ "2-Back: d'", B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
-    label = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_dprime ~ "1-Back: d'", B2_dprime ~ "2-Back: d'", B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
-    type = list(B1_pCor ~ 'continuous', B2_pCor ~ 'continuous', B1_pFA ~ 'continuous', B2_pFA ~ 'continuous', B1_BalAcc ~ 'continuous', B2_BalAcc ~ 'continuous', B1_dprime ~ 'continuous', B2_dprime ~ 'continuous', B1_meanRTcor ~ 'continuous', B2_meanRTcor ~ 'continuous', B1_medRTcor ~ 'continuous', B2_medRTcor ~ 'continuous'),
+    value = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
+    label = list(B1_pCor ~ '1-Back: Correct, %', B2_pCor ~ '2-Back: Correct, %', B1_pFA ~ '1-Back: False Alarm, %', B2_pFA ~ '2-Back: False Alarm, %', B1_BalAcc ~ '1-Back: Balanced Acc, %', B2_BalAcc ~ '2-Back: Balanced Acc, %', B1_meanRTcor ~ '1-Back: mean RT, ms', B2_meanRTcor ~ '2-Back: mean RT, ms', B1_medRTcor ~ '1-Back: median RT, ms', B2_medRTcor ~ '2-Back: median RT, ms'),
+    type = list(B1_pCor ~ 'continuous', B2_pCor ~ 'continuous', B1_pFA ~ 'continuous', B2_pFA ~ 'continuous', B1_BalAcc ~ 'continuous', B2_BalAcc ~ 'continuous', B1_meanRTcor ~ 'continuous', B2_meanRTcor ~ 'continuous', B1_medRTcor ~ 'continuous', B2_medRTcor ~ 'continuous'),
     statistic = all_continuous() ~ c("{mean} ({sd}) [{min} - {max}]"), 
     missing = "ifany",
     digits = all_continuous() ~ 2) %>%
